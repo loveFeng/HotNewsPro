@@ -1,24 +1,47 @@
 <div class="clear"></div>
 <div class="footer_top">
-	<h2 class="blogtitle"><a href="<?php bloginfo('home'); ?>/" title="<?php bloginfo('name'); ?>"><?php bloginfo('name'); ?></a></h2>
-</div>
-<div class="footer_center">
-	<div id="back_top"><a href="#" onclick="ZMJS.goTop();return false;"title="返回顶部"></a></div>
-	<div class="footer_cat">
-		<?php wp_nav_menu( array( 'theme_location' => 'footer-menu' ) ); ?>
+	<div id="menu">
+		<?php 
+			$catNav = '';
+			if (function_exists('wp_nav_menu')) {
+				$catNav = wp_nav_menu( array( 'theme_location' => 'footer-menu',  'echo' => false, 'fallback_cb' => '' ) );};
+			if ($catNav == '') { ?>
+				<ul id="cat-nav" class="nav">
+					<?php wp_list_pages('depth=1&sort_column=menu_order&title_li='); ?>
+				</ul>
+		<?php } else echo($catNav); ?>
 	</div>
+	<h2 class="blogtitle">
+	<a href="<?php bloginfo('home'); ?>/" title="<?php bloginfo('name'); ?>">返回首页</a></h2>
+
+	<big class="lt"></big>
+	<big class="rt"></big>
+</div>
+	<div class="link">
+		<?php
+			if(function_exists(’wp_dtree_get_links’)){
+			wp_dtree_get_links();
+			}else{
+			wp_list_bookmarks('title_li=&categorize=1&category=&orderby=rand&show_images=1');
+			}
+		?>
+		<div class="clear"></div>
+	</div>
+	<!-- end: link -->
+<div class="link_b">
+	<big class="lb"></big>
+	<big class="rb"></big>
 </div>
 	<div class="footer_bottom">
-		<p>Copyright &#169; <?php echo date('Y'); ?>&nbsp;&nbsp;<span class="url fn org"><?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
+		Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
 	 	</span>&nbsp;Theme by <a href="http://zmingcx.com" title="http://zmingcx.com">Robin</a>&nbsp;&nbsp;
 		基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建&nbsp;&nbsp;
 		
 		<?php if(get_theme_mod('track') == 'Yes') { ?>
-		<?php echo stripslashes(get_theme_mod('track_code')); ?>		
+		<?php echo stripslashes(get_theme_mod('track_code')); ?>
 		<?php } else { ?>
 		<?php } ?>
-		</p>
 	</div>
   	<div class="clear"></div>
-   <?php wp_footer(); ?>
+<?php wp_footer(); ?>
 </body></html>

@@ -57,5 +57,5 @@
 <a href="javascript:grin(':cry:')"><img src="<?php bloginfo('url'); ?>/wp-includes/images/smilies/icon_cry.gif" alt="" /></a>
 <a href="javascript:grin(':mrgreen:')"><img src="<?php bloginfo('url'); ?>/wp-includes/images/smilies/icon_mrgreen.gif" alt="" /></a>
 <br />
-	<?php } else { ?>
-	<?php } ?>
+<?php } else { ?>
+<?php } ?>

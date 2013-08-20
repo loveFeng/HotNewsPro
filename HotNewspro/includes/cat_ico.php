@@ -9,9 +9,9 @@
 			echo "/>";
 			echo "<img src=/wp-content/caticon/";
 			echo $catname;
-			echo ".png alt=\"$catname category \" title=\"$cattitle\" /></a>\n";
+			echo ".gif alt=\"$catname category \" title=\"$cattitle\" /></a>\n";
 			}
 		?>
 	</div>
-	<?php } else { ?>
-	<?php } ?>
+<?php } else { ?>
+<?php } ?>

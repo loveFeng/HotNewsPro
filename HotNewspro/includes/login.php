@@ -6,7 +6,6 @@
 	<!-- if not logged -->
 	<form action="<?php echo wp_login_url( get_permalink() ); ?>" method="post" id="loginform">
 		<div class="loginblock">
-			<p class="check"><input type="checkbox" name="rememberme" id="modlogn_remember" class="inputbox" value="yes" alt="Remember Me" /></p>
 			<p class="lefted"><button value="Submit" id="submit" type="submit" tabindex="13"></button></p>
 			<p class="password"><input type="password" name="pwd" id="pwd"  size="10" tabindex="12" /></p>
 			<p class="login"><input type="text" name="log" id="log" size="10" tabindex="11" /></p>
@@ -22,7 +21,7 @@
 		if( $cb == NULL ) $cb = '0.00';
 	?>
 	<div class="loginblock">
-		<span class="date_t"><?php date_default_timezone_set('PRC');print date('Y年m月d日'); ?></span> / <span class="loginx">您已经登录：<?php echo $user_identity; ?> / <?php wp_register('', ''); ?> / <?php wp_loginout(); ?></span>
+		<span class="date_t"><?php date_default_timezone_set('PRC');print date('Y年m月d日'); ?></span> / <span class="loginx">您已经登录：<?php echo $user_identity; ?> / <?php wp_register('', ''); ?><a href="<?php echo wp_logout_url( get_bloginfo('url') ); ?>" title="">  / 退出</a></span>
 	</div>
 <?php
 }

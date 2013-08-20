@@ -1,13 +1,8 @@
 <?php
-/*
-NOTE: this file requires WordPress 2.7+ to function
-*/
-$settings = 'mods_'.get_current_theme(); 
-
+$settings = 'mods_'.get_current_theme();
 $defaults = array(
-		'top_hot' => '1',
-		'advice' => '1',
 		'ads' => '',
+		'adt' => '',
 		'description' => '',
 		'keywords' => '',
 		'rss' => '',
@@ -19,18 +14,21 @@ $defaults = array(
 		'track' => 'No',
 		'showico' => 'No',
 		'showcount' => 'Yes',
-		'showie' => 'Yes',
+		'showie' => 'No',
 		'showlazy' => 'Yes',
 		'showadmin' => 'Yes',
 		'showseo' => 'Yes',
-		'showimg' => 'No',
 		'map' => 'Yes',
 		'showads' => 'No',
-		'showrss' => 'No',
+		'showadt' => 'No',
+		'showadb' => 'No',
+		'showrss' => 'Yes',
 		'showlogo' => 'No',
 		'showrsssub' => 'No',
 		'showcatico' => 'No',
 		'showr_img' => 'Yes',
+		'avatar' => 'No',
+		'thumbnail' => 'No',
 );
 
 add_option($settings, $defaults, '', 'yes');
@@ -57,78 +55,38 @@ function theme_settings_admin() { ?>
 	}
 	screen_icon('options-general');
 ?>
-  <h2><?php echo get_current_theme() . ' '; _e('主题设置', ''); ?></h2>
+  <h2><?php echo get_current_theme() . '主题设置 '; ?></h2>
   <form method="post" action="options.php">
     <?php settings_fields($settings); ?>
     <?php // 第一列开始 ?>
     <div class="metabox-holder">
-      <div class="postbox">
-        <h3>顶部热点文章设置</h3>
-        <div class="inside">
-          <p>
-            选择分类
-            <br/>
-            <?php wp_dropdown_categories(array('selected' => get_theme_mod('top_hot'), 'name' => $settings.'[top_hot]', 'orderby' => 'Name' , 'hierarchical' => 1, 'hide_empty' => '0' )); ?>
-          </p>
-        </div>
-      </div>
-      <!--end: featured news--> 
-      <div class="postbox">
-        <h3>侧边推荐文章设置</h3>
-        <div class="inside"> 
- 		  <p>
-            选择分类
-            <br/>
-            <?php wp_dropdown_categories(array('selected' => get_theme_mod('advice'), 'name' => $settings.'[advice]', 'orderby' => 'Name' , 'hierarchical' => 1, 'hide_empty' => '0' )); ?>
-          </p>
-          <p>
-            分类文章数目:
-            <br/>
-            <select name="<?php echo $settings; ?>[list2]">
-              <option style="padding-right:10px;" value="1" <?php selected('1', get_theme_mod('list2')); ?>>1</option>
-              <option style="padding-right:10px;" value="2" <?php selected('2', get_theme_mod('list2')); ?>>2</option>
-              <option style="padding-right:10px;" value="3" <?php selected('3', get_theme_mod('list2')); ?>>3</option>
-              <option style="padding-right:10px;" value="4" <?php selected('4', get_theme_mod('list2')); ?>>4</option>
-              <option style="padding-right:10px;" value="5" <?php selected('5', get_theme_mod('list2')); ?>>5</option>
-              <option style="padding-right:10px;" value="6" <?php selected('6', get_theme_mod('list2')); ?>>6</option>
-              <option style="padding-right:10px;" value="7" <?php selected('7', get_theme_mod('list2')); ?>>7</option>
-              <option style="padding-right:10px;" value="8" <?php selected('8', get_theme_mod('list2')); ?>>8</option>
-              <option style="padding-right:10px;" value="9" <?php selected('9', get_theme_mod('list2')); ?>>9</option>
-			  <option style="padding-right:10px;" value="10" <?php selected('10', get_theme_mod('list2')); ?>>10</option> 
-            </select>
-            <span style="margin-left:10px; color: #999999;">
-            默认: 10
-            </span> </p> 
-        </div>
-      </div>
-      <!--end: content middle--> 
      <div class="postbox">
         <h3>
           缩略图设置
         </h3>
         <div class="inside">
           <p>
-            是否开启自动截图?
+            是否开启自动截图?（不支持外链）
             <br />
-            <select name="<?php echo $settings; ?>[showimg]">
-              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showimg')); ?><?php selected('No', get_theme_mod('showimg')); ?>>Yes</option>
-              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showimg')); ?><?php selected('No', get_theme_mod('showimg')); ?>>No</option>
+            <select name="<?php echo $settings; ?>[thumbnail]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('thumbnail')); ?><?php selected('Yes', get_theme_mod('thumbnail')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('thumbnail')); ?><?php selected('No', get_theme_mod('thumbnail')); ?>>No</option>
             </select>
 			<span style="margin-left:10px; color: #999999;">
-            默认不开启自动截图
+            默认缩略图支持外链
             </span> 
            <p>
-            <span style="margin-left:10px; color: #999999;">
-            注：如果开启自动截图，将取消随机缩略图功能，也可以通过添加自定义域：thumbnail，使用外链图片。
+            <span style="margin-left:10px; color: #ff0000;">
+            注：自动截图可能不适合所有主机空间！
             </span> </p> 
           </p>
         </div>
       </div>
-      <!--end: img--> 
+      <!--end: thumbnail--> 
       <!--logo-->
       <div class="postbox">
         <h3>
-          LOGO设置
+          LOGO
         </h3>
         <div class="inside">
           <p>
@@ -148,7 +106,7 @@ function theme_settings_admin() { ?>
       <!--catico-->
       <div class="postbox">
         <h3>
-          分类图标设置
+          分类图标
         </h3>
         <div class="inside">
           <p>
@@ -167,7 +125,7 @@ function theme_settings_admin() { ?>
       <!--end: catico-->
      <div class="postbox">
         <h3>
-          首页底部默认模块设置
+          首页底部默认模块
         </h3>
         <div class="inside">
           <p>
@@ -179,96 +137,15 @@ function theme_settings_admin() { ?>
             </select>
 			<span style="margin-left:10px; color: #999999;">
             默认显示
-            </span> 
-           <p>
-            <span style="margin-left:10px; color: #999999;">
-            注：如果不显示默认模块，切换到小工具“home bottom”
-            </span> </p> 
+            </span>
           </p>
         </div>
       </div>
       <!--end: map--> 
-      <!--related_img-->
-      <div class="postbox">
-        <h3>
-          相关日志缩略图设置
-        </h3>
-        <div class="inside">
-          <p>
-            是否显示相关日志缩略图?
-            <br />
-            <select name="<?php echo $settings; ?>[showr_img]">
-              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showr_img')); ?>>Yes</option>
-              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showr_img')); ?>>No</option>
-            </select>
-			<span style="margin-left:10px; color: #999999;">
-            默认显示
-            </span>  
-          </p>
-        </div>
-      </div>
-      <!--end: related_img-->
-      <!--seo-->
-      <div class="postbox">
-        <h3>
-          SEO设置
-        </h3>
-        <div class="inside">
-          <p>
-            是否设置SEO?
-            <br />
-            <select name="<?php echo $settings; ?>[showseo]">
-              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showseo')); ?>>Yes</option>
-              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showseo')); ?>>No</option>
-            </select>
-			<span style="margin-left:10px; color: #999999;">
-            默认开启.
-            	<br/>注：一定要添写下面内容，否则会影响博客SEO
-            </span>
-			<p><span style="margin-left:10px; color: #999999;">
-            </span></p>  
-          </p>
-          <p>
-            输入你的首页描述
-            :<br />
-            <textarea name="<?php echo $settings; ?>[description]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('description')); ?></textarea>
-          </p>
-          <p>
-            输入你首页关键字
-            :<br />
-            <textarea name="<?php echo $settings; ?>[keywords]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('keywords')); ?></textarea>
-          </p>
-        </div>
-      </div>
-      <!--end: seo-->
-    </div>
-    <?php // 结束第一列 ?>
-    <?php // 第二列开始 ?>
-    <div class="metabox-holder">
-      <!--admin-->
-      <div class="postbox">
-        <h3>
-          侧边管理面板设置
-        </h3>
-        <div class="inside">
-          <p>
-            是否登录后显示管理面板?
-            <br />
-            <select name="<?php echo $settings; ?>[showadmin]">
-              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showadmin')); ?>>Yes</option>
-              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showadmin')); ?>>No</option>
-            </select>
-			<span style="margin-left:10px; color: #999999;">
-            默认显示
-            </span>  
-          </p>
-        </div>
-      </div>
-      <!--end: admin -->
       <!--showcount-->
       <div class="postbox">
         <h3>
-          侧边读者墙设置
+          侧边读者墙
         </h3>
         <div class="inside">
           <p>
@@ -285,6 +162,30 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: showcount -->
+      <!--ie-->
+      <div class="postbox">
+        <h3>
+          IE浮雕效果
+        </h3>
+        <div class="inside">
+          <p>
+            是否开启导航菜单IE浮雕效果?
+            <br />
+            <select name="<?php echo $settings; ?>[showie]">
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showie')); ?>>No</option>
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showie')); ?>>Yes</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认不开启
+            </span>
+           <p>
+            <span style="margin-left:10px; color: #ff0000;">
+            注：如果导航菜单上文字较多请不要启！
+            </span> </p> 
+          </p>
+        </div>
+      </div>
+      <!--end: ie -->
       <!--lazy-->
       <div class="postbox">
         <h3>
@@ -305,10 +206,67 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: lazy-->
+
+      <!--seo-->
+      <div class="postbox">
+        <h3>
+          SEO设置
+        </h3>
+        <div class="inside">
+          <p>
+            是否设置SEO?
+            <br />
+            <select name="<?php echo $settings; ?>[showseo]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showseo')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showseo')); ?>>No</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认开启.</span>
+			<p><span style="margin-left:10px; color: #ff0000;">
+			注：一定要添写下面内容，否则可能会影响博客SEO！
+            </span></p>  
+          </p>
+          <p>
+            你的首页描述
+            :<br />
+            <textarea name="<?php echo $settings; ?>[description]" cols=38 rows=4><?php echo stripslashes(get_theme_mod('description')); ?></textarea>
+          </p>
+          <p>
+            你首页关键字
+            :<br />
+            <textarea name="<?php echo $settings; ?>[keywords]" cols=38 rows=6><?php echo stripslashes(get_theme_mod('keywords')); ?></textarea>
+          </p>
+        </div>
+      </div>
+      <!--end: seo-->
+    </div>
+    <?php // 结束第一列 ?>
+    <?php // 第二列开始 ?>
+    <div class="metabox-holder">
+      <!--admin-->
+      <div class="postbox">
+        <h3>
+          侧边管理面板
+        </h3>
+        <div class="inside">
+          <p>
+            是否登录后显示管理面板?
+            <br />
+            <select name="<?php echo $settings; ?>[showadmin]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showadmin')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showadmin')); ?>>No</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认显示
+            </span>  
+          </p>
+        </div>
+      </div>
+      <!--end: admin -->
       <!--ico-->
       <div class="postbox">
         <h3>
-          表情设置
+          表情
         </h3>
         <div class="inside">
           <p>
@@ -325,26 +283,6 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: ico -->
-      <!--ie-->
-      <div class="postbox">
-        <h3>
-          IE浮雕效果设置
-        </h3>
-        <div class="inside">
-          <p>
-            是否开启导航菜单IE浮雕效果?
-            <br />
-            <select name="<?php echo $settings; ?>[showie]">
-              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showie')); ?>>Yes</option>
-              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showie')); ?>>No</option>
-            </select>
-			<span style="margin-left:10px; color: #999999;">
-            默认开启
-            </span>
-          </p>
-        </div>
-      </div>
-      <!--end: ie -->
       <!-- rss -->
       <div class="postbox">
         <h3>
@@ -359,7 +297,7 @@ function theme_settings_admin() { ?>
               <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showrss')); ?>>No</option>
             </select>
 			<span style="margin-left:10px; color: #999999;">
-            默认不显示
+            默认显示
             </span>  
           </p>
           <p>
@@ -370,19 +308,44 @@ function theme_settings_admin() { ?>
           <p>
             输入你的订阅HTML代码
             :<br />
-            <textarea name="<?php echo $settings; ?>[rss]" cols=38 rows=4><?php echo stripslashes(get_theme_mod('rss')); ?></textarea>
+            <textarea name="<?php echo $settings; ?>[rss]" cols=38 rows=3><?php echo stripslashes(get_theme_mod('rss')); ?></textarea>
           </p>
         </div>
       </div>
       <!--end: rss-->
-      <!--ads-->
+      <!--adt-->
       <div class="postbox">
         <h3>
-          侧边广告设置
+          正文底部广告
         </h3>
         <div class="inside">
           <p>
-            是否显示广告?
+            是否显示正文底部广告？
+            <br />
+            <select name="<?php echo $settings; ?>[showadt]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showadt')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showadt')); ?>>No</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认不显示
+            </span>  
+          </p>
+          <p>
+            输入你的广告代码
+            :<br />
+            <textarea name="<?php echo $settings; ?>[adt]" cols=38 rows=4><?php echo stripslashes(get_theme_mod('adt')); ?></textarea>
+          </p>
+        </div>
+      </div>
+      <!--end: ads-->
+      <!--ads-->
+      <div class="postbox">
+        <h3>
+          侧边广告
+        </h3>
+        <div class="inside">
+          <p>
+            是否显示侧边广告?
             <br />
             <select name="<?php echo $settings; ?>[showads]">
               <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showads')); ?>>Yes</option>
@@ -395,7 +358,7 @@ function theme_settings_admin() { ?>
           <p>
             输入你的广告代码
             :<br />
-            <textarea name="<?php echo $settings; ?>[ads]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('ads')); ?></textarea>
+            <textarea name="<?php echo $settings; ?>[ads]" cols=38 rows=4><?php echo stripslashes(get_theme_mod('ads')); ?></textarea>
           </p>
         </div>
       </div>
@@ -403,7 +366,7 @@ function theme_settings_admin() { ?>
       <!--track-->
       <div class="postbox">
         <h3>
-          统计代码设置
+          统计代码
         </h3>
         <div class="inside">
           <p>
@@ -425,8 +388,8 @@ function theme_settings_admin() { ?>
       </div>
       <!--end: tracking-->
       <p class="submit">
-        <input type="submit" class="button-primary" value="<?php _e('保存设置', '') ?>" />
-        <input type="submit" class="button-highlighted" name="<?php echo $settings; ?>[reset]" value="<?php _e('重新设置', ''); ?>" />
+        <input type="submit" class="button-primary" value="保存设置" />
+        <input type="submit" class="button-highlighted" name="<?php echo $settings; ?>[reset]" value="重新设置" />
       </p>
     </div>
     <!--end: second column-->

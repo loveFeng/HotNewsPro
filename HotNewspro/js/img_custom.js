@@ -1,0 +1,38 @@
+// 滑动特效
+$(function() {
+	// featured window effect
+	$("#images_featured .item").hover(function(){
+		$(this).find(".boxCaption").stop().animate({
+			top:0
+		}, 150);
+		}, function(){
+		$(this).find(".boxCaption").stop().animate({
+			top:160
+		}, 600);
+	});
+	
+	// tab
+	var tabContainers = $('div.tabs').find('div.tabitem');
+	var tabnavs = $('div.tabs').find('ul.tabnav li');
+	tabContainers.css('display','block').fadeOut(0);
+	tabContainers.filter(':first').css('display','block');
+	tabnavs.filter(':first').find('.arrow-down').css('display','block');
+                        
+	$('.tabs ul.tabnav a').click(function () {
+		if($(this).attr('class') != 'selected') {
+			tabContainers.hide();
+			tabnavs.find('.arrow-down').hide();
+			$(this).parent().find('span').show();
+			tabContainers.filter(this.hash).show();
+			$('.tabs ul.tabnav a').removeClass('selected');
+			$(this).addClass('selected');
+		}
+		return false;
+	});
+});
+// 滚屏
+jQuery(document).ready(function($){
+$('#roll_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);}); 
+$('#ct').click(function(){$('html,body').animate({scrollTop:$('.ct').offset().top}, 800);});
+$('#fall').click(function(){$('html,body').animate({scrollTop:$('.footer_bottom,.footer_bottom_a').offset().top}, 800);});
+});

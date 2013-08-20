@@ -30,3 +30,31 @@ $(function() {
 		return false;
 	});
 });
+// 滚屏
+jQuery(document).ready(function($){
+$('#roll_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);}); 
+$('#ct').click(function(){$('html,body').animate({scrollTop:$('.ct').offset().top}, 800);});
+$('#fall').click(function(){$('html,body').animate({scrollTop:$('.footer_bottom,.footer_bottom_a').offset().top}, 800);});
+});
+// context
+$(document).ready(function(){
+$('.entry_box_s ').hover(
+	function() {
+		$(this).find('.context_t').stop(true,true).fadeIn();
+	},
+	function() {
+		$(this).find('.context_t').stop(true,true).fadeOut();
+	}
+);
+});
+// more
+$(document).ready(function(){
+$('.entry_box').hover(
+	function() {
+		$(this).find('.archive_more').stop(true,true).fadeIn();
+	},
+	function() {
+		$(this).find('.archive_more').stop(true,true).fadeOut();
+	}
+);
+});

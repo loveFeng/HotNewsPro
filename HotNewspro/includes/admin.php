@@ -11,11 +11,11 @@
 			<?php // Get comments awaiting moderation
 			$numcomments = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->comments WHERE comment_approved = '0'");
 			?>
-			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/post-new.php" title="添加文章>"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_post_new.png"/><?php _e('&nbsp;&nbsp;文章'); ?></a></li>
-			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/page-new.php" title="页面"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_page_new.png"/><?php _e('&nbsp;&nbsp;页面'); ?></a></li>
-			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/widgets.php" title="小工具"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_post_manage.png"/><?php _e('&nbsp;&nbsp;小工具'); ?></a></li>
+			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/post-new.php" title="添加文章"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_page_new.png"/><?php _e('&nbsp;&nbsp;文章'); ?></a></li>
+			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/widgets.php" title="挂件"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_post_new.png"/><?php _e('&nbsp;&nbsp;挂件'); ?></a></li>
 			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/link-manager.php" title="链接管理"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_link_manage.png"/><?php _e('&nbsp;&nbsp;链接'); ?></a></li>
 			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/upload.php" title="媒体管理"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_uploads_manage.png" /><?php _e('&nbsp;&nbsp;媒体'); ?></a></li>
+			<li><a href="<?php echo get_option('siteurl'); ?>/wp-admin/tools.php" title="工具"><img src="<?php bloginfo('template_url'); ?>/images/adminbar/icon_post_manage.png"/><?php _e('&nbsp;&nbsp;工具'); ?></a></li>
 			<?php } ?>
 		</ul>
 		<ul class="admin_bar">
@@ -28,7 +28,10 @@
 		</ul>
 	</div>
 	<div class="clear"></div>
-	<div class="admin-bottom"></div>
+	<div class="box-bottom">
+		<b class="lb"></b>
+		<b class="rb"></b>
+	</div>
 	<?php } ?>
 <?php } else { ?>
 <?php } ?>

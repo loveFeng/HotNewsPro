@@ -1,2 +1,22 @@
-#topnav li a, #topnav li a:link, #topnav li a:visited {display:block;width:70px; text-align:center;filter:shadow(color=#ffffff,direction:135,strength:1);}
+/* 
+万恶的IE
+*/
+#topnav li a, #topnav li a:link, #topnav li a:visited {display:block;width:85px; text-align:center;filter:shadow(color=#ffffff,direction:135,strength:1);}
 #topnav  {font: 13px '宋体','Arial','Lucida Grande','Tahoma',Verdana,sans-serif;}
+#topnav li a, #topnav li a:link, #topnav li a:visited ,#topnav li a:hover, #topnav li a:active{
+	padding: 0 10px 0 10px;
+	}
+#topnav  li ul li a {
+	background: #fbfbfb;
+	width: 120px !important;
+	height:30px !important;
+	}
+#topnav  li ul ul {
+	_margin: -32px 0 0 140px;
+	}
+#topnav  li ul ul {
+	margin: -32px 0 0 140px;
+	}
+#topnav  li ul {
+	width: 140px;
+	}
