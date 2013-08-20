@@ -1,24 +1,13 @@
 <?php get_header(); ?>
-
+<div id="roll"><div id="roll_top"></div><div id="ct"></div><div id="fall"></div></div>
 <div id="content">
+	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	 <!-- menu -->
 	<div id="menu">
-		<h2>阅读正文</h2>
-		<div class="menu_left">
-			<div class="menu">
-				<li><a href="#">全部分类</a>
-				<ul><?php wp_list_categories('sorderby=name&depth=4&title_li=&exclude='); ?></ul>
-				</li>
-			</div>	
-	</div>
-		<div class="menu_right"><div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div></div>
+		<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_category(', ') ?>＞正文<!-- <?php the_title();?> --></div>
+		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-	 <!-- browse -->
-	<p class="browse"> 现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_category(', ') ?>＞正文<!-- <?php the_title();?> --></p>
-	<div class="clear"></div>
-	<!-- end: browse -->
 	<div class="entry_title_box">
 		<!-- 分类图标 -->
 		<div class="ico"><?php include('includes/cat_ico.php'); ?></div>
@@ -37,6 +26,7 @@
 		<?php the_content('Read more...'); ?>
 		<?php wp_link_pages( array( 'before' => '<p class="pages">' . __( '日志分页:'), 'after' => '</p>' ) ); ?>
 		<div class="clear"></div>
+		本文固定链接: <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><?php the_permalink() ?> | <?php bloginfo('name');?></a>
 		<!-- end: entrymeta -->
 		<div class="entrymeta">
 			<div class="authorbio">
@@ -69,7 +59,11 @@
 	<!-- relatedposts -->
 	<div class="entry_b">
 	<?php include('includes/related.php'); ?>
+	<?php if (get_theme_mod('showimg') == 'Yes') { ?>
+	<?php include('includes/related_img_a.php'); ?>
+	<?php } else { ?>
 	<?php include('includes/related_img.php'); ?>
+	<?php } ?>
 	<div class="clear"></div>
 	</div>
 	<!-- end: relatedposts -->

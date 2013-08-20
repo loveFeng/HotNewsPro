@@ -71,6 +71,13 @@ if (function_exists('register_sidebar'))
     	'after_widget' => '</div>',
     ));		
 }
+// 自定义菜单
+   register_nav_menus(
+      array(
+         'header-menu' => __( '导航自定义菜单' ),
+         'footer-menu' => __( '页角自定义菜单' )
+      )
+   );
 
 //文字截断
 function cut_str($src_str,$cut_length)
@@ -126,7 +133,7 @@ $total_posts = $my_query->post_count;
 if(empty($paged))$paged = 1;
 $prev = $paged - 1;							
 $next = $paged + 1;	
-$range = 2; // only edit this if you want to show more page-links
+$range = 6; // only edit this if you want to show more page-links
 $showitems = ($range * 2)+1;
 
 $pages = ceil($total_posts/$posts_per_page);
@@ -154,9 +161,30 @@ $myavatar = get_bloginfo('template_directory') . '/images/gravatar.png';
   $avatar_defaults[$myavatar] = '自定义头像';
   return $avatar_defaults;
 }
+//彩色标签云
+function colorCloud($text) {
+$text = preg_replace_callback('|<a (.+?)>|i', 'colorCloudCallback', $text);
+return $text;
+}
+function colorCloudCallback($matches) {
+$text = $matches[1];
+$color = dechex(rand(0,16777215));
+$pattern = '/style=(\'|\")(.*)(\'|\")/i';
+$text = preg_replace($pattern, "style=\"color:#{$color};$2;\"", $text);
+return "<a $text>";
+}
+add_filter('wp_tag_cloud', 'colorCloud', 1);
+
 ?>
-<?php // 自定义登录样式
-function custom_login() {
-echo '<link rel="stylesheet" tyssspe="text/css" href="' . get_bloginfo('template_directory') . '/includes/custom_login/custom_login.css" />'; }
-add_action('login_head', 'custom_login');
+<?php //自动截图设置
+function catch_that_image() {
+  global $post, $posts;
+  $first_img = '';
+  ob_start();
+  ob_end_clean();
+  $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+  $first_img = $matches [1] [0];
+  return $first_img;
+}
+//结束
 ?>

@@ -8,6 +8,8 @@ $defaults = array(
 		'top_hot' => '1',
 		'advice' => '1',
 		'ads' => '',
+		'description' => '',
+		'keywords' => '',
 		'rss' => '',
 		'rsssub' => '',
 		'cut' => '',
@@ -16,10 +18,12 @@ $defaults = array(
 		'img' => 'Yes',
 		'track' => 'No',
 		'showico' => 'No',
+		'showcount' => 'Yes',
+		'showie' => 'Yes',
 		'showlazy' => 'Yes',
 		'showadmin' => 'Yes',
-		'showseo' => 'No',
-		'showimg' => 'Yes',
+		'showseo' => 'Yes',
+		'showimg' => 'No',
 		'map' => 'Yes',
 		'showads' => 'No',
 		'showrss' => 'No',
@@ -104,18 +108,18 @@ function theme_settings_admin() { ?>
         </h3>
         <div class="inside">
           <p>
-            是否显示缩略图?
+            是否开启自动截图?
             <br />
             <select name="<?php echo $settings; ?>[showimg]">
               <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showimg')); ?><?php selected('No', get_theme_mod('showimg')); ?>>Yes</option>
               <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showimg')); ?><?php selected('No', get_theme_mod('showimg')); ?>>No</option>
             </select>
 			<span style="margin-left:10px; color: #999999;">
-            默认显示缩略图
+            默认不开启自动截图
             </span> 
            <p>
             <span style="margin-left:10px; color: #999999;">
-            注：如果不显示缩略图将关闭文章截断，首页显示全文
+            注：如果开启自动截图，将取消随机缩略图功能，也可以通过添加自定义域：thumbnail，使用外链图片。
             </span> </p> 
           </p>
         </div>
@@ -204,6 +208,43 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: related_img-->
+      <!--seo-->
+      <div class="postbox">
+        <h3>
+          SEO设置
+        </h3>
+        <div class="inside">
+          <p>
+            是否设置SEO?
+            <br />
+            <select name="<?php echo $settings; ?>[showseo]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showseo')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showseo')); ?>>No</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认开启.
+            	<br/>注：一定要添写下面内容，否则会影响博客SEO
+            </span>
+			<p><span style="margin-left:10px; color: #999999;">
+            </span></p>  
+          </p>
+          <p>
+            输入你的首页描述
+            :<br />
+            <textarea name="<?php echo $settings; ?>[description]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('description')); ?></textarea>
+          </p>
+          <p>
+            输入你首页关键字
+            :<br />
+            <textarea name="<?php echo $settings; ?>[keywords]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('keywords')); ?></textarea>
+          </p>
+        </div>
+      </div>
+      <!--end: seo-->
+    </div>
+    <?php // 结束第一列 ?>
+    <?php // 第二列开始 ?>
+    <div class="metabox-holder">
       <!--admin-->
       <div class="postbox">
         <h3>
@@ -224,6 +265,26 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: admin -->
+      <!--showcount-->
+      <div class="postbox">
+        <h3>
+          侧边读者墙设置
+        </h3>
+        <div class="inside">
+          <p>
+            是否显示最活跃的读者?
+            <br />
+            <select name="<?php echo $settings; ?>[showcount]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showcount')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showcount')); ?>>No</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认显示
+            </span>
+          </p>
+        </div>
+      </div>
+      <!--end: showcount -->
       <!--lazy-->
       <div class="postbox">
         <h3>
@@ -244,33 +305,6 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: lazy-->
-    </div>
-    <?php // 结束第一列 ?>
-    <?php // 第二列开始 ?>
-    <div class="metabox-holder">
-      <!--seo-->
-      <div class="postbox">
-        <h3>
-          SEO设置
-        </h3>
-        <div class="inside">
-          <p>
-            是否设置SEO?
-            <br />
-            <select name="<?php echo $settings; ?>[showseo]">
-              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showseo')); ?>>Yes</option>
-              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showseo')); ?>>No</option>
-            </select>
-			<span style="margin-left:10px; color: #999999;">
-            默认不显示
-            </span>
-			<p><span style="margin-left:10px; color: #999999;">
-            注：这一功能还需手动修改"includes/seo.php"文件.
-            </span></p>  
-          </p>
-        </div>
-      </div>
-      <!--end: seo-->
       <!--ico-->
       <div class="postbox">
         <h3>
@@ -291,6 +325,26 @@ function theme_settings_admin() { ?>
         </div>
       </div>
       <!--end: ico -->
+      <!--ie-->
+      <div class="postbox">
+        <h3>
+          IE浮雕效果设置
+        </h3>
+        <div class="inside">
+          <p>
+            是否开启导航菜单IE浮雕效果?
+            <br />
+            <select name="<?php echo $settings; ?>[showie]">
+              <option style="padding-right:10px;" value="Yes" <?php selected('Yes', get_theme_mod('showie')); ?>>Yes</option>
+              <option style="padding-right:10px;" value="No" <?php selected('No', get_theme_mod('showie')); ?>>No</option>
+            </select>
+			<span style="margin-left:10px; color: #999999;">
+            默认开启
+            </span>
+          </p>
+        </div>
+      </div>
+      <!--end: ie -->
       <!-- rss -->
       <div class="postbox">
         <h3>
@@ -316,7 +370,7 @@ function theme_settings_admin() { ?>
           <p>
             输入你的订阅HTML代码
             :<br />
-            <textarea name="<?php echo $settings; ?>[rss]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('rss')); ?></textarea>
+            <textarea name="<?php echo $settings; ?>[rss]" cols=38 rows=4><?php echo stripslashes(get_theme_mod('rss')); ?></textarea>
           </p>
         </div>
       </div>
@@ -365,7 +419,7 @@ function theme_settings_admin() { ?>
             <br />
             输入你的统计代码
             :<br />
-            <textarea name="<?php echo $settings; ?>[track_code]" cols=38 rows=5><?php echo stripslashes(get_theme_mod('track_code')); ?></textarea>
+            <textarea name="<?php echo $settings; ?>[track_code]" cols=38 rows=4><?php echo stripslashes(get_theme_mod('track_code')); ?></textarea>
           </p>
         </div>
       </div>

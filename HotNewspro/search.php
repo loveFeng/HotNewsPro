@@ -1,24 +1,13 @@
 <?php get_header(); ?>
-
+<div id="roll"><div id="roll_top"></div><div id="fall"></div></div>
 <div id="content">
  <!-- menu -->
 	<div id="menu">
-		<h2>搜索结果</h2>
-		<div class="menu_left">
-			<div class="menu">
-				<li><a href="#">全部分类</a>
-					<ul><?php wp_list_categories('sorderby=name&depth=4&title_li=&exclude='); ?></ul>
-				</li>
-			</div>	
-		</div>
-		<div class="menu_right"><div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div></div>
+		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞搜索结果</div>
+		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
  	<!-- end: menu -->
-	<!-- browse_a -->
-	<div class="browse_archive"><p>现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞搜索结果</p>
-	</div>
- 	<!-- end: browse_a -->
-    <div class="navigation_t"><?php kriesi_pagination($query_string); ?></div>
+    <div class="navigation"><?php kriesi_pagination($query_string); ?></div>
     <div class="clear"></div>
  	<!-- end: navigation_t -->
  	<!-- archive_box -->
@@ -41,7 +30,11 @@
 			</div>
 		</div>
  		<!-- end: archive_title_box -->
-		<?php include('includes/thumbnail.php'); ?>
+				<?php if (get_theme_mod('showimg') == 'Yes') { ?>
+				<?php include('includes/thumbnail_a.php'); ?>
+					<?php } else { ?>
+				<?php include('includes/thumbnail.php'); ?>
+				<?php } ?>
 		<div class="archive">
 			<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 530,"..."); ?>
 		</div>
@@ -54,7 +47,7 @@
 	<?php endif; ?>
  <!-- end: archive_box --> 
  	<!-- navigation_b -->
-    <div class="navigation_b"><?php kriesi_pagination($query_string); ?></div>
+    <div class="navigation"><?php kriesi_pagination($query_string); ?></div>
  	<!-- end: navigation_b -->
 <div class="clear"></div>	
   <!-- menu_b -->
@@ -65,25 +58,32 @@
 	<!-- end: menu_b -->
 	<!-- bottom -->
 	<div id="bottom">
+		<?php if (get_theme_mod('map') == 'Yes') { ?>
 		<!--  random -->
 		<?php include('includes/random.php'); ?>
 		<!-- end: random -->
 		<div class="tag">
 			<h2>热门标签</h2>
-			<div class="tag_c"><?php wp_tag_cloud('smallest=12&largest=12&unit=px&number=40');?></div>
+			<div class="tag_c"><?php wp_tag_cloud('smallest=12&largest=12&unit=px&number=41');?></div>
 		</div>
 		<!-- end: tag -->
-		<!-- link -->	
+			<div class="clear"></div>
 		<div class="link">
 			<?php
 				if(function_exists(’wp_dtree_get_links’)){
 				wp_dtree_get_links();
 				}else{
-				wp_list_bookmarks();
+				wp_list_bookmarks('show_images=1');
 				}
 			?>
 		</div>
 		<!-- end: link -->
+		<?php } else { ?>
+		<div class="bottom_widget">
+			<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('home bottom') ) : ?>
+    		<?php endif; ?>
+		</div>
+		<?php } ?>
 	</div>
 	<!-- end: bottom -->
 <div class="clear"></div>

@@ -1,25 +1,15 @@
 <?php get_header(); ?>
-
+<div id="roll"><div id="roll_top"></div><div id="fall"></div></div>
 <div id="content">
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
  <!-- menu -->
 	<div id="menu">
-		<h2><?php the_title(); ?></h2>
-		<div class="menu_left">
-			<div class="menu">
-				<li><a href="#">全部分类</a>
-					<ul><?php wp_list_categories('sorderby=name&depth=4&title_li=&exclude='); ?></ul>
-				</li>
-			</div>	
-		</div>
-		<div class="menu_right"><div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div></div>
+		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_title(); ?></div>
+		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
  <!-- end: menu -->
- 	<p class="browse"> 现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞
-	<?php the_title(); ?>
-	</p>
  <!-- entry -->
-		<div class="clear"></div>
+	<div class="clear"></div>
   <div class="entry">
     <div class="post" id="post-<?php the_ID(); ?>">
       <?php the_content('More &raquo;'); ?>

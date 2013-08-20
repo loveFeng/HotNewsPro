@@ -1,5 +1,4 @@
 <?php if (get_theme_mod('showr_img') == 'Yes') { ?>
-<div class="e_img">	相关日志缩略图</div>
 <div class="related_img">
 <?php
   $backup = $post; 
@@ -25,7 +24,7 @@
 			<?php $image = get_post_meta($post->ID, 'thumbnail', true); ?>
 			<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><img src="<?php echo $image; ?>" alt="<?php the_title(); ?>"/></a>
 			<?php else: ?>
-			<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><img src="<?php bloginfo('template_directory'); ?>/images/related/r_m<?php echo rand(1,6)?>.jpg" alt="<?php the_title(); ?>" /></a>
+			<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><img src="<?php bloginfo('template_directory'); ?>/images/random/tb<?php echo rand(1,20)?>.jpg" alt="<?php the_title(); ?>" /></a>
 			<?php endif; ?>
 		</div>
       <?php endwhile;

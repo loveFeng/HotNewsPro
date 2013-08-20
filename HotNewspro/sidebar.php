@@ -2,7 +2,7 @@
 
 <div class="tab">
 	<ul id=drawer>
-  		<li><a href="">最新日志</a>
+  		<li><a href="#">最新日志</a>
 			<ul>
 				<ol id="newarticles">
 					<?php $myposts = get_posts('numberposts=10&offset=0');foreach($myposts as $post) :?>
@@ -10,8 +10,7 @@
 					<?php endforeach; ?>
 				</ol>
 			</ul>
-
-		<li><a href="">最热文章</a> 
+		<li><a href="#">热门文章</a>
 			<ul>
 				<ol id="hotarticles">
 					<?php $result = $wpdb->get_results("SELECT comment_count,ID,post_title FROM $wpdb->posts ORDER BY comment_count DESC LIMIT 0 , 10");
@@ -25,9 +24,8 @@
 					<?php echo cut_str($post->post_title,32); ?></a> </li>
 					<?php } } ?>
 				</ol> 
-			</ul>
-		
-		<li><a href="">推荐文章</a> 
+			</ul>		
+		<li><a href="#">本站推荐</a>
 			<ul>
 				<ol id="advice">
 					<?php $recent = new WP_Query("cat=".get_theme_mod('advice')."&offset=0&showposts=".get_theme_mod('list2')); while($recent->have_posts()) : $recent->the_post();?>
@@ -39,12 +37,12 @@
 	</ul>
 </div>
   <!-- end: tab -->
-  
 <div class="clear"></div>
 <div class="widget">
 	<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('sidebar Widget1') ) : ?>
     <?php endif; ?>
-</div>	
+</div>
+<div id="top-comments-author"><?php include('includes/top_comment.php'); ?></div>
 <?php include('includes/admin.php'); ?>
 <div class="rssblock"><?php include('includes/rssblock.php'); ?></div>
 <div class="widget">
