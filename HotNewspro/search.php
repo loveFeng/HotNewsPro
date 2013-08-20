@@ -12,6 +12,7 @@
  	<!-- archive_box -->
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<div class="entry_box">
+		<span class="comment_a"><?php comments_popup_link('0℃ ', '1℃ ', '%℃ '); ?></span>
 		<div class="archive_box">
 			<!-- end: archive_title_box -->
 			<div class="archive_title_box">
@@ -24,9 +25,8 @@
 				<div class="archive_info">
 					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
 					<span class="category"> &#8260; <?php the_category(', ') ?></span>
-					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数 1', '评论数 %'); ?></span>
 					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
-					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
+					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
 				</div>
 			</div>
 			<!-- end: archive_title_box -->
@@ -49,50 +49,57 @@
 			<span class="posttag"><?php the_tags('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', ', ', ''); ?></span><span class="archive_more"><a href="<?php the_permalink() ?>" title="详细阅读 <?php the_title(); ?>" rel="bookmark" class="title">阅读全文</a></span>
 			<div class="clear"></div>
 		</div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_box_b">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<?php endwhile; else: ?>
 	<div class="entry_box">
-		<b class="lt"></b>
-		<b class="rt"></b>
-	<h3 class="center">抱歉!无法搜索到与之相匹配的信息。</h3>
+	<h3 class="center">抱歉!无法搜索到与之相匹配的信息。您可以重新搜索或者直接浏览下面的文章</h3>
+		<div class="search_s">
+			<form method="get" id="searchform" action="<?php bloginfo('url'); ?>/">
+				<input type="text" value="搜索" onclick="this.value='';" name="s" id="s" class="swap_value" />
+				<input type="image" src="<?php bloginfo('template_directory'); ?>/images/go.gif" id="go" alt="Search" title="搜索" />
+			</form>
+		</div>
+	 	<div id="expand_collapse">展开收缩</div>
+		<div id="archives">
+			<?php archives_list_SHe(); ?>
+		</div>
+		<div class="clear"></div>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_box_b">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<?php endif; ?>
 	<!-- end: archive_box --> 
  	<!-- navigation_b -->
     <div class="navigation_b"><?php pagination($query_string); ?></div>
  	<!-- end: navigation_b -->
-	<div class="clear"></div>	
-	<div id="bottom">
-		<?php if (get_theme_mod('map') == 'Yes') { ?>
-		<div id="map_b">
-			<h2>网站地图</h2>
-			<div id="rss"><a href="<?php bloginfo('comments_rss2_url'); ?>"title="Comments (RSS)">Comments (RSS)</a></div>
-		</div>	
-		<!-- end: menu_b -->
-		<!--  random -->
-		<?php include('includes/random.php'); ?>
-		<!-- end: random -->
-		<div class="tag">
-			<h2>热门标签</h2>
-			<div class="tag_c"><?php wp_tag_cloud('smallest=12&largest=12&unit=px&number=45');?></div>
-		</div>
-		<!-- end: tag -->
-			<div class="clear"></div>
-		<?php } ?>
-	</div>
-	<!-- end: bottom -->
 <div class="clear"></div>
 </div>
 <!-- end: content -->
-<?php get_sidebar(); ?>
+<?php get_sidebar('img'); ?>
 <?php get_footer(); ?>
+<script type="text/javascript">
+jQuery(function($){
+	$('#expand_collapse,.archives-yearmonth').css({cursor:"pointer"});
+	$('#archives ul li ul.archives-monthlisting').hide();
+	$('#archives ul li ul.archives-monthlisting:first').show();
+	$('#archives ul li span.archives-yearmonth').click(function(){$(this).next().slideToggle('fast');return false;});
+	//以下是全局的操作
+	$('#expand_collapse').toggle(
+	function(){
+	$('#archives ul li ul.archives-monthlisting').slideDown('fast');
+	},
+	function(){
+	$('#archives ul li ul.archives-monthlisting').slideUp('fast');
+	});
+	});
+</script>

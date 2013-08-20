@@ -1,7 +1,7 @@
 <?php if (get_option('swt_hot_img') == 'Key') { ?>
 <div id="featured" class="clearfix">
 	<?php $recent = new WP_Query('meta_key=hot&orderby=rand&showposts=4&caller_get_posts=4'); while($recent->have_posts()) : $recent->the_post();?>
-	<div class="item grid">
+	<div class="item">
 		<div class="top_t">
 			<?php if ( get_post_meta($post->ID, 'image', true) ) : ?>
 			<?php $image = get_post_meta($post->ID, 'image', true); ?>

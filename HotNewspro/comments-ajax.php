@@ -146,17 +146,14 @@ $tmp_c = get_comment($tmp_c->comment_parent);
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 		<div id="comment-<?php comment_ID(); ?>">
 		<div class="comment-author">
-			<div id="avatar"><?php echo get_avatar( $comment, 32 ); ?></div>
+			<div id="avatar"><?php echo get_avatar( $comment, 48 ); ?></div>
 			<?php printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link() ); ?>
 		</div>
-		<?php if ( $comment->comment_approved == '0' ) : ?>
-			您的评论正在等待审核中...
-			<br />
-			
-		<?php endif; ?>
-
-		<div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)' ), ' ' ); ?></div>
-
+		<div class="comment-meta commentmetadata">
+			<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)' ), ' ' ); ?>
+			<?php if ( $comment->comment_approved == '0' ) : ?>
+			<font color=Red>您的评论需要管理员审核...</font>
+			<?php endif; ?>
+	</div>
 		<div class="comment-body"><?php comment_text(); ?></div>
-
 	</div>

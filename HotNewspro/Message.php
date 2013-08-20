@@ -1,9 +1,9 @@
 <?php
 /*
-Template Name: 留言板
+Template Name: 近期留言
 */
 ?>
-<?php include('header_c.php'); ?>
+<?php get_header(); ?>
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
 	<div id="map_box">
 		<div id="map_l">
@@ -28,13 +28,13 @@ Template Name: 留言板
 				?> 
 			</ul>
 		</div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb_l">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<?php endwhile; ?>
 	<?php endif; ?>
-<?php include('footer_a.php'); ?>
+<?php get_footer(); ?>

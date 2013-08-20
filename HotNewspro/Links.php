@@ -3,8 +3,7 @@
 Template Name: 友情链接
 */
 ?>
- 
-<?php include('header_c.php'); ?>
+<?php get_header(); ?>
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
 	<div id="map_box">
 		<div id="map_l">
@@ -27,30 +26,29 @@ Template Name: 友情链接
 			?>
 			<div class="clear"></div>
 		</div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb_l">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<div class="entry_box_s_l">
 		<div class="links_m">
-			<h2>申请链接</h2>
+			<h2>申请链接条件：</h2>
 			<div class="page" id="post-<?php the_ID(); ?>">
 				<?php the_content('More &raquo;'); ?><span class="edit">
 				<div class="clear"></div>
 			</div>
 		</div>
 			<div class="clear"></div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb_l">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
-
-	<?php endwhile; ?>
+	<?php endwhile; else: ?>
 	<?php endif; ?>
-<?php include('footer_a.php'); ?>
+<?php get_footer(); ?>

@@ -3,13 +3,13 @@
 Template Name: 读者墙
 */
 ?>
-<?php include('header_c.php'); ?>
+<?php get_header(); ?>
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
 	<div id="map_box">
 		<div id="map_l">
 			<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_title(); ?></div>
 		</div>
-		<div id="map_r">	
+		<div id="map_r">
 			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
 		</div>
 	</div>
@@ -18,7 +18,7 @@ Template Name: 读者墙
 		<div class="readers">
 			<ul>
 			<?php
-				$query="SELECT COUNT(comment_ID) AS cnt, comment_author, comment_author_url, comment_author_email FROM (SELECT * FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->posts.ID=$wpdb->comments.comment_post_ID) WHERE comment_date > date_sub( NOW(), INTERVAL 3 MONTH ) AND user_id='0' AND comment_author_email != '' AND post_password='' AND comment_approved='1' AND comment_type='') AS tempcmt GROUP BY comment_author_email ORDER BY cnt DESC LIMIT 300";
+				$query="SELECT COUNT(comment_ID) AS cnt, comment_author, comment_author_url, comment_author_email FROM (SELECT * FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->posts.ID=$wpdb->comments.comment_post_ID) WHERE comment_date > date_sub( NOW(), INTERVAL 12 MONTH ) AND user_id='0' AND comment_author_email != '' AND post_password='' AND comment_approved='1' AND comment_type='') AS tempcmt GROUP BY comment_author_email ORDER BY cnt DESC LIMIT 300";
 				$wall = $wpdb->get_results($query);
 				foreach ($wall as $comment)
 				{
@@ -35,13 +35,13 @@ Template Name: 读者墙
 			</ul>
 				<div class="clear"></div>
 		</div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb_l">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<?php endwhile; ?>
 	<?php endif; ?>
-<?php include('footer_a.php'); ?>
+<?php get_footer(); ?>

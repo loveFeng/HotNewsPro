@@ -1,6 +1,6 @@
 <div id="featured">
 	<?php $myposts = get_posts('numberposts=4&offset=0&caller_get_posts=20');foreach($myposts as $post) :?>
-	<div class="item grid">
+	<div class="item">
 		<div class="top_t">
 			<?php if ( get_post_meta($post->ID, 'image', true) ) : ?>
 			<?php $image = get_post_meta($post->ID, 'image', true); ?>

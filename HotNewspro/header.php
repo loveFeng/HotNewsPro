@@ -1,14 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head profile="http://gmpg.org/xfn/11">
+<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes() ?>>
+<head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-<?php include('includes/seo.php'); ?>	
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style.css" />
+<?php include('includes/seo.php'); ?>
+<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
 <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/css.css" />
 <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/highlight.css" />
-<?php if (get_option('swt_ie') == 'Hide') { ?>
-<?php { echo ''; } ?>
-<?php } else { include(TEMPLATEPATH . '/includes/ie.php'); } ?>
+<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/img.css" />
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="alternate" type="application/atom+xml" title="<?php bloginfo('name'); ?> Atom Feed" href="<?php bloginfo('atom_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
@@ -18,13 +16,15 @@
 <?php wp_head(); ?>
 <?php if ( is_singular() ){ ?>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/comments-ajax.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/reply.js"></script>
 <?php } ?>
 <?php endif; ?>
 <script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery.min.js" ></script>
-<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/hoveraccordion.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/custom.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/superfish.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/muscript.js"></script>
+<?php if (get_option('swt_pirobox') == 'Hide') { ?>
+<?php } else { include(TEMPLATEPATH . '/includes/pirobox.php'); } ?>
 <script type="text/javascript">
 $(function () {
 $('.thumbnail img,.thumbnail_t img,.box_comment img,#slideshow img,.cat_ico,.cat_name,.r_comments img').hover(
@@ -37,7 +37,7 @@ function() {$(this).fadeTo("fast", 1);
 <!--[if lt IE 7]>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/pngfix.js"></script>
 <script type="text/javascript">
-DD_belatedPNG.fix('.boxCaption,.top_box,.logo,.reply');
+DD_belatedPNG.fix('.boxCaption,.top_box,.logo,.reply,.imgcat');
 </script>
 <![endif]-->
 <!-- 图片延迟加载 -->
@@ -76,10 +76,9 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 			</div>
 			<!-- end: left_top --> 
 			<div id="searchbar">
-				<form method="get" id="searchform" action="<?php bloginfo('url'); ?>/">
-					<input type="text" value="搜索" onclick="this.value='';" name="s" id="s" class="swap_value" />
-					<input type="image" src="<?php bloginfo('template_directory'); ?>/images/go.gif" id="go" alt="Search" title="搜索" />
-				</form>
+				<?php if (get_option('swt_search') == 'google') { ?>
+				<?php include('includes/g_search.php'); ?>
+				<?php } else { include(TEMPLATEPATH . '/includes/w_search.php'); } ?>
 			</div>
 			<!-- end: searchbar -->
 		</div>
@@ -92,6 +91,7 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 			<h1><a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?>&trade;</a><br/><span  class="blog-title"><?php bloginfo('description'); ?></span ></h1>
 			<?php { echo ''; } ?>
 			<?php } else { include(TEMPLATEPATH . '/includes/logo.php'); } ?>
+			<div class="login_t"><?php include('includes/login.php'); ?></div>
 			<?php include('includes/time.php'); ?>
 		</div>
 		<div class="clear"></div>
@@ -99,12 +99,20 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 	</div>
 	<!-- end: header -->
 	<?php if (get_option('swt_hot') == 'Hide') { ?>
-	<?php { echo ''; } ?>
+		<!-- header_image -->
+		<div class="banner">
+			<?php
+				$header_image = get_header_image();
+				if ( ! empty( $header_image ) ) :
+			?>
+				<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />
+			<?php endif;?>
+		</div>
+		<!-- end:header_image -->
 	<?php } else { include(TEMPLATEPATH . '/includes/top_hot_a.php'); } ?>
-	<?php include('includes/share.php'); ?>
 	<!-- scroll -->
 	<div id="scroll">
-		<a class="scroll_t" title="返回顶部" href="#header"></a>
-		<?php if(is_single() || is_page()) { ?><a class="scroll_c" title="查看留言" href="#comments"></a><?php } ?>
-		<a class="scroll_b" title="转到底部" href="#footer"></a>
+		<a class="scroll_t" title="返回顶部"></a>
+		<?php if(is_single() || is_page()) { ?><a class="scroll_c" title="查看留言"></a><?php } ?>
+		<a class="scroll_b" title="转到底部"></a>
 	</div>

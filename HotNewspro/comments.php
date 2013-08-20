@@ -37,7 +37,7 @@
 		?>
       <?php if($numPingBacks>0) { ?>引用:<?php echo ' '.$numPingBacks.'';?><?php } ?>
 	</h2>	
-	<ol class="commentlist"><?php wp_list_comments('type=comment&callback=robin_comment&end-callback=robin_end_comment'); ?></ol>
+	<ol class="commentlist"><?php wp_list_comments('type=comment&callback=mytheme_comment&end-callback=mytheme_end_comment'); ?></ol>
 <!-- 引用 -->
 <?php if($numPingBacks>0) { ?>
 	<div class="trackbacks">
@@ -66,10 +66,13 @@
 		<p class="nocomments">抱歉!评论已关闭.</p>
 	<?php endif; ?>
 	<?php endif; ?>
+	<?php if (get_option('swt_adc') == 'Hide') { ?>
+	<?php { echo ''; } ?>
+	<?php } else { include(TEMPLATEPATH . '/includes/ad_c.php'); } ?>
 	<?php if ('open' == $post->comment_status) : ?>
 	<div id="respond_box">
 	<div id="respond">
-		<h3>给我留言</h3>	
+		<h3>给我留言</h3>
 		<div class="cancel-comment-reply">
 			<small><?php cancel_comment_reply_link(); ?></small>
 		</div>
@@ -136,7 +139,7 @@
 			<?php } else { include(TEMPLATEPATH . '/includes/smiley.php'); } ?>
 		</p>
 		<div class="submitted">
-			<input class="submit" name="submit" type="submit" tabindex="5" value="提交留言"/>
+			<input class="submit" name="submit" type="submit" id="submit" tabindex="5" value="提交留言"/>
 			<input class="reset" name="reset" type="reset" id="reset" tabindex="6" value="<?php esc_attr_e( '重写' ); ?>" />
 			<?php comment_id_fields(); ?>
 		</div>
@@ -157,11 +160,11 @@
 	<div class="clear"></div>
     <?php endif; // If registration required and not logged in ?>
   </div>
-	<b class="lt"></b>
-	<b class="rt"></b>
+	<i class="lt"></i>
+	<i class="rt"></i>
   </div>
 <div class="respond_b">
-	<b class="lb"></b>
-	<b class="rb"></b>	
+	<i class="lb"></i>
+	<i class="rb"></i>	
 </div>
  <?php endif; // if you delete this the sky will fall on your head ?>

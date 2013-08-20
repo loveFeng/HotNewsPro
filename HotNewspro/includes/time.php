@@ -24,7 +24,7 @@ document.write(' '+hello);
 　today=new Date(); var tdate,tday, x,year; var x = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六");
 　　var MSIE=navigator.userAgent.indexOf("MSIE");
 　　if(MSIE != -1)
-　　 year =(today.getYear());
+　　 year =(today.getFullYear());
 　　else
 　　 year = (today.getYear()+1900);
 　　tdate= year+ "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日" + " " + x[today.getDay()];

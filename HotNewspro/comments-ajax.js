@@ -17,8 +17,8 @@ var edit_mode = '1', // 再編輯模式 ( '1'=開; '0'=不開 )
 		txt2 = '<div id="error">#</div>',
 		txt3 = '"> <div id="edita">提交成功',
 		edt1 = ',刷新页面之前你可以<a rel="nofollow" class="comment-reply-link_a" href="#edit" onclick=\'return addComment.moveForm("',
-		edt2 = ')\'>　[ 编辑留言内容 ]</a></div> ',
-		cancel_edit = '[ 取消编辑 ]',
+		edt2 = ')\'>重新编辑</a></div> ',
+		cancel_edit = '取消编辑',
 		edit, num = 1, comm_array=[]; comm_array.push('');
 
 jQuery(document).ready(function($) {
@@ -155,13 +155,13 @@ function exit_prev_edit() {
 		edit = '';
 }
 
-var wait = 15, submit_val = $submit.val();
+var wait = 8, submit_val = $submit.val();
 function countdown() {
 	if ( wait > 0 ) {
 		$submit.val(wait); wait--; setTimeout(countdown, 1000);
 	} else {
 		$submit.val(submit_val).attr('disabled', false).fadeTo('slow', 1);
-		wait = 15;
+		wait = 8;
   }
 }
 

@@ -34,19 +34,19 @@ Template Name: 联系方式
 						<input type="text" name="website" id="form_website" style="padding:3px;border:1px solid #0196e3;"/>
 						<div class="index_contact_form_title">内容</div>
 						<textarea name="message" id="form_message" style="height:100px;padding:10px;border:1px solid #0196e3;width:96.5%;" cols="" rows=""></textarea>
-						<input type="button" value="发送邮件" class="contact_form_submit" onclick="initrequest('<?php bloginfo('template_url'); ?>/includes/form.php');" style="cursor:pointer;background: url(./wp-content/themes/HotNewspro/images/bg.png) 0 -170px;width:87px;height:26px;color: #fff;text-align:center;text-shadow: 0px 1px 0px #000;margin:10px 0 0 0;border:0px;" />
+						<input type="button" value="发送邮件" class="contact_form_submit" onclick="initrequest('<?php bloginfo('template_url'); ?>/includes/form.php');" style="cursor:pointer;background: #498FE1;width:87px;height:26px;color: #fff;text-align:center;text-shadow: 0px 1px 0px #000;margin:10px 0 0 0;border:0px;"/>
 					</div>
 				</form>
 			</div>
 		</div>
 		<!-- end: entry -->
 		<div class="clear"></div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<?php endwhile; ?>
 	<?php endif; ?>

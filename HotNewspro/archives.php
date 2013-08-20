@@ -3,9 +3,7 @@
 Template Name: 文章归档
 */
 ?>
-
 <?php get_header(); ?>
-</style>
 <script type="text/javascript">
 jQuery(function($){
 	$('#expand_collapse,.archives-yearmonth').css({cursor:"pointer"});
@@ -34,9 +32,9 @@ jQuery(function($){
 	<div class="entry_box_s">
 		<div class="entry">
 		<h3>文章归档</h3>
-		( 共有：<?php $count_posts = wp_count_posts(); echo $published_posts = $count_posts->publish;?> 篇文章
-		/<?php echo $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->comments");?>条留言
-		/于<?php $last = $wpdb->get_results("SELECT MAX(post_modified) AS MAX_m FROM $wpdb->posts WHERE (post_type = 'post' OR post_type = 'page') AND (post_status = 'publish' OR post_status = 'private')");$last = date('Y年n月j日', strtotime($last[0]->MAX_m));echo $last; ?>最后更新
+		( 共有：<?php $count_posts = wp_count_posts(); echo $published_posts = $count_posts->publish;?> 篇文章&nbsp;&nbsp;
+		<?php echo $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->comments");?>条留言&nbsp;&nbsp;
+		于<?php $last = $wpdb->get_results("SELECT MAX(post_modified) AS MAX_m FROM $wpdb->posts WHERE (post_type = 'post' OR post_type = 'page') AND (post_status = 'publish' OR post_status = 'private')");$last = date('Y年n月j日', strtotime($last[0]->MAX_m));echo $last; ?>最后更新
 		 )
 		<div id="expand_collapse">展开收缩</div>
 			<div id="archives">
@@ -45,15 +43,13 @@ jQuery(function($){
 		</div>
 		<!-- end: entry -->
 		<div class="clear"></div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
-
-
 </div>
 <!-- end: content -->
 <?php get_sidebar(); ?>

@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<title><?php wp_title('',true); ?> | <?php bloginfo('name'); ?></title>
 	<!-- menu -->
 	<div id="map_box">
 		<div id="map_l">
@@ -30,9 +31,9 @@
 					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
 					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
 				</div>
+				<div class="clear"></div>
 			</div>
  			<!-- end: archive_title_box -->
- 			<div class="clear"></div>
 			<div class="archive_b">
 				<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 140,"......"); ?>
 				<div class="clear"></div>
@@ -40,15 +41,14 @@
 				<div class="clear"></div>
 			</div>
 		</div>
-		<!-- end: archive_box --> 
-	</div>
- 		
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<!-- end: archive_box -->
+	</div> 		
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb_l">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<?php endwhile; ?>
 	<?php endif; ?>
@@ -57,4 +57,4 @@
     <div class="navigation_b"><?php pagination($query_string); ?></div>
  	<!-- end: navigation -->
 	<div class="clear"></div>
-<?php include('footer_a.php'); ?>
+<?php get_footer(); ?>

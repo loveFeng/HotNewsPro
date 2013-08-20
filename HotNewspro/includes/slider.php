@@ -31,8 +31,8 @@
 				<div class="archive_info">
 					<span class="date"><?php the_time('Y年m月d日') ?></span>
 					<span class="category"> &#8260; <?php the_category(', ') ?></span>
-					<?php include('source.php'); ?>
-				</div>    
+					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
+				</div>
 				<p><?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 320,"..."); ?></p>
 				<div class="clear"></div>
 			</div>
@@ -41,8 +41,8 @@
 <?php endif; ?>	
 	</div>
  </div>
-	<b class="lt"></b>
-	<b class="rt"></b>
-	<b class="lb"></b>
-	<b class="rb"></b>
+	<i class="lt"></i>
+	<i class="rt"></i>
+	<i class="lb"></i>
+	<i class="rb"></i>
  </div>

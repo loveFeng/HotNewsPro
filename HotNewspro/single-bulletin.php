@@ -1,4 +1,5 @@
 <?php get_header(); ?>
+<?php include('includes/addclass.php'); ?>
 <script type="text/javascript">
     function doZoom(size) {
         var zoom = document.all ? document.all['entry'] : document.getElementById('entry');
@@ -37,12 +38,12 @@
 			</div>
 			<div class="clear"></div>
 			<!-- end: entry -->
-			<b class="lt"></b>
-			<b class="rt"></b>
+			<i class="lt"></i>
+			<i class="rt"></i>
 		</div>
 		<div class="entry_sb">
-			<b class="lb"></b>
-			<b class="rb"></b>
+			<i class="lb"></i>
+			<i class="rb"></i>
 		</div>
 		<!-- entrymeta -->
 		<div class="entrymeta">
@@ -66,39 +67,31 @@
 				原创文章转载请注明: <a href="<?php the_permalink() ?>" rel="bookmark" title="本文固定链接 <?php the_permalink() ?>"><?php the_title(); ?> | <?php bloginfo('name');?></a><br/>
 				<span class="content_tag"><?php the_tags('关键字: ', ', ', ''); ?></span>
 			</span>
-			<b class="lt"></b>
-			<b class="rt"></b>
+			<i class="lt"></i>
+			<i class="rt"></i>
 			<div class="clear"></div>
 		</div>
 		<div class="entry_sb">
-			<b class="lb"></b>
-			<b class="rb"></b>
+			<i class="lb"></i>
+			<i class="rb"></i>
 		</div>
 		<!-- end: entrymeta -->
 	<div class="context_b">
 		<?php previous_post_link('【上篇】%link') ?><br/><?php next_post_link('【下篇】%link') ?>
-		<b class="lt"></b>
-		<b class="rt"></b>
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<!-- relatedposts -->
-	<div class="entry_b">
-	<?php include('includes/related.php'); ?>
-	<?php include('includes/related_img.php'); ?>
-	<div class="clear"></div>
-		<b class="lt"></b>
-		<b class="rt"></b>
-	</div>
-	<div class="entry_sb">
-		<b class="lb"></b>
-		<b class="rb"></b>
-	</div>
-	<div class="ct"></div>
+	<?php if (get_option('swt_related') == 'Hide') { ?>
+	<?php { echo ''; } ?>
+	<?php } else { include(TEMPLATEPATH . '/includes/related_a.php'); } ?>
+	<!-- end: relatedposts -->
 	<?php comments_template(); ?>
 	<?php endwhile; else: ?>
 	<?php endif; ?>
 </div>
 <!-- end: content -->
-<?php get_sidebar(); ?>
-<?php include('footer_a.php'); ?>
+<?php get_sidebar('img'); ?>
+<?php get_footer(); ?>

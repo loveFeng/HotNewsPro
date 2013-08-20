@@ -15,7 +15,7 @@ print "<font color=black>$num</font>";
 exec("rm -rf $counterFile");
 exec("echo $num > $counterFile");
 }
-echo("您是今天第 ");
+echo("您是第 ");
 print mycounter();
 echo(" 位访客");
 ?>

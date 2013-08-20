@@ -14,7 +14,7 @@
 			<p class="lefted"><button value="Submit" id="submit_t" type="submit" tabindex="13">登录</button></p>
 		</div>
 		<input type="hidden" name="redirect_to" value="<?php echo $_SERVER[ 'REQUEST_URI' ]; ?>" />
-		<input type="checkbox" name="rememberme" id="modlogn_remember" value="yes"  checked="checked" alt="Remember Me" />记住我的登录信息
+		<input type="checkbox" name="rememberme" id="modlogn_remember" value="yes"  checked="checked" alt="Remember Me" />下次自动登录
 	</form>
 	<!-- end if not logged -->
 	</div>

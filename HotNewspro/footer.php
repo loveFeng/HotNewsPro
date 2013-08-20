@@ -13,35 +13,49 @@
 	</div>
 	<h2 class="blogtitle">
 	<a href="<?php bloginfo('home'); ?>/" title="<?php bloginfo('name'); ?>">返回首页</a></h2>
-
+	<?php wp_reset_query();if ( is_home()){ ?><div class="link_s"><a href="<?php echo stripslashes(get_option('swt_link_s')); ?>" title="友情链接">随机显示不分先后 更多</a></div><?php } ?>
 	<big class="lt"></big>
 	<big class="rt"></big>
 </div>
-	<div class="link">
-		<?php
-			if(function_exists(’wp_dtree_get_links’)){
-			wp_dtree_get_links();
-			}else{
-			wp_list_bookmarks('title_li=&categorize=1&category=&orderby=rand&limit=38&show_images=');
-			}
-		?>
-		<div class="clear"></div>
-	</div>
-	<!-- end: link -->
+<!-- 页脚 -->
+<?php wp_reset_query();if (is_single() || is_page() || is_archive() || is_search()) { ?>
+<div class="footer_bottom_a">
+	Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
+	&nbsp;&nbsp;基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建
+	&nbsp;&nbsp;Theme by <a target="_blank" href="http://zmingcx.com">Robin</a>
+	<?php echo stripslashes(get_option('swt_track_code')); ?>
+	<big class="lb"></big>
+	<big class="rb"></big>
+</div>
+<?php } ?>
+<!-- 首页页脚 -->
+<?php wp_reset_query();if ( is_home()){ ?>
+<div class="link">
+	<?php
+		if(function_exists('wp_hto_get_links')){
+		wp_hot_get_links();
+		}else{
+		wp_list_bookmarks('title_li=&categorize=1&category=&orderby=rand&limit=38&show_images=');
+		}
+	?>
+	<div class="clear"></div>
+</div>
 <div class="link_b">
 	<big class="lb"></big>
 	<big class="rb"></big>
 </div>
-	<div class="footer_bottom">
-		Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
-	 	</span>&nbsp;Theme by <a href="http://zmingcx.com" title="http://zmingcx.com">Robin</a>&nbsp;&nbsp;
-		基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建
-		&nbsp;&nbsp;<?php echo get_num_queries(); ?>次查询&nbsp;&nbsp;
-		<?php echo stripslashes(get_option('swt_track_code')); ?>
-	</div>
-  	<div class="clear"></div>
-<?php wp_footer(); ?>
+<!-- end: link -->
+<div class="footer_bottom">
+	Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
+	&nbsp;&nbsp;基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建
+	&nbsp;&nbsp;Theme by <a target="_blank" href="http://zmingcx.com">Robin</a>
+	&nbsp;&nbsp;<?php echo get_num_queries(); ?>次查询
+	<?php echo stripslashes(get_option('swt_track_code')); ?>
 </div>
+<?php } ?>
+ <div class="clear"></div>
+</div>
+<?php wp_footer(); ?>
 </body></html>
 <?php if (get_option('swt_bulletin') == 'Hide') { ?>
 <?php { echo ''; } ?>

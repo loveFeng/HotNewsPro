@@ -21,12 +21,12 @@
 		</div>
 		<!-- end: entry -->
 		<div class="clear"></div>
-		<b class="lt"></b>
-		<b class="rt"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
 	</div>
 	<div class="entry_sb">
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<div class="ct"></div>
 	<?php comments_template(); ?>

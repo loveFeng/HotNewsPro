@@ -1,11 +1,11 @@
 <?php get_header(); ?>
+<?php include('includes/addclass.php'); ?>
 <script type="text/javascript">
     function doZoom(size) {
         var zoom = document.all ? document.all['entry'] : document.getElementById('entry');
         zoom.style.fontSize = size + 'px';
     }
 </script>
-
 <div id="content">
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	 <!-- menu -->
@@ -28,7 +28,7 @@
 				<!-- end: 分类图标 -->
 				<div class="entry_title"><?php the_title(); ?></div>
 				<div class="archive_info">
-					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
+					<span class="date"><?php the_time('Y年m月d日') ?></span>
 					<span class="category"> &#8260; <?php the_category(', ') ?></span>
 					<?php include('includes/source.php'); ?>
 					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数 1', '评论数 %'); ?></span>
@@ -43,7 +43,9 @@
 					<?php wp_link_pages( array( 'before' => '<p class="pages">' . __( '日志分页:'), 'after' => '</p>' ) ); ?>
 					<div class="clear"></div>
 				</div>
-				<?php include('includes/adt.php'); ?>
+				<?php if (get_option('swt_adt') == 'Hide') { ?>
+				<?php { echo ''; } ?>
+				<?php } else { include(TEMPLATEPATH . '/includes/adt.php'); } ?>
 				<div class="clear"></div>
 			</div>
 			<div class="back_b">
@@ -51,12 +53,12 @@
 			</div>
 			<div class="clear"></div>
 			<!-- end: entry -->
-			<b class="lt"></b>
-			<b class="rt"></b>
+			<i class="lt"></i>
+			<i class="rt"></i>
 		</div>
 		<div class="entry_sb">
-			<b class="lb"></b>
-			<b class="rb"></b>
+			<i class="lb"></i>
+			<i class="rb"></i>
 		</div>
 		<!-- entrymeta -->
 		<div class="entrymeta">
@@ -71,7 +73,7 @@
 				</div>
 			</div>
 			<span class="spostinfo">
-				该日志由 <?php the_author() ?> 于<?php the_time('Y年m月d日') ?>发表在<?php the_category(', ') ?>分类下，
+				该日志由 <?php the_author() ?> 于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?>发表在<?php the_category(', ') ?>分类下，
 				<?php if (('open' == $post-> comment_status) && ('open' == $post->ping_status)) {?>
 				你可以<a href="#respond">发表评论</a>，并在保留<a href="<?php the_permalink() ?>" rel="bookmark">原文地址</a>及作者的情况下<a href="<?php trackback_url(); ?>" rel="trackback">引用</a>到你的网站或博客。
 				<?php } elseif (('open' == $post-> comment_status) && !('open' == $post->ping_status)) { ?>
@@ -80,41 +82,32 @@
 				转载请注明: <a href="<?php the_permalink() ?>" rel="bookmark" title="本文固定链接 <?php the_permalink() ?>"><?php the_title(); ?> | <?php bloginfo('name');?></a><a href="#" onclick="copy_code('<?php the_permalink() ?>'); return false;"> +复制链接</a></span><br/>
 				<span class="content_tag"><?php the_tags('关键字: ', ', ', ''); ?></span>
 			</span>
-			<b class="lt"></b>
-			<b class="rt"></b>
+			<i class="lt"></i>
+			<i class="rt"></i>
 			<div class="clear"></div>
 		</div>
 		<div class="entry_sb">
-			<b class="lb"></b>
-			<b class="rb"></b>
+			<i class="lb"></i>
+			<i class="rb"></i>
 		</div>
 		<!-- end: entrymeta -->
 	<div class="context_b">
 		<?php previous_post_link('【上篇】%link') ?><br/><?php next_post_link('【下篇】%link') ?>
-		<b class="lt"></b>
-		<b class="rt"></b>
-		<b class="lb"></b>
-		<b class="rb"></b>
+		<i class="lt"></i>
+		<i class="rt"></i>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</div>
 	<!-- relatedposts -->
-	<div class="entry_b">
-	<?php include('includes/related.php'); ?>
-	<?php include('includes/related_img.php'); ?>
-	<div class="clear"></div>
-		<b class="lt"></b>
-		<b class="rt"></b>
-	</div>
-	<div class="entry_sb">
-		<b class="lb"></b>
-		<b class="rb"></b>
-	</div>
-	<div class="ct"></div>
+	<?php if (get_option('swt_related') == 'Hide') { ?>
+	<?php { echo ''; } ?>
+	<?php } else { include(TEMPLATEPATH . '/includes/related_a.php'); } ?>
 	<!-- end: relatedposts -->
-
+	<div class="ct"></div>
 	<?php comments_template(); ?>
 	<?php endwhile; else: ?>
 	<?php endif; ?>
 </div>
 <!-- end: content -->
 <?php get_sidebar(); ?>
-<?php include('footer_a.php'); ?>
+<?php get_footer(); ?>

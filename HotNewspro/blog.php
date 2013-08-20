@@ -1,8 +1,8 @@
-<?php include('header_b.php'); ?>
+<?php get_header(); ?>
 <div id="post">
 	<!-- menu -->
 	<div id="map">
-		<div class="browse"> 现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a></div>	
+		<div class="browse"> 现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a></div>
 		<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
@@ -14,14 +14,15 @@
 	<?php while (have_posts()) : the_post(); ?>
 		<div <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 			<div class="entry_box">
+				<span class="comment_a"><?php comments_popup_link('0℃ ', '1℃ ', '%℃ '); ?></span>
 				<div class="box_entry">
 					<div class="box_entry_title">
 						<div class="ico"><?php include('includes/cat_ico.php'); ?></div>
 						<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读 <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
 						<div class="info">
-							<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
+							<span class="date"><?php the_time('Y年m月d日') ?></span>
 							<span class="category"> &#8260; <?php the_category(', ') ?></span>&nbsp
-							<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数1', '评论数%'); ?></span>
+							
 							<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
 							<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
 						</div>
@@ -49,22 +50,26 @@
 						<div class="clear"></div>
 					</div>
 				</div>
-				<b class="lt"></b>
-				<b class="rt"></b>
+				<i class="lt"></i>
+				<i class="rt"></i>
 			</div>	
 			<div class="entry_box_b">
-				<b class="lb"></b>
-				<b class="rb"></b>
+				<i class="lb"></i>
+				<i class="rb"></i>
 			</div>
 		<!-- end: entry_box -->
 		</div>
+		<!-- ad -->
+		<?php if ($wp_query->current_post == 0) : ?>
+		<?php if (get_option('swt_adh') == 'Hide') { ?>
+		<?php { echo ''; } ?>
+		<?php } else { include(TEMPLATEPATH . '/includes/ad_h.php'); } ?>
+		<?php endif; ?>	
+		<!-- end: ad -->
 		<?php endwhile; ?>
 		<?php endif; ?>
 	<div class="navigation_b"><?php pagination($query_string); ?></div>
 	<div class="clear"></div>
-	<?php if (get_option('swt_map') == 'Hide') { ?>
-	<?php { echo ''; } ?>
-	<?php } else { include(TEMPLATEPATH . '/includes/map.php'); } ?>
 </div>
 <!-- end: post -->
 <?php get_sidebar(); ?>

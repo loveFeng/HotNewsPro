@@ -1,6 +1,5 @@
 // 滑动特效
 $(function() {
-	// featured window effect
 	$("#featured .item").hover(function(){
 		$(this).find(".boxCaption").stop().animate({
 			top:0
@@ -58,7 +57,14 @@ function embedImage() {
     document.getElementById('comment').value = document.getElementById('comment').value + '[img]' + URL + '[/img]';
   }
 }
-
+// 控制贴图大小
+$(document).ready(function() {
+    var maxwidth=500;
+    $(".commentlist img").each(function(){
+        if (this.width>maxwidth)
+         this.width = maxwidth;
+    });
+});
  // 关闭
 function turnoff(obj){
 document.getElementById(obj).style.display="none";
@@ -98,7 +104,7 @@ document.getElementById(obj).style.display="none";
     });
 //加载中提示
 $(document).ready(function(){
-$('h3 a,.tab ul li ul a,.cat_post a,.r_comments a,#scat a').click(function(){
+$('h3 a,.cat_post a,#scat a').click(function(){
 $(this).text('正在给力加载中...');
 window.location = $(this).attr('href');
 });
@@ -115,35 +121,6 @@ $(function(){
 		}
 	})
 })
-
-//分享
-
-function addFavorite(){ 
-	var aUrls=document.URL.split("/"); 
-	var vDomainName="http://"+aUrls[2]+"/"; 
-	var description=document.title; 
-	try{//IE 
-		window.external.AddFavorite(vDomainName,description); 
-	}catch(e){//FF 
-		window.sidebar.addPanel(description,vDomainName,""); 
-	} 
-} 
-
-window.onload=function(){
-	clickMenu('share');
-}
-clickMenu = function(share) {
-	var getEls = document.getElementById(share).getElementsByTagName("li");
-	var getAgn = getEls;
-	for (var i=0; i<getEls.length; i++) {
-		getEls[i].onmouseover=function() {
-			this.className+="shownav";
-		}
-		getEls[i].onmouseout=function() {
-			this.className=this.className.replace("shownav", "");
-		}
-	}
-}
 
 //提示
 var titleToNote = {
@@ -182,19 +159,23 @@ window.onload=titleToNote.setup;
 }else{window.onload=function(){oldonload();
 titleToNote.setup();}}
 
-//双击滚屏
-var currentpos,timer; 
-
-function initialize() 
-{ 
-timer=setInterval("scrollwindow()",80); 
-} 
-function sc(){ 
-clearInterval(timer); 
-} 
-function scrollwindow() 
-{ 
-window.scrollBy(0,1); 
-} 
-document.onmousedown=sc 
-document.ondblclick=initialize
+//Comments
+$(document).ready(function(){
+// 当鼠标聚焦
+if($('#comment').val()==""){
+$('#comment').val('留言是种美德，写点什么...').css({color:"#666"});}
+$('#comment').focus(
+function() {
+if($(this).val() == '留言是种美德，写点什么...') {
+$(this).val('').css({color:"#222"});
+}
+}
+// 当鼠标失去焦点
+).blur(
+function(){
+if($(this).val() == '') {
+$(this).val('留言是种美德，写点什么...').css({color:"#666"});
+}
+}
+);
+});
