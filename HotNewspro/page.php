@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div id="roll"><div id="roll_top"></div><div id="fall"></div></div>
+
 <div id="content">
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
  <!-- menu -->

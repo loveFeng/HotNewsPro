@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-<div id="roll"><div id="roll_top"></div><div id="fall"></div></div>
+
 <div id="content">
  <!-- menu -->
 	<div id="menu">
@@ -31,9 +31,9 @@
 		</div>
  		<!-- end: archive_title_box -->
 				<?php if (get_theme_mod('showimg') == 'Yes') { ?>
-				<?php include('includes/thumbnail_a.php'); ?>
-					<?php } else { ?>
 				<?php include('includes/thumbnail.php'); ?>
+					<?php } else { ?>
+				<?php include('includes/thumbnail_a.php'); ?>
 				<?php } ?>
 		<div class="archive">
 			<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 530,"..."); ?>
@@ -73,7 +73,7 @@
 				if(function_exists(’wp_dtree_get_links’)){
 				wp_dtree_get_links();
 				}else{
-				wp_list_bookmarks('show_images=1');
+				wp_list_bookmarks('categorize=0&show_images=0');
 				}
 			?>
 		</div>

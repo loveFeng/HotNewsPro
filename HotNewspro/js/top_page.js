@@ -1,8 +1,3 @@
-jQuery(document).ready(function($){
-$('#roll_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);}); 
-$('#ct').click(function(){$('html,body').animate({scrollTop:$('#comments').offset().top}, 800);});
-$('#fall').click(function(){$('html,body').animate({scrollTop:$('.footer_bottom').offset().top}, 800);});
-});
 (function() {
 
 function $(id) {

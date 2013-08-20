@@ -37,13 +37,13 @@ $(document).ready(function(){
 	$('#drawer').children('li:last').addClass('lastitem');
 });
 </script>
+
 <!--[if lt IE 7]>
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/pngfix.js"></script>
+<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/DD_belatedPNG.js"></script>
 <script type="text/javascript">
-DD_belatedPNG.fix('.boxCaption,code ,#back_top a,.thumbnail img,.top_box,.reply,.cat_ico img ');
+  DD_belatedPNG.fix('.boxCaption, #topnav,code ,#back_top a,.thumbnail img,.top_box,.reply,.cat_ico img '); 
 </script>
 <![endif]-->
-
 <!-- IMG -->
 <?php include('includes/lazyload.php'); ?>
 <!-- PNG -->

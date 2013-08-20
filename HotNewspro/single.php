@@ -1,13 +1,13 @@
 <?php get_header(); ?>
-<div id="roll"><div id="roll_top"></div><div id="ct"></div><div id="fall"></div></div>
+
 <div id="content">
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	 <!-- menu -->
 	<div id="menu">
 		<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_category(', ') ?>＞正文<!-- <?php the_title();?> --></div>
 		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
+	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<div class="entry_title_box">
 		<!-- 分类图标 -->
 		<div class="ico"><?php include('includes/cat_ico.php'); ?></div>

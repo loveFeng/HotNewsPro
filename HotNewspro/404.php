@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 <div id="content">
 	<div id="menu">
-		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞未知页面</div>
-		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
+		<h2>未知页面</h2>
+		<div class="menu_right"><div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div></div>
 	</div>
  <!-- end: menu -->
  	<div class="error">

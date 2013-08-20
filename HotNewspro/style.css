@@ -1,10 +1,10 @@
 /* 
 	Theme Name: HotNewspro
-	Theme URL: http://zmingcx.com/post-wordpress-theme-hotnews-pro2-2-version.html
-	Description: 仿Apple网站风格Wordpress主题热点新闻专业版，更多主题<a href="http://zmingcx.com/">zmingcx.com</a>。
+	Theme URL: http://zmingcx.com
+	Description: 热点新闻专业版，仿Apple网站风格Wordpress主题，更多主题<a href="http://zmingcx.com/">zmingcx.com</a>。
 	Author: Robin
 	Author URI: http://zmingcx.com
-	Version: 2.21
+	Version: 2.2
 */
 
 /**	RESET **/
@@ -22,7 +22,7 @@ a {text-decoration: none;}
 /** OVERALL **/
 body {
 	background: #fff;
-	font: 12px '微软雅黑','Lucida Grande','宋体',Lucida Sans Unicode,Arial,Verdana,sans-serif;
+	font: 12px 'Lucida Grande','Lucida Sans Unicode','宋体',Arial,Verdana,sans-serif;
 	color: #393939;
 	}
 #wrapper {
@@ -779,7 +779,7 @@ p.pages a {
 	}
 .categories_c ul li {
 	float:left;
-	width:46%;
+	width:102px;
 	padding: 0 0 0 5px;
 	margin:3px 0 3px 0;
 	}
@@ -868,8 +868,7 @@ h2#comments{
 	margin: 0px 0 0 65px;
 	line-height:20px;
 	}
-ol.commentlist li div.vcard img.avatar {
-	position: relative;
+ol.commentlist li div.vcard img.avatar {	position: relative;
 	float: left;
 	margin: 0 10px 0 0;
 	}
@@ -923,13 +922,47 @@ ol.commentlist li div.vcard cite.fn {
 .commentmetadata a{
 	color:#8C8C8C;
 	}
+.respond_box{
+	margin:10px 0 10px 0;
+ }
+.respond_b{
+	width:732px;
+	background:url(images/bg.png) no-repeat left bottom;
+	padding-bottom:5px;
+	}
+.respond_t{
+	background:#fff url(images/bg.png) no-repeat left top;
+	padding-top:5px;
+	}
+.respond_c {
+	background:#fff;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+	padding:10px 10px 10px 15px;
+ }
+#respond p {
+	color: #fff;
+	line-height: 23px;
+	margin: 10px 0 0 0;
+	}
+#respond h3 {
+	margin: 5px 0 0 0;
+	}
+#respond h6 {
+	color: #ff0000;
+	font-weight:normal;
+	}
 #commentform p {
 	margin: 5px 0;
 	color: #000;
 	}
-#commentform label{
-	color: #868686;
-	top:-2px;
+#commentform small{
+	position:relative;
+	top:-3px;
+	font-size:12px;
+	}
+#commentform a, #commentform small{
+	color: #0196e3;
 	}
 #commentform input{
 	width:200px;
@@ -949,15 +982,15 @@ ol.commentlist li div.vcard cite.fn {
 	border: 1px solid #ccc;
 	}
 #commentform #author {
-	background:#fff  url(images/login.png) no-repeat 0 -38px;
+	background: url(images/login.png) no-repeat 0 -38px;
 	padding: 4px 3px 4px 20px;
 	}
 #commentform #email {
-	background:#fff url(images/login.png) no-repeat 0 -62px;
+	background:url(images/login.png) no-repeat 0 -62px;
 	padding: 4px 3px 4px 20px;
 	}
 #commentform #url {
-	background:#fff url(images/login.png) no-repeat 0 -86px;
+	background:url(images/login.png) no-repeat 0 -86px;
 	padding: 4px 3px 4px 20px;
 	}
 #commentform textarea{
@@ -1010,13 +1043,6 @@ ol.commentlist li div.vcard cite.fn {
 	padding: 0 5px 0 5px;
 	border-right:1px solid #ccc;
 	}
-.author_avatar{
-	float:left;
-	margin: 0 5px 0 0;
-}
-.author{
-	line-height:48px; 
-}
 /* End Comments */
 /** FOOTER **/ 
 .footer_top{
@@ -1119,7 +1145,7 @@ img.alignleft {
 	text-align:right;
 	}
 .pagination{
-	line-height:25px;
+	line-height:23px;
 	}
 .pagination span, .pagination a{
 	font-size:12px;
@@ -1140,28 +1166,4 @@ img.alignleft {
 	color:#fff;
 	font-size:12px;
 	padding:2px 5px 2px 5px;
-	}
-/** Roll **/
-#roll_top,#fall,#ct{
-	position:relative;
-	cursor:pointer;
-	height:40px;
-	width:10px;
-	}
-#roll_top{
-	background:url(images/roll.png) no-repeat;
-	}
-#fall{
-	background:url(images/roll.png) no-repeat 0 -80px;
-	}
-#ct{
-	background:url(images/roll.png) no-repeat 0 -40px;
-	}
-#roll{
-	position:fixed;
-	top:40%;
-	right:0;
-	_position:absolute;
-	_margin-top:300px;
-	_top:expression(eval(document.documentElement.scrollTop));
 	}
