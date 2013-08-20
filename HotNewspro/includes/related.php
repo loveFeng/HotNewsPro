@@ -13,7 +13,7 @@
 	foreach($myposts as $post) {
 	setup_postdata($post);
 	?>
-	<li><a href="<?php the_permalink(); ?>"><?php echo cut_str($post->post_title,54); ?></a></li>
+	<li><a href="<?php the_permalink(); ?>"><?php echo cut_str($post->post_title,50); ?></a></li>
 	<?php
 	$i += 1;
 	}
@@ -27,7 +27,7 @@
 	foreach($myposts as $post) {
 	setup_postdata($post);
 	?>
-	<li><a href="<?php the_permalink(); ?>"><?php echo cut_str($post->post_title,54); ?></a></li>
+	<li><a href="<?php the_permalink(); ?>"><?php echo cut_str($post->post_title,50); ?></a></li>
 	<?php
 	}
 	}

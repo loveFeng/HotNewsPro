@@ -1,1 +1,1 @@
-<a href="<?php bloginfo('siteurl'); ?>"title="<?php bloginfo('name'); ?>"><div class="logo"></div></a>
+<a href="<?php bloginfo('siteurl'); ?>" title="<?php bloginfo('name'); ?>"><h1 class="logo"><?php bloginfo('name'); ?></h1></a>

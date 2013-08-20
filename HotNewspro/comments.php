@@ -33,21 +33,25 @@
 			$count_t = $post->comment_count;
 			$count_v = $wpdb->get_var("$str != '$my_email'");
 			$count_h = $wpdb->get_var("$str = '$my_email'");
-			echo $count_t, " 条留言  其中：访客:", $count_v, " 条, 博主:", $count_h, " 条 ";
+			echo $count_t, " 条留言&nbsp;&nbsp;&nbsp;&nbsp;访客：", $count_v, " 条， 博主：", $count_h, " 条 ";
 		?>
-      <?php if($numPingBacks>0) { ?>引用:<?php echo ' '.$numPingBacks.'';?><?php } ?>
+      <?php if($numPingBacks>0) { ?>，引用：<?php echo ' '.$numPingBacks.' 条';?><?php } ?>
+		<i class="lt"></i>
+		<i class="rt"></i>
+		<i class="lb"></i>
+		<i class="rb"></i>
 	</h2>	
 	<ol class="commentlist"><?php wp_list_comments('type=comment&callback=mytheme_comment&end-callback=mytheme_end_comment'); ?></ol>
 <!-- 引用 -->
 <?php if($numPingBacks>0) { ?>
 	<div class="trackbacks">
-		<h4 class="backs">查看来自外部的引用:<?php echo ' '.$numPingBacks.'';?></h4>
+		<h4 class="backs">外部的引用：<?php echo ' '.$numPingBacks.'';?> 条</h4>
 		<div class="track">
 			<ul >
 				<?php foreach ($comments as $comment) : ?>
 				<?php $comment_type = get_comment_type(); ?>
 				<?php if($comment_type != 'comment') { ?>
-				<li><?php comment_author_link() ?></li>
+				<li><?php comment_author() ?></li>
 				<?php } ?>
 				<?php endforeach; ?>
  			</ul>
@@ -66,7 +70,7 @@
 		<p class="nocomments">抱歉!评论已关闭.</p>
 	<?php endif; ?>
 	<?php endif; ?>
-	<?php if (get_option('swt_adc') == 'Hide') { ?>
+	<?php if (get_option('swt_adc') == '关闭') { ?>
 	<?php { echo ''; } ?>
 	<?php } else { include(TEMPLATEPATH . '/includes/ad_c.php'); } ?>
 	<?php if ('open' == $post->comment_status) : ?>
@@ -74,7 +78,7 @@
 	<div id="respond">
 		<h3>给我留言</h3>
 		<div class="cancel-comment-reply">
-			<small><?php cancel_comment_reply_link(); ?></small>
+			<?php cancel_comment_reply_link(); ?>
 		</div>
 		<?php if ( get_option('comment_registration') && !$user_ID ) : ?>
 		<p><?php print '您必须'; ?><a href="<?php echo get_option('siteurl'); ?>/wp-login.php?redirect_to=<?php echo urlencode(get_permalink()); ?>"> [ 登录 ] </a>才能发表留言！</p>
@@ -134,7 +138,7 @@
       <div class="clear"></div>
 		<p><textarea name="comment" id="comment" tabindex="4"></textarea></p>
 		<p>
-			<?php if (get_option('swt_smiley') == 'Hide') { ?>
+			<?php if (get_option('swt_smiley') == '关闭') { ?>
 			<?php { echo ''; } ?>
 			<?php } else { include(TEMPLATEPATH . '/includes/smiley.php'); } ?>
 		</p>
@@ -143,7 +147,7 @@
 			<input class="reset" name="reset" type="reset" id="reset" tabindex="6" value="<?php esc_attr_e( '重写' ); ?>" />
 			<?php comment_id_fields(); ?>
 		</div>
-		<div class="picture"><a href='javascript:embedImage();' >插入图片</a></div>
+		<div class="picture"><a href="http://zmingcx.com/code/coderender.html" target="_blank">添加代码</a>&nbsp;&nbsp;<a href='javascript:embedImage();' >插入图片</a></div>
 		<script type="text/javascript">	//Crel+Enter
 			$(document).keypress(function(e){
 				if(e.ctrlKey && e.which == 13 || e.which == 10) { 

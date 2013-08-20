@@ -1,0 +1,57 @@
+http://zmingcx.com/wordpress-code-highlight.html
+
+偶尔在日志中加入一些代码，感觉完全没必要安装代码高亮插件，万一某天不用插件了，页面可能会很乱。其实大部分插件都是在代码中强行加入一些标签，然后用CSS定义样式，通过查看页面源文件可以清楚地看到。
+
+今天推荐的是一款本地转换代码高亮显示的小工具：CodeRenderUnmi
+
+[url href="http://zmingcx.com/?dl_id=39"]下载地址[/url]　　2,167 次下载
+
+本程序是基于 dp.SyntaxHighlighter 写的代码语法着色的工具。支持的语言有:
+
+java/xml/sql/jscript/css/cpp/c#/python/vb/perl/php/ruby/delphi。
+
+可方便用于你的博客中粘贴代码，只要自定相应的样式 (highlight.css 的内容，.Text 支持自定义样式或在模板里加上语法样式)，然后复制用这个工具生成的 HTML 代码就能让你的代码着高亮显示。 可以加入更多语种的支持，本程序就是在 dp.SyntaxHighlighter 的基础上扩展了对 Perl 语言的支持，网上可以找到相应语法的 JS 代码和 CSS。语言扩展支持通过在 shCore.js 和 highlight.css 加入相应代码即可。
+
+程序界面
+
+
+
+操作很容易，Source Code 中贴上你要着色的代码，然后选择语种，点击 Render 按钮就会在 HTML Code 中生成相应的 HTML 代码，同时在 HTML Preview 中可以预览到效果。
+
+简要说明：Lang 下拉框可以选择所支持的语法，Options 右边的 Gutter、Controls、CollapseAll、FirstLine、Columns 是控制生成的额外的元素，逐一点试试就知道了。每个内容显示(输入)区都提供了 Copy/Paste/Clear 快捷操作链接，还有一个总的 Clear 按钮。
+
+Copy生成 的HTML 代码，在日志编辑窗口切换到HTML源代码编辑模式，粘贴就可以了。
+
+不过要想正确显示代码高亮还需在WordPress主题中加载样式文件“highlight.css”（在下载的压缩包中）
+
+方法：
+
+首先，把highlight.css上传到所使用主题目录中；
+
+其次：打开header.php，查找：
+
+<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style.css" />
+在后面添加：
+
+<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/highlight.css" />
+当然，你也可以复制highlight.css中的所有代码到你主题style.css中，以上步骤就免了！
+
+如认为默认的样式不符合自己的要求，可以通过修改“highlight.css”中的样式改变代码高亮、边框、背景等颜色，更个性化。
+
+在线代码高亮转换
+
+但需要注意的是Wordpress会自动把半角符号替换为全角，别人复制下来的函数代码标点是全角的，无法使用，切记！
+
+解决办法：
+
+打开并编辑 wp-includes/formatting.php 文件，找到以下代码：
+// static strings
+$curl = str_replace($static_characters, $static_replacements, $curl);
+// regular expressions
+$curl = preg_replace($dynamic_characters, $dynamic_replacements, $curl);
+将$curl 开头的两句代码注释掉，如下：
+// static strings
+//$curl = str_replace($static_characters, $static_replacements, $curl);
+// regular expressions
+//$curl = preg_replace($dynamic_characters, $dynamic_replacements, $curl);
+注:使用IE核心浏览器复制代码时会将行号一起复制下来，可以参考这篇文章去掉行号：小技巧:帮你批量删除代码前的行号，或才使用火狐、chrome等浏览器。

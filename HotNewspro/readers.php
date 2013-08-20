@@ -7,10 +7,10 @@ Template Name: 读者墙
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
 	<div id="map_box">
 		<div id="map_l">
-			<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_title(); ?></div>
+			<div class="browse">现在位置： <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; <?php the_title(); ?></div>
 		</div>
 		<div id="map_r">
-			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+			<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 		</div>
 	</div>
 	<div class="clear"></div>
@@ -26,7 +26,7 @@ Template Name: 读者墙
 					$url = $comment->comment_author_url;
 					else $url="#";
 					$r="rel='external nofollow'";
-					$imgsize="32";
+					$imgsize="48";
 					$tmp = "<a target='_blank' href='".$url."' title='".$comment->comment_author." (留下".$comment->cnt."个脚印)'><img width='".$imgsize ."' height='".$imgsize ."' src='http://www.gravatar.com/avatar.php?gravatar_id=".md5( strtolower($comment->comment_author_email) )."&size=".$imgsize ."&d=identicon&r=G' alt='".$comment->comment_author."(留下".$comment->cnt."个脚印)' /></a>";
 					$output .= $tmp;
 				}

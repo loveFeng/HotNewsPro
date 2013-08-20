@@ -18,20 +18,17 @@ document.write(' '+hello);
 <?php printf(__('%s 欢迎回来. '), $_COOKIE["comment_author_" . COOKIEHASH]) ?>
 <?php endif; ?>
 <span id=localtime>
-<?php include('counter.php'); ?> 
-
 <script type="text/javascript">
-　today=new Date(); var tdate,tday, x,year; var x = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六");
-　　var MSIE=navigator.userAgent.indexOf("MSIE");
-　　if(MSIE != -1)
-　　 year =(today.getFullYear());
-　　else
-　　 year = (today.getYear()+1900);
-　　tdate= year+ "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日" + " " + x[today.getDay()];
-　　document.write(tdate); 
-//-->
+today=new Date(); var tdate,tday, x,year; var x = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五","星期六");
+var MSIE=navigator.userAgent.indexOf("MSIE");
+if(MSIE != -1)
+year =(today.getFullYear());
+else
+year = (today.getYear()+1900);
+tdate= year+ "年" + (today.getMonth() + 1 ) + "月" + today.getDate() + "日" + " " + x[today.getDay()];
+document.write(tdate);
 </script>
-</span> 
+</span>
 <?php
 	global $user_identity,$user_level;
 	get_currentuserinfo();

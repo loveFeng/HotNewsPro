@@ -31,9 +31,6 @@ register_post_type(
 															'comments',
 															'custom-fields',
 															'revisions'	) ,
-							'show_in_nav_menus'	=> true ,
-							'taxonomies'		=> array(	'menutype',
-															'post_tag')
                                 ) 
                       ); 
 

@@ -4,13 +4,11 @@
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	 <!-- menu -->
 		<div id="map">
-			<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php echo get_the_term_list($post->ID,  'videos', '', ', ', ''); ?>＞正文<!-- <?php the_title();?> --></div>
-			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+			<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; <?php echo get_the_term_list($post->ID,  'videos', '', ', ', ''); ?> &gt; 正文<!-- <?php the_title();?> --></div>
+			<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 		</div>
 		<!-- end: menu -->
 		<div class="entry_box_s">
-			<div class="imgcat"></div>
-			<div class="more_img"><?php echo get_the_term_list($post->ID,  'videos', '', ', ', ''); ?></div>
 			<div class="img_title_box">
 				<div class="entry_title"><?php the_title(); ?></div>
 			</div>
@@ -29,13 +27,14 @@
 							<?php if ( get_post_meta($post->ID, 'small', true) ) : ?>
 							<?php $image = get_post_meta($post->ID, 'small', true); ?>
 							<?php $img = get_post_meta($post->ID, 'big', true); ?>
-							<a class="example6" href="<?php echo $img; ?>" rel="example6" title="<?php the_title(); ?>"><img src="<?php echo $image; ?>" alt="<?php the_title(); ?>"/></a>
+							<a  id="various2" href="<?php echo $img; ?>" title="<?php the_title(); ?>"><img src="<?php echo $image; ?>" alt="<?php the_title(); ?>"/></a>
 							<?php else: endif;?>
 							<?php $img = get_post_meta($post->ID, 'big', true); ?>
-							<div class="zoom"><a class="example6" href="<?php echo $img; ?>" rel="example6" title="<?php the_title_attribute(); ?>"></a></div>
+							<div class="zoom"><a id="various1" href="<?php echo $img; ?>" rel="example_group" title="<?php the_title_attribute(); ?>"></a></div>
 						</div>
 					</div>
 					<!-- end: thumbnail -->
+					<?php the_content('Read more...'); ?>
 				</div>
 			</div>
 			<div class="back_b">
@@ -50,7 +49,33 @@
 			<i class="lb"></i>
 			<i class="rb"></i>
 		</div>
-
+		<!-- entrymeta -->
+		<div class="entrymeta">
+			<div class="authorbio">
+				<div class="author_pic">
+					<?php echo get_avatar( get_the_author_email(), '48' ); ?>
+				</div>
+				<div class="clear"></div>
+				<div class="author_text">
+					<h4>作者: <span><?php the_author_posts_link('namefl'); ?></span></h4>
+				</div>
+			</div>
+			<span class="spostinfo">
+				<ul>
+					<li>该日志由 <?php the_author() ?> 于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?>发表在 <?php echo get_the_term_list($post->ID,  'videos', '', ', ', ''); ?> 分类下</li>
+					<li>转载请注明: <a href="<?php the_permalink() ?>" rel="bookmark" title="本文固定链接 <?php the_permalink() ?>"><?php the_title(); ?> | <?php bloginfo('name');?></a><a href="#" onclick="copy_code('<?php the_permalink() ?>'); return false;"> +复制链接</a></li>
+					<li class="content_tag"><?php echo get_the_term_list($post->ID,  'video_tags', '关键字：', ', ', ''); ?></li>
+				</ul>
+			</span>
+			<i class="lt"></i>
+			<i class="rt"></i>
+			<div class="clear"></div>
+		</div>
+		<div class="entry_sb">
+			<i class="lb"></i>
+			<i class="rb"></i>
+		</div>
+		<!-- end: entrymeta -->
 	<div class="context_b">
 		<?php previous_post_link('【上篇】%link') ?><br/><?php next_post_link('【下篇】%link') ?>
 		<i class="lt"></i>
@@ -58,6 +83,7 @@
 		<i class="lb"></i>
 		<i class="rb"></i>
 	</div>
+	<div class="ct"></div>
 	<?php comments_template(); ?>
 	<?php endwhile; else: ?>
 	<?php endif; ?>

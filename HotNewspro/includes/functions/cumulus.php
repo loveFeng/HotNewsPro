@@ -1,4 +1,4 @@
-<?php if (get_option('swt_cumulus') == 'Hide') { ?>
+<?php if (get_option('swt_cumulus') == '关闭') { ?>
 <?php { echo ''; } ?>
 <?php } else { 
 //彩色标签云

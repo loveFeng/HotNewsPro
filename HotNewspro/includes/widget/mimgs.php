@@ -3,7 +3,8 @@
 	<i class="lt"></i>
 </div>
 <div class="mimg">
-	<?php $loop = new WP_Query( array( 'post_type' => 'picture', 'showposts' => 4 ) );	while ( $loop->have_posts() ) : $loop->the_post();?>
+	<div class="clear"></div>
+	<?php $loop = new WP_Query( array( 'post_type' => 'picture', 'showposts' => get_option('swt_mimg_n') ) );	while ( $loop->have_posts() ) : $loop->the_post();?>
 	<div class="mimg_c">
 		<div class="thumb_s">
 			<?php if ( get_post_meta($post->ID, 'small', true) ) : ?>
@@ -18,8 +19,8 @@
 			<?php endif; ?>	
 		</div>
 	</div>
-<?php endwhile;?>
-<div class="clear"></div>
+	<?php endwhile;?>
+	<div class="clear"></div>
 </div>
 <div class="box-bottom">
 	<i class="lb"></i>

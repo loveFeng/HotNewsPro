@@ -6,11 +6,10 @@
 </div>
 <!-- 截图 -->
 <div class="thumbnail">
-<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>">
-<?php if (has_post_thumbnail()) { the_post_thumbnail('thumbnail'); }
-else { ?>
-<img class="home-thumb" src="<?php echo catch_first_image() ?>" width="140px" height="100px" alt="<?php the_title(); ?>"/>
-<?php } ?>
-</a>
-<?php endif; ?>
+	<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>">
+	<?php if (has_post_thumbnail()) { the_post_thumbnail('thumbnail', array('alt' => get_the_title()));
+	} else { ?>
+	<img class="home-thumb" src="<?php echo catch_first_image() ?>" width="140px" height="100px" alt="<?php the_title(); ?>"/>
+	<?php } ?></a>
+	<?php endif; ?>
 </div>

@@ -10,9 +10,8 @@
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	 <!-- menu -->
 		<div id="map">
-			<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php echo get_the_term_list($post->ID,  'genre', '', ', ', ''); ?>＞正文<!-- <?php the_title();?> --></div>
-			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
-			<div class="font"><a href="javascript:doZoom(12)">小</a> <a href="javascript:doZoom(13)">中</a> <a href="javascript:doZoom(18)">大</a></div>
+			<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; <?php echo get_the_term_list($post->ID,  'genre', '', ', ', ''); ?> &gt; 正文<!-- <?php the_title();?> --></div>
+			<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 		</div>
 		<!-- end: menu -->
 		<div class="entry_box_s">
@@ -22,6 +21,8 @@
 					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
 					<span class="category"> &#8260; <?php echo get_the_term_list($post->ID,  'genre', '', ', ', ''); ?></span>
 					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数 1', '评论数 %'); ?></span>
+					&#8260; <?php echo count_words ($text); ?>
+					&#8260; 字号 <span class="font"><a href="javascript:doZoom(12)">小</a> <a href="javascript:doZoom(13)">中</a> <a href="javascript:doZoom(18)">大</a></span>
 					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
 					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
 				</div>
@@ -88,6 +89,7 @@
 	<?php { echo ''; } ?>
 	<?php } else { include(TEMPLATEPATH . '/includes/related_a.php'); } ?>
 	<!-- end: relatedposts -->
+	<div class="ct"></div>
 	<?php comments_template(); ?>
 	<?php endwhile; else: ?>
 	<?php endif; ?>

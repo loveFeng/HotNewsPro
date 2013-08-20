@@ -16,6 +16,17 @@ $('.scroll_t').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);
 $('.scroll_c').click(function(){$('html,body').animate({scrollTop:$('.ct').offset().top}, 800);});
 $('.scroll_b').click(function(){$('html,body').animate({scrollTop:$('.footer_bottom,.footer_bottom_a').offset().top}, 800);});
 });
+
+$(document).ready(function(){ 
+    $("ul.scroll li").hover(function() {
+        $(this).find("div").stop()
+        .animate({right: "0", opacity:1}, "fast")
+        .css("display","block")
+    }, function() {
+        $(this).find("div").stop()
+        .animate({right: "0", opacity: 0}, "fast")
+    });  
+});
 // context
 $(document).ready(function(){
 $('.entry_box_s ').hover(
@@ -27,6 +38,129 @@ $('.entry_box_s ').hover(
 	}
 );
 });
+// 登录
+function showid(idname){
+var isIE = (document.all) ? true : false;
+var isIE6 = isIE && (/MSIE (\d)\.0/i.exec(navigator.userAgent));
+var newbox=document.getElementById(idname);
+newbox.style.zIndex="9999";
+newbox.style.display="block"
+newbox.style.position = !isIE6 ? "fixed" : "absolute";
+newbox.style.top =newbox.style.left = "50%";
+newbox.style.marginTop = - newbox.offsetHeight / 2 + "px";
+newbox.style.marginLeft = - newbox.offsetWidth / 2 + "px";
+var layer=document.createElement("div");
+layer.id="layer";
+layer.style.width=layer.style.height="100%";
+layer.style.position= !isIE6 ? "fixed" : "absolute";
+layer.style.top=layer.style.left=0;
+layer.style.backgroundColor="#000";
+layer.style.zIndex="9998";
+layer.style.opacity="0.6";
+document.body.appendChild(layer);
+var sel=document.getElementsByTagName("select");
+for(var i=0;i<sel.length;i++){
+sel[i].style.visibility="hidden";
+}
+function layer_iestyle(){
+layer.style.width=Math.max(document.documentElement.scrollWidth, document.documentElement.clientWidth)
++ "px";
+layer.style.height= Math.max(document.documentElement.scrollHeight, document.documentElement.clientHeight) +
+"px";
+}
+function newbox_iestyle(){
+newbox.style.marginTop = document.documentElement.scrollTop - newbox.offsetHeight / 2 + "px";
+newbox.style.marginLeft = document.documentElement.scrollLeft - newbox.offsetWidth / 2 + "px";
+}
+if(isIE){layer.style.filter ="alpha(opacity=60)";}
+if(isIE6){
+layer_iestyle()
+newbox_iestyle();
+window.attachEvent("onscroll",function(){
+newbox_iestyle();
+})
+window.attachEvent("onresize",layer_iestyle)
+}
+layer.onclick=function(){newbox.style.display="none";layer.style.display="none";for(var i=0;i<sel.length;i++){
+sel[i].style.visibility="visible";
+}}
+}
+
+// 邮件
+
+function initrequest(url){
+	var http_request = false;
+	//initialize vars
+	var email=document.wr.email.value;
+	var name=document.wr.name.value;
+	var message=document.wr.message.value;
+	var website=document.wr.website.value;
+	var hint="";
+	var msg="姓名: "+name+" \n网址: "+website+" \n邮箱: "+email+"\n\n"+"\n"+"邮件内容:\n"+message;
+   	
+	var passData="email="+email+"&name="+name+"&message="+msg;
+
+	if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+        http_request = new XMLHttpRequest();
+            if (http_request.overrideMimeType) {
+                http_request.overrideMimeType('text/xml');
+            }
+        } else if (window.ActiveXObject) { // IE
+            try {
+                http_request = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {}
+            }
+        }
+        if (!http_request) {
+            alert('Error: Unable to initialize class');
+            return false;
+        }
+        http_request.onreadystatechange = function() { sendrequest(http_request); };
+        http_request.open('POST', url, true);
+       	http_request.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
+		if (email && name && message)
+		{
+			http_request.send(passData);
+
+		}else 
+		{
+			if (!email)
+			{
+				hint+="请填写电子邮件地址<br />";
+			}
+			if (!name)
+			{
+				hint+="请填写昵称<br />";
+			}
+			if (!message)
+			{
+				hint+="请输入邮件内容<br />";
+			}
+			
+			document.getElementById('hint').innerHTML=hint;	
+			
+		}
+}
+
+function sendrequest(http_request) {
+		if (http_request.readyState == 4) {
+            if (http_request.status == 200) {
+				document.getElementById('hint').innerHTML = http_request.responseText;	
+				document.getElementById('form_name').value = '';
+				document.getElementById('form_email').value = '';
+				document.getElementById('form_website').value = '';
+				document.getElementById('form_message').value = '';
+			} 
+			else {
+				HideIndicator()
+                document.getElementById('hint').innerHTML = '邮件没有发送成功，请稍后再试。谢谢！';
+            }
+        }
+}
+
 
 // 头像
 $(document).ready(function(){
@@ -65,50 +199,7 @@ $(document).ready(function() {
          this.width = maxwidth;
     });
 });
- // 关闭
-function turnoff(obj){
-document.getElementById(obj).style.display="none";
-}
- // 文字滚动
-    (function($){
-    $.fn.extend({
-    Scroll:function(opt,callback){
-    if(!opt) var opt={};
-    var _this=this.eq(0).find("ul:first");
-    var        lineH=_this.find("li:first").height(),
-    line=opt.line?parseInt(opt.line,10):parseInt(this.height()/lineH,10),
-    speed=opt.speed?parseInt(opt.speed,10):7000, //卷动速度，数值越大，速度越慢（毫秒）
-    timer=opt.timer?parseInt(opt.timer,10):7000; //滚动的时间间隔（毫秒）
-    if(line==0) line=1;
-    var upHeight=0-line*lineH;
-    scrollUp=function(){
-    _this.animate({
-    marginTop:upHeight
-    },speed,function(){
-    for(i=1;i<=line;i++){
-    _this.find("li:first").appendTo(_this);
-    }
-    _this.css({marginTop:0});
-    });
-    }
-    _this.hover(function(){
-    clearInterval(timerID);
-    },function(){
-    timerID=setInterval("scrollUp()",timer);
-    }).mouseout();
-    }
-    })
-    })(jQuery);
-    $(document).ready(function(){
-    $(".bulletin").Scroll({line:1,speed:1000,timer:5000});//修改此数字调整滚动时间
-    });
-//加载中提示
-$(document).ready(function(){
-$('h3 a,.cat_post a,#scat a').click(function(){
-$(this).text('正在给力加载中...');
-window.location = $(this).attr('href');
-});
-});
+
 
 //引用
 $(function(){
@@ -123,42 +214,49 @@ $(function(){
 })
 
 //提示
-var titleToNote = {
- elements : ['a', 'img'],
- setup : function(){
- if(!document.getElementById || !document.createElement) return;
-   var div = document.createElement("div");
-   div.setAttribute("id", "title2note");
-   document.getElementsByTagName("body")[0].appendChild(div);
-   document.getElementById("title2note").style.display = "none";
-   for(j=0;j<titleToNote.elements.length;j++){
-     for(i=0;i<document.getElementsByTagName(titleToNote.elements[j]).length;i++){
-       var el = document.getElementsByTagName(titleToNote.elements[j])[i];
-       if(el.getAttribute("title") && el.getAttribute("title") != ""){
-         el.onmouseover = titleToNote.showNote;
-         el.onmouseout = titleToNote.hideNote;
-       }
-     }
-   }
- },
- showNote : function()
- {
-   document.getElementById("title2note").innerHTML = this.getAttribute("title");
-   this.setAttribute("title", "");
-   document.getElementById("title2note").style.display = "block";
- },
- hideNote : function()
- {
-   this.setAttribute("title", document.getElementById("title2note").innerHTML);
-   document.getElementById("title2note").innerHTML = "";
-   document.getElementById("title2note").style.display = "none";
+ var sweetTitles = {
+ x : 10, // @Number: x pixel value of current cursor position
+ y : 20, // @Number: y pixel value of current cursor position
+ tipElements : ".cat_post_box a,.slider_image a,.v_content_list a", // @Array: Allowable elements that can have the toolTip,split with ","
+ noTitle : true, //if this value is false,when the elements has no title,it will not be show
+ init : function() {
+ var noTitle = this.noTitle;
+ $(this.tipElements).each(function(){
+ $(this).mouseover(function(e){
+ if(noTitle){
+ isTitle = true;
+ }else{
+ isTitle = $.trim(this.title) != '';
  }
-} 
-var oldonload=window.onload;if(typeof window.onload!='function'){
-window.onload=titleToNote.setup;
-}else{window.onload=function(){oldonload();
-titleToNote.setup();}}
-
+ if(isTitle){
+ this.myTitle = this.title;
+ this.title = "";
+ var tooltip = "<div id='tooltip'><p>"+this.myTitle+"</p></div>";
+ $('body').append(tooltip);
+ $('#tooltip')
+ .css({
+ "top" :( e.pageY+20)+"px",
+ "left" :( e.pageX+10)+"px"
+ }).show('fast');
+ }
+ }).mouseout(function(){
+ if(this.myTitle != null){
+ this.title = this.myTitle;
+ $('#tooltip').remove();
+ }
+ }).mousemove(function(e){
+ $('#tooltip')
+ .css({
+ "top" :( e.pageY+20)+"px",
+ "left" :( e.pageX+10)+"px"
+ });
+ });
+ });
+ }
+ };
+ $(function(){
+ sweetTitles.init();
+ });
 //Comments
 $(document).ready(function(){
 // 当鼠标聚焦

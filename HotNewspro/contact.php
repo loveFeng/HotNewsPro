@@ -3,14 +3,14 @@
 Template Name: 联系方式
 */
 ?>
-
 <?php get_header(); ?>
 <div id="content">
-	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
+	<?php if (have_posts()) : ?>
+	<?php while (have_posts()) : the_post(); ?>	
 	<!-- menu -->
 	<div id="map">
-		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_title(); ?></div>
-		<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+		<div class="browse">现在位置： <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; <?php the_title(); ?></div>
+		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
 	<!-- entry -->
@@ -34,7 +34,7 @@ Template Name: 联系方式
 						<input type="text" name="website" id="form_website" style="padding:3px;border:1px solid #0196e3;"/>
 						<div class="index_contact_form_title">内容</div>
 						<textarea name="message" id="form_message" style="height:100px;padding:10px;border:1px solid #0196e3;width:96.5%;" cols="" rows=""></textarea>
-						<input type="button" value="发送邮件" class="contact_form_submit" onclick="initrequest('<?php bloginfo('template_url'); ?>/includes/form.php');" style="cursor:pointer;background: #498FE1;width:87px;height:26px;color: #fff;text-align:center;text-shadow: 0px 1px 0px #000;margin:10px 0 0 0;border:0px;"/>
+						<input type="button" value="发送邮件" class="contact_form_submit" onclick="initrequest('<?php bloginfo('template_url'); ?>/includes/form.php');" style="cursor:pointer;background: #498FE1;width:87px;height:25px;color: #fff;text-align:center;text-shadow: 0px 1px 0px #000;margin:10px 0 0 0;border:0px;line-height: 25px;border-radius:13px;"/>
 					</div>
 				</form>
 			</div>

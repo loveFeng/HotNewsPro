@@ -59,7 +59,7 @@ function s_random_lists($num_limit = 10 , $exclude = "" , $date_limit = "" , $ec
         for ( $i = 0 ; $i < $num_limit ; $i++ ){
              if ( !$date_limit or $date_limit_ts < strtotime( $posts[$i]->post_date )){
                 if ( $list ) $out.= '<li class="random-post-link">'."\n";
-                  $out.= '<a href="'.get_permalink($posts[$i]->ID).'" title="'.$posts[$i]->post_title.'">'.cut_str($posts[$i]->post_title,32).'</a>'."\n";
+                  $out.= '<a href="'.get_permalink($posts[$i]->ID).'" title="'.$posts[$i]->post_title.'">'.cut_str($posts[$i]->post_title,30).'</a>'."\n";
                 if ( $list ) $out.= '</li>'."\n";
             }else{
                 if ( $postscount > $num_limit ) $num_limit++;

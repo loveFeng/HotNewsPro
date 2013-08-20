@@ -58,7 +58,7 @@ add_action('widgets_init',create_function('', 'return register_widget("comments"
 // 推荐文章
 class recommend extends WP_Widget{
     function recommend(){
-		$widget_options = array('classname'=>'set_contact','description'=>'主题自带的推荐文章');
+		$widget_options = array('classname'=>'set_contact','description'=>'添加后需到主题设置中添加分类ID');
 		$this->WP_Widget(false,'主题小工具&nbsp;&nbsp;&nbsp;&nbsp;推荐文章',$widget_options);
     }
 	function widget($instance){
@@ -96,20 +96,6 @@ class rcategory extends WP_Widget{
 }
 }
 add_action('widgets_init',create_function('', 'return register_widget("rcategory");'));
-
-// 订阅本站
-class rssblock extends WP_Widget{
-    function rssblock(){
-		$widget_options = array('classname'=>'set_contact','description'=>'主题自带的订阅本站，添加后需到主题设置中添加订阅代码');
-		$this->WP_Widget(false,'主题小工具&nbsp;&nbsp;&nbsp;&nbsp;订阅本站',$widget_options);
-    }
-	function widget($instance){
-		include("widget/rssblock.php");
-?>
-<?php
-}
-}
-add_action('widgets_init',create_function('', 'return register_widget("rssblock");'));
 
 // 侧边广告
 class ads extends WP_Widget{
@@ -153,11 +139,11 @@ class mimgs extends WP_Widget{
 }
 add_action('widgets_init',create_function('', 'return register_widget("mimgs");'));
 
-// 谷歌搜索
+// 搜索
 class search_g extends WP_Widget{
     function search_g(){
-		$widget_options = array('classname'=>'set_contact','description'=>'主题自带的谷歌搜索');
-		$this->WP_Widget(false,'主题小工具&nbsp;&nbsp;&nbsp;&nbsp;谷歌搜索',$widget_options);
+		$widget_options = array('classname'=>'set_contact','description'=>'主题自带的百度站内搜索');
+		$this->WP_Widget(false,'主题小工具&nbsp;&nbsp;&nbsp;&nbsp;搜索',$widget_options);
     }
 	function widget($instance){
 		include("widget/search_g.php");

@@ -31,9 +31,6 @@ register_post_type(
 															'comments',
 															'custom-fields',
 															'revisions'	) ,
-							'show_in_nav_menus'	=> true ,
-							'taxonomies'		=> array(	'menutype',
-															'post_tag')
                                 ) 
                       ); 
 
@@ -54,6 +51,19 @@ function create_gallery_taxonomy()
   							  'add_new_item' => __( '添加新相册分类' ),
   							  'new_item_name' => __( 'New Genre Name' ),
   ); 
+  
+// Tags
+	register_taxonomy(
+		'picture_tags',
+		'picture',
+		array(
+			'hierarchical' => false,
+			'label' => '图片标签',
+			'query_var' => true,
+			'rewrite' => true
+		)
+	);
+
   register_taxonomy('gallery',array('picture'), array(
     'hierarchical' => true,
     'labels' => $labels,

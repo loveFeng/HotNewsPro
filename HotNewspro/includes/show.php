@@ -1,4 +1,4 @@
-<div class="ad_h">
+<div class="show_h">
 <div class="v_show">
 	<div class="v_content">
 		<div  class="v_content_list">
@@ -6,13 +6,12 @@
 			<ul>
 				<li>
 					<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>">
-						<?php if ( get_post_meta($post->ID, 'img', true) ) : ?>
-						<?php $image = get_post_meta($post->ID, 'img', true); ?>
-						<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><img src="<?php echo $image; ?>" alt="<?php the_title(); ?>"/></a>
-						<?php else: ?>
-						<img class="home-thumb" src="<?php echo catch_first_image() ?>" width="140px" height="100px" alt="<?php the_title(); ?>"/></a>
-						<?php endif; ?>
-					<h4><a href="<?php the_permalink(); ?>" title="Permalink to <?php the_title(); ?>"><?php echo cut_str($post->post_title,100); ?></a></h4>
+					<?php if ( get_post_meta($post->ID, 'img', true) ) : ?>
+					<?php $image = get_post_meta($post->ID, 'img', true); ?>
+					<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><img src="<?php echo $image; ?>" alt="<?php the_title(); ?>"/></a>
+					<?php else: ?>
+					<img class="home-thumb" src="<?php echo catch_first_image() ?>" width="140px" height="100px" alt="<?php the_title(); ?>"/></a>
+					<?php endif; ?>
 				</li>
    		     </ul>
 		     <?php endwhile; ?>

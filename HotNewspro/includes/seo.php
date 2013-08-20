@@ -1,6 +1,6 @@
 <?php if ( is_home() ) { ?><title><?php bloginfo('name'); ?> | <?php bloginfo('description'); ?></title><?php } ?>
 <?php if ( is_search() ) { ?><title>搜索结果 | <?php bloginfo('name'); ?></title><?php } ?>
-<?php if ( is_single() ) { ?><title><?php echo trim(wp_title('',0)); ?> | <?php bloginfo('name'); ?></title><?php } ?>
+<?php if ( is_single() ) { ?><title><?php echo trim(wp_title('',0)); ?><?php if (get_query_var('page')) { echo '-第'; echo get_query_var('page'); echo '页';}?> | <?php bloginfo('name'); ?></title><?php } ?>
 <?php if ( is_page() ) { ?><title><?php echo trim(wp_title('',0)); ?> | <?php bloginfo('name'); ?></title><?php } ?>
 <?php if ( is_category() ) { ?><title><?php single_cat_title(); ?> | <?php bloginfo('name'); ?></title><?php } ?>
 <?php if ( is_month() ) { ?><title><?php the_time('F'); ?> | <?php bloginfo('name'); ?></title><?php } ?>
@@ -38,6 +38,16 @@ if ( is_single() ){
 <?php if ( is_single() ) { ?>
 <meta name="description" content="<?php echo trim($description); ?>" />
 <meta name="keywords" content="<?php echo rtrim($keywords,','); ?>" />
+<?php } ?>
+<?php if ( is_page() ) { ?>
+<meta name="description" content="<?php $description = get_post_meta($post->ID, 'description', true);{echo $description;}?>" />
+<meta name="keywords" content="<?php $keywords = get_post_meta($post->ID, 'keywords', true);{echo $keywords;}?>" />
+<?php } ?>
+<?php if ( is_category() ) { ?>
+<meta name="description" content="<?php echo category_description( $categoryID ); ?>" />
+<?php } ?>
+<?php if ( is_tag() ) { ?>
+<meta name="description" content="<?php echo single_tag_title(); ?>" />
 <?php } ?>
 <?php if ( is_home() ) { ?>
 <meta name="description" content="<?php echo get_option('swt_description'); ?>" />

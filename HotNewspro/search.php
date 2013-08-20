@@ -2,48 +2,36 @@
 <div id="content">
  <!-- menu -->
 	<div id="map">
-		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞搜索结果</div>
-		<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+		<div class="browse">现在位置： <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; 搜索结果</div>
+		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
  	<!-- end: menu -->
-    <div class="navigation"><?php pagination($query_string); ?></div>
-    <div class="clear"></div>
- 	<!-- end: navigation_t -->
  	<!-- archive_box -->
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	<div class="entry_box">
-		<span class="comment_a"><?php comments_popup_link('0℃ ', '1℃ ', '%℃ '); ?></span>
 		<div class="archive_box">
 			<!-- end: archive_title_box -->
 			<div class="archive_title_box">
 				<!-- 分类图标 -->
-				<div class="ico"><?php include('includes/cat_ico.php'); ?></div>
+				<div class="ico"><?php if (get_option('swt_ico') == '显示') { ?><?php include('includes/cat_ico.php'); ?><?php } else { } ?></div>
 				<!-- end: 分类图标 -->
 				<div class="archive_title">
-					<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读 <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+					<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读 <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 				</div> 
 				<div class="archive_info">
 					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
-					<span class="category"> &#8260; <?php the_category(', ') ?></span>
-					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
+					&#8260; <?php echo count_words ($text); ?>
+					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论 1 条', '评论 % 条'); ?></span>
+					<?php if(function_exists('the_views')) { print ' &#8260; 阅读 '; the_views(); print ' 次';  } ?>
 					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
 				</div>
 			</div>
 			<!-- end: archive_title_box -->
 			<div class="thumbnail_box">
 				<?php include('includes/thumbnail.php'); ?>
-				<span class="postdate"><?php the_time('Y年m月d日') ?></span>
 			</div>
 			<div class="archive">
-				<?php if (has_excerpt())
-				{ ?> 
-					<?php the_excerpt() ?>
-				<?php
-				}
-				else{
-					echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 480,"...");
-				} 
-				?>
+				<?php if (has_excerpt()){ ?><?php the_excerpt() ?><?php } else { echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 400,"..."); } ?>
 			</div>
 			<div class="clear"></div>
 			<span class="posttag"><?php the_tags('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', ', ', ''); ?></span><span class="archive_more"><a href="<?php the_permalink() ?>" title="详细阅读 <?php the_title(); ?>" rel="bookmark" class="title">阅读全文</a></span>
@@ -80,12 +68,12 @@
 	<?php endif; ?>
 	<!-- end: archive_box --> 
  	<!-- navigation_b -->
-    <div class="navigation_b"><?php pagination($query_string); ?></div>
+	<div id="pagenavi"><?php pagenavi(); ?></div>
  	<!-- end: navigation_b -->
 <div class="clear"></div>
 </div>
 <!-- end: content -->
-<?php get_sidebar('img'); ?>
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>
 <script type="text/javascript">
 jQuery(function($){

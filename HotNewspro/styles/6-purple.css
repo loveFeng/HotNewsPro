@@ -4,12 +4,12 @@
 	height: 38px;
 	font-size: 13px;
 	}
-.home {
+.home_h {
 	float: left;
 	width:117px;
 	height:35px;
 	}
-.home a:hover {
+.home_h a:hover {
 	width:117px;
 	height:36px;
 	background: url(purple/bg.png) 0 -38px;
@@ -173,11 +173,12 @@
 #expand_collapse{
 	background: url(purple/bg.png) 0 -170px;
 	}
-/** 分类列表 **/
-.cat_post_box {
-	background: url(purple/bg.png) no-repeat;
-	background-position:-960px -46px;
-	}
+/** 最新图标 **/
 .news {
-	background:url(purple/bg.png) no-repeat -232px -113px;
+	background:url(gray/bg.png) no-repeat -232px -113px;
+	}
+/** 分类名称 **/
+#hot_tag,.cat_name a,.cat_name_l,.cat_name a:hover {
+	background:#830D96;
+	color: #fff;
 	}

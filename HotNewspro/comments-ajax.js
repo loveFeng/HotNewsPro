@@ -8,7 +8,7 @@ while ( i <= len && got == -1){
 			got = js_url.indexOf('comments-ajax.js'); i++ ;
 }
 var edit_mode = '1', // 再編輯模式 ( '1'=開; '0'=不開 )
-		ajax_php_url = js_url.replace('-ajax.js','-ajax.php'),
+		ajax_php_url = js_url.replace('comments-ajax.js','comment-ajax.php'),
 		wp_url = js_url.substr(0, js_url.indexOf('wp-content')),
 		pic_sb = wp_url + 'wp-admin/images/wpspin_dark.gif', // 提交 icon
 		pic_no = wp_url + 'wp-admin/images/no.png',      // 錯誤 icon
@@ -17,7 +17,7 @@ var edit_mode = '1', // 再編輯模式 ( '1'=開; '0'=不開 )
 		txt2 = '<div id="error">#</div>',
 		txt3 = '"> <div id="edita">提交成功',
 		edt1 = ',刷新页面之前你可以<a rel="nofollow" class="comment-reply-link_a" href="#edit" onclick=\'return addComment.moveForm("',
-		edt2 = ')\'>重新编辑</a></div> ',
+		edt2 = ')\'>+重新编辑</a></div> ',
 		cancel_edit = '取消编辑',
 		edit, num = 1, comm_array=[]; comm_array.push('');
 

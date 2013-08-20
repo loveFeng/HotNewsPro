@@ -6,10 +6,10 @@ Template Name: 谷歌搜索
 <?php get_header(); ?>
 	<div id="map_box">
 		<div id="map_l">
-			<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞搜索结果</div>
+			<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; 搜索结果</div>
 		</div>
 		<div id="map_r">
-			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+			<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 		</div>
 	</div>
 	<div class="clear"></div>

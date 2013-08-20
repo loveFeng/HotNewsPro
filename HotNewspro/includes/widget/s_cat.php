@@ -4,7 +4,7 @@
 	<div id="scat">
 		<?php query_posts('showposts='.get_option('swt_s_cat_n').'&cat='.get_option('swt_s_cat'));?><?php while (have_posts()) : the_post(); ?>
 		<ul>
-			<li><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读<?php the_title(); ?>"><?php echo mb_strimwidth(get_the_title(), 0, 32, '');?></a></li>
+			<li><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读<?php the_title(); ?>"><?php echo mb_strimwidth(get_the_title(), 0, 30, '');?></a></li>
 		</ul>
 		<?php endwhile; ?>
 	</div>

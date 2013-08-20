@@ -23,8 +23,8 @@ jQuery(function($){
 <div id="content">
 	<!-- menu -->
 	<div id="map">
-		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞文章归档</div>
-		<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+		<div class="browse">现在位置： <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> &gt; 文章归档</div>
+		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
 	<!-- entry -->

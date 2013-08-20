@@ -1,15 +1,21 @@
+<?php if (get_option('swt_cut_img') == '关闭') { ?>
+<?php { echo ''; } ?>
+<?php } else { 
+add_image_size('thumbnail', 140, 100, true);
+add_image_size('show', 400, 248, true);
+add_image_size('hot', 236, 155, true);
+ } ?>
 <?php
-
 include("includes/theme_options.php");
+include("includes/guide.php");
+include("includes/functions/Pagenavi.php");
 include("includes/functions/types.php");
 include("includes/functions/types_gallery.php");
 include("includes/functions/types_video.php");
-include("includes/functions/inks_ico.php");
-include("includes/functions/cut_img.php");
 include("includes/functions/cumulus.php");
 include("includes/functions/notify.php");
-include("includes/functions/paged.php");
 include("includes/functions/filing.php");
+include("includes/functions/recently.php");
 include("includes/widget.php");
 include("includes/functions/banner.php");
 if (function_exists('register_sidebar'))
@@ -97,7 +103,17 @@ if (function_exists('register_sidebar'))
 		</div>',
     ));
 }
-// 自定义菜单
+{
+    register_sidebar(array(
+		'name'			=> 'RSS聚合',
+        'before_widget'	=> '',
+        'after_widget'	=> '',
+        'before_title'	=> '<div class="r_box"><div class="rss"></div><h3>',
+        'after_title'	=> '</h3>',
+    	'after_widget' => '<i class="lt"></i><i class="rt"></i><i class="lb"></i><i class="rb"></i></div>',
+    ));
+}
+//自定义菜单
    register_nav_menus(
       array(
          'header-menu' => __( '导航自定义菜单' ),
@@ -105,12 +121,12 @@ if (function_exists('register_sidebar'))
       )
    );
 
-// 背景
+//背景
 add_custom_background();
-
+//feed
+add_theme_support( 'automatic-feed-links' );
 //后台预览
 add_editor_style('/css/editor-style.css');
-
 //支持外链缩略图
 if ( function_exists('add_theme_support') )
  add_theme_support('post-thumbnails');
@@ -129,8 +145,7 @@ if ( function_exists('add_theme_support') )
 		echo '/images/random/'.$random.'.jpg';
   }
   return $first_img;
- }
- 
+ } 
 //标题文字截断
 function cut_str($src_str,$cut_length)
 {
@@ -177,10 +192,24 @@ function cut_str($src_str,$cut_length)
     }
     return $return_str;
 }
-
 //禁止代码标点转换
 remove_filter('the_content', 'wptexturize');
-
+//编辑器增强
+ function enable_more_buttons($buttons) {
+     $buttons[] = 'hr';
+     $buttons[] = 'del';
+     $buttons[] = 'sub';
+     $buttons[] = 'sup'; 
+     $buttons[] = 'fontselect';
+     $buttons[] = 'fontsizeselect';
+     $buttons[] = 'cleanup';   
+     $buttons[] = 'styleselect';
+     $buttons[] = 'wp_page';
+     $buttons[] = 'anchor';
+     $buttons[] = 'backcolor';
+     return $buttons;
+     }
+add_filter("mce_buttons_3", "enable_more_buttons");
 //分类文章数
 function wt_get_category_count($input = '') {
     global $wpdb;
@@ -205,14 +234,11 @@ $myavatar = get_bloginfo('template_directory') . '/images/gravatar.png';
   $avatar_defaults[$myavatar] = '自定义头像';
   return $avatar_defaults;
 }
-
 // 判断管理员
-function is_admin_comment( $comment_ID = 0 ) {
-$comment = get_comment( $comment_ID );
-$admin_comment = false;
-if($comment->user_id == 1){
-$admin_comment = true;
-}
+function is_admin_comment ($comment_ID=0) {
+$user_id = get_comment($comment_ID)->user_id;
+$user_info = get_userdata($user_id);
+return $user_info->user_level == 10;
 return $admin_comment;
 }
 // 评论回复
@@ -232,15 +258,21 @@ function mytheme_comment($comment, $args, $depth) {
 			<div class="t" style="display:none;" id="comment-<?php comment_ID(); ?>"></div>
 			<span id="avatar">
 				<?php if (is_admin_comment($comment->comment_ID)){ ?>
-      			 <?php echo get_avatar( $comment, 32 ); ?> 
+      			 <?php echo get_avatar( $comment, 32 ); ?><br/><span class="admin_w">管理员</span>
 				<?php } else { echo get_avatar( $comment, 48 ); } ?>
 			</span>
 			<span  class="comment-author">
-				<strong><?php comment_author_link() ?></strong> :
+				<strong><?php commentauthor(); ?></strong>：
 				<span class="datetime">
-					<?php comment_date('Y年m月d日') ?><?php comment_time('H:i:s') ?><?php edit_comment_link('编辑','+',''); ?>
-					<span class="floor"><?php if(!$parent_id = $comment->comment_parent) {printf('&nbsp;%1$s楼', ++$commentcount);} ?></span>
-					<span class="reply_t"><?php comment_reply_link(array_merge( $args, array('reply_text' => ' @回复', 'add_below' =>$add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?></span>
+					<?php comment_date('Y年m月d日') ?> <?php comment_time('') ?><?php edit_comment_link('编辑','&nbsp;+',''); ?>
+					<?php
+					if ( is_user_logged_in() ) {
+					$url = get_bloginfo('url');
+					echo '<a id="delete-'. $comment->comment_ID .'" href="' . wp_nonce_url("$url/wp-admin/comment.php?action=deletecomment&amp;p=" . $comment->comment_post_ID . '&amp;c=' . $comment->comment_ID, 'delete-comment_' . $comment->comment_ID) . '"" >&nbsp;×删除</a>';
+					}
+					?>
+					<span class="reply_t"><?php comment_reply_link(array_merge( $args, array('reply_text' => '&nbsp;@回复', 'add_below' =>$add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?></span>
+					<span class="floor"><?php if(!$parent_id = $comment->comment_parent) {printf('&nbsp;&#916;%1$s楼', ++$commentcount);} ?><?php if( $depth > 1){printf('&nbsp;&#8711;地下%1$s层', $depth-1);} ?></span>
 				</span>
 				<span class="reply"><?php comment_reply_link(array_merge( $args, array('reply_text' => '回复', 'add_below' =>$add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?></span>
 			</span >
@@ -250,6 +282,10 @@ function mytheme_comment($comment, $args, $depth) {
 		<br/>
 		<?php endif; ?>
 		<?php comment_text() ?>
+		<i class="lt"></i>
+		<i class="rt"></i>
+		<i class="lb"></i>
+		<i class="rb"></i>
 		<div class="clear"></div>
   </div>
 <?php
@@ -258,7 +294,15 @@ function mytheme_comment($comment, $args, $depth) {
 function mytheme_end_comment() {
 		echo '</li>';
 }
-
+//评论链接新窗口
+function commentauthor($comment_ID = 0) {
+    $url    = get_comment_author_url( $comment_ID );
+    $author = get_comment_author( $comment_ID );
+    if ( empty( $url ) || 'http://' == $url )
+		echo $author;
+    else
+		echo "<a href='$url' rel='external nofollow' target='_blank' class='url'>$author</a>";
+}
 //自动生成版权时间
 function comicpress_copyright() {
     global $wpdb;
@@ -281,84 +325,12 @@ function comicpress_copyright() {
     }
     return $output;
     }
-
-//密码保护提示
-function password_hint( $c ){
-global $post, $user_ID, $user_identity;
-if ( empty($post->post_password) )
-return $c;
-if ( isset($_COOKIE['wp-postpass_'.COOKIEHASH]) && stripslashes($_COOKIE['wp-postpass_'.COOKIEHASH]) == $post->post_password )
-return $c;
-if($hint = get_post_meta($post->ID, 'password_hint', true)){
-$url = get_option('siteurl').'/wp-pass.php';
-if($hint)
-$hint = '密码提示：'.$hint;
-else
-$hint = "请输入您的密码";
-if($user_ID)
-$hint .= sprintf('欢迎进入，您的密码是：', $user_identity, $post->post_password);
-$out = <<<END
-<form method="post" action="$url">
-<p>这篇文章是受保护的文章，请输入密码继续阅读:</p>
-<div>
-<label>$hint<br/>
-<input type="password" name="post_password"/></label>
-<input type="submit" value="Submit" name="Submit"/>
-</div>
-</form>
-END;
-return $out;
-}else{
-return $c;
-}
-}
-add_filter('the_content', 'password_hint');
- 
-//小墙Willin Kan
-class anti_spam {
-  function anti_spam() {
-    if ( !current_user_can('level_0') ) {
-      add_action('template_redirect', array($this, 'w_tb'), 1);
-      add_action('init', array($this, 'gate'), 1);
-      add_action('preprocess_comment', array($this, 'sink'), 1);
-    }
-  }
-  function w_tb() {
-    if ( is_singular() ) {
-      ob_start(create_function('$input','return preg_replace("#textarea(.*?)name=([\"\'])comment([\"\'])(.+)/textarea>#",
-      "textarea$1name=$2w$3$4/textarea><textarea name=\"comment\" cols=\"100%\" rows=\"4\" style=\"display:none\"></textarea>",$input);') );
-    }
-  }
-  function gate() {
-    if ( !empty($_POST['w']) && empty($_POST['comment']) ) {
-      $_POST['comment'] = $_POST['w'];
-    } else {
-      $request = $_SERVER['REQUEST_URI'];
-      $referer = isset($_SERVER['HTTP_REFERER'])         ? $_SERVER['HTTP_REFERER']         : '隱瞞';
-      $IP      = isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] . ' (透過代理)' : $_SERVER["REMOTE_ADDR"];
-      $way     = isset($_POST['w'])                      ? '手動操作'                       : '未經評論表格';
-      $spamcom = isset($_POST['comment'])                ? $_POST['comment']                : null;
-      $_POST['spam_confirmed'] = "請求: ". $request. "\n來路: ". $referer. "\nIP: ". $IP. "\n方式: ". $way. "\n內容: ". $spamcom. "\n -- 記錄成功 --";
-    }
-  }
-  function sink( $comment ) {
-    if ( !empty($_POST['spam_confirmed']) ) {
-      if ( in_array( $comment['comment_type'], array('pingback', 'trackback') ) ) return $comment;
-      add_filter('pre_comment_approved', create_function('', 'return "spam";'));
-      $comment['comment_content'] = "[ 小牆判斷這是Spam! ]\n". $_POST['spam_confirmed'];
-    }
-    return $comment;
-  }
-}
-$anti_spam = new anti_spam();
-
 //评论贴图
 function embed_images($content) {
   $content = preg_replace('/\[img=?\]*(.*?)(\[\/img)?\]/e', '"<img src=\"$1\" alt=\"" . basename("$1") . "\" />"', $content);
   return $content;
 }
 add_filter('comment_text', 'embed_images');
-
 //留言信息
 function WelcomeCommentAuthorBack($email = ''){
 	if(empty($email)){
@@ -374,8 +346,121 @@ function WelcomeCommentAuthorBack($email = ''){
 	$times = $wpdb->get_results($sql);
 	$times = ($times[0]->times) ? $times[0]->times : 0;
 	$message = $times ? sprintf(__('过去30天内您有<strong>%1$s</strong>条留言，感谢关注!' ), $times) : '您已很久都没有留言了，这次想说点什么？';
-
 	return $message;
 }
+//字数统计
+function count_words ($text) {
+global $post;
+if ( '' == $text ) {
+   $text = $post->post_content;
+   if (mb_strlen($output, 'UTF-8') < mb_strlen($text, 'UTF-8')) $output .= '共 ' . mb_strlen(preg_replace('/\s/','',html_entity_decode(strip_tags($post->post_content))),'UTF-8') . '字';
+   return $output;
+}
+}
+//跳转到设置
+if (is_admin() && $_GET['activated'] == 'true') {
+header("Location: themes.php?page=theme_options.php");
+}
+//去掉描述P标签
+function deletehtml($description) {
+$description = trim($description);
+$description = strip_tags($description,"");
+return ($description);
+}
+add_filter('category_description', 'deletehtml');
+//屏蔽默认小工具
+add_action( 'widgets_init', 'my_unregister_widgets' );
+function my_unregister_widgets() {
+//近期评论
+	unregister_widget( 'WP_Widget_Recent_Comments' );
+//近期文章
+	unregister_widget( 'WP_Widget_Recent_Posts' );
+//搜索
+	unregister_widget( 'WP_Widget_Search' );
+}
+//下载按钮
+function button_a($atts, $content = null) {
+return '<div id="down"><a id="download" title="下载链接" href="#button_file">下载地址</a></div>';
+}
+add_shortcode("file", "button_a");
+//按时间获得最受欢迎文章
+function get_timespan_most_viewed($mode = '', $limit = 10, $days = 7, $display = true) {
+	global $wpdb, $post;
+	$limit_date = current_time('timestamp') - ($days*86400); 
+	$limit_date = date("Y-m-d H:i:s",$limit_date);	
+	$where = '';
+	$temp = '';
+	if(!empty($mode) && $mode != 'both') {
+		$where = "post_type = '$mode'";
+	} else {
+		$where = '1=1';
+	}
+	$most_viewed = $wpdb->get_results("SELECT $wpdb->posts.*, (meta_value+0) AS views FROM $wpdb->posts LEFT JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.ID WHERE post_date < '".current_time('mysql')."' AND post_date > '".$limit_date."' AND $where AND post_status = 'publish' AND meta_key = 'views' AND post_password = '' ORDER  BY views DESC LIMIT $limit");
+	if($most_viewed) {
+		foreach ($most_viewed as $post) {
+			$post_title = get_the_title();
+			$post_views = intval($post->views);
+			$post_views = number_format($post_views);
+			$temp .= "<li><a href=\"".get_permalink()."\">$post_title</a>".__('', 'wp-postviews')."</li>";
+		}
+	} else {
+		$temp = '<li>'.__('N/A', 'wp-postviews').'</li>'."\n";
+	}
+	if($display) {
+		echo $temp;
+	} else {
+		return $temp;
+	}
+}
+// 禁止无中文留言
+function hot_comment_post( $incoming_comment ) {
+$pattern = '/[一-龥]/u';
+$http = '/href/u';
+// 禁止全英文评论
+if(!preg_match($pattern, $incoming_comment['comment_content'])) {
+wp_die( "您的评论中必须包含汉字!" );
+}elseif(preg_match($http, $incoming_comment['comment_content'])) {
+wp_die( "万恶的发贴机!" );
+}
+return( $incoming_comment );
+}
+add_filter('preprocess_comment', 'hot_comment_post');
+// 优酷视频
+function youku_video($atts, $content=null){
+	return '<p style="text-align: center;"><embed src=http://static.youku.com/v1.0.0149/v/swf/qplayer_rtmp.swf?VideoIDS='.$content.'ID&winType=adshow&isAutoPlay=true" quality="high" width="610" height="460" align="middle" wmode="transparent" allowScriptAccess="never" allowNetworking="internal" autostart="0" type="application/x-shockwave-flash"></embed></p>';
+}
+add_shortcode('youku','youku_video');
+// 友情链接
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+// 编辑器按钮
+add_action('after_wp_tiny_mce', 'bolo_after_wp_tiny_mce');
+function bolo_after_wp_tiny_mce($mce_settings) {
+?>
+<script type="text/javascript">
+QTags.addButton( 'file', '下载按钮', "[file]" );
+QTags.addButton( 'youku', '优酷视频', "[youku]视频ID[/youku]" );
+function bolo_QTnextpage_arg1() {
+}
+</script>
+<?php }
+// 导航目录
+function article_index($content) {
+    $matches = array();
+    $ul_li = '';
+    $r = "/<h3>([^<]+)<\/h3>/im";
+  
+    if(preg_match_all($r, $content, $matches)) {
+        foreach($matches[1] as $num => $title) {
+            $content = str_replace($matches[0][$num], '<h4 id="title-'.$num.'">'.$title.'</h4>', $content);
+            $ul_li .= '<li><a href="#title-'.$num.'" title="'.$title.'">'.$title."</a></li>\n";
+        }
+        $content = "\n<div id=\"article-index\">
+                <strong>文章目录</strong>  
+                <ul id=\"index-ul\">\n" . $ul_li . "</ul>
+            </div>\n" . $content;
+    }
+    return $content;
+}
+add_filter( "the_content", "article_index" ); 
 //全部结束
 ?>
