@@ -1,0 +1,87 @@
+html{
+	background:#757575;
+	}
+body.login{
+	background:#757575;
+	border-top:32px solid #757575;
+	}
+h1 a{
+	background:transparent;
+	height:82px;
+	width:0px;
+	}
+#login{
+	background:url(login-bkg-tile.png) no-repeat center top;
+	width:340px;
+	}
+#loginform, #registerform, #lostpasswordform{
+	background-color:transparent;
+	border:none;
+	width:300px;
+	}
+#login form{
+	margin-top:0px;
+	-webkit-box-shadow: none;
+	}
+form{
+	color:#000;
+	-moz-border-radius:none;
+	-moz-box-shadow:none;
+	}
+#nav{
+	height:45px;
+	text-indent:26px;
+	margin:0px;
+	padding:0px;
+	}
+#login form .submit input{
+	margin:0 11px 0 0;
+	}
+#login p.message{
+	display:none;
+	}
+#login p{
+	margin:0 0 12px 0;
+	}
+#login p .input{
+	background:#fff;
+	padding:3px;
+	height:14px;
+	font-size:14px;
+	color:#888;
+
+	}
+#login #login_error{
+	padding:6px 12px;
+	margin:15px 26px 0px 24px;
+	background:#fff;
+	border:1px solid #fff;
+	color:#fff;
+	}
+#user_pass, #user_login, #user_email{
+	font-size:20px;
+	border:1px solid #373737;
+	width:94%;
+	}
+.login p#backtoblog{
+	display:block;
+	width:100%;
+	height:30px;
+	}
+.login p#backtoblog a{
+	color:#6cf;
+	padding:2px 5px;
+
+	}
+.login p#backtoblog a:hover{
+	background:#6cf;
+	color:#1f1f1f;
+	}
+.button-primary,.submit .button-primary,#login form .submit input {
+	width:83px;
+	height:25px;
+	font-weight: bold;
+	color: #fff !important;
+	background:url(submit.png) no-repeat center top;
+	border:none;
+	}
