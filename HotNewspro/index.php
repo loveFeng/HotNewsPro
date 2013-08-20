@@ -1,4 +1,4 @@
-<?php if (get_option('swt_bj') == 'Display') { ?>
-<?php include('img.php'); ?>
+<?php if (get_option('swt_home') == 'CMS') { ?>
+<?php include('cms.php'); ?>
 <?php { echo ''; } ?>
-<?php } else { include(TEMPLATEPATH . '/layout.php'); } ?>
+<?php } else { include(TEMPLATEPATH . '/blog.php'); } ?>

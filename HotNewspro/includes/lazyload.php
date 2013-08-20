@@ -2,7 +2,6 @@
 <script type="text/javascript">
 	$(function() {          
     	$("#post img,#content img,#images_content img").lazyload({
-        	placeholder:"<?php bloginfo('template_url'); ?>/images/load.gif",
             effect:"fadeIn"
           });
     	});

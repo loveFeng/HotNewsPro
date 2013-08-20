@@ -9,7 +9,7 @@
 		</div>
 		<!-- 截图 -->
 		<div class="thumbnail_hot">
-			<?php if (has_post_thumbnail()) { the_post_thumbnail('home-thumb' ,array('class' => 'home-thumb')); }
+			<?php if (has_post_thumbnail()) { the_post_thumbnail('hot'); }
 				else { ?>
 				<a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title(); ?>"><img class="home-thumb" src="<?php echo catch_first_image() ?>" width="236px" height="155px" alt="<?php the_title(); ?>"/></a>
 			<?php } ?>

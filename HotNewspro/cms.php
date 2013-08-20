@@ -1,5 +1,5 @@
 <?php include('header_h.php'); ?>
-<div id="roll"><div title="回到顶部" id="roll_top"></div><div title="转到底部" id="fall"></div></div>
+
 <div id="post">
 	<?php include (TEMPLATEPATH . '/includes/slider.php'); ?>
 	<!-- end: menu -->
@@ -18,15 +18,26 @@
 	?>
 		<div class="entry_box_h">
 			<?php while (have_posts()) : the_post(); ?>
-			<div class="ico_name">
-				<div class="ico"><?php include('includes/cat_ico.php'); ?></div>
-				<span class="cat_name"><a href="<?php echo get_category_link($category);?>" rel="bookmark" title="更多关于<?php single_cat_title(); ?>的文章"><?php single_cat_title(); ?></a></span>
-			<div class="clear"></div>
-			</div>
+		<div class="box_entry_title">
+			<span class="cat_name"><?php the_category(', ') ?></span>
+			<div class="ico"><?php include('includes/cat_ico.php'); ?></div>
+				<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读 <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+				<div class="info">
+					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
+					<span class="category"> &#8260; <?php the_category(', ') ?></span>
+					<?php include('includes/source.php'); ?>
+					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数 1', '评论数 %'); ?></span>
+					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
+					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
+				</div>
+		</div>
 			<div class="clear"></div>
 			<div class="thumbnail_box">
 				<?php include('includes/thumbnail.php'); ?>
 				<span class="postdate"><?php the_time('Y年m月d日') ?></span>
+			</div>
+			<div class="cat_box">
+				<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 160,"..."); ?>
 			</div>
 			<?php endwhile; ?>
 			<div class="cat_post_box">
@@ -34,6 +45,7 @@
 					query_posts( array(
 						'showposts' => 5,
 						'cat' => $category,
+						'offset' => 1,
 						'post__not_in' => $do_not_duplicate
 						)
  					);
@@ -41,7 +53,18 @@
 				<?php while (have_posts()) : the_post(); ?>
 				<div class="cat_post">
 					<span class="hoem_date"><?php the_time('m/d') ?></span>
-					<li><a href="<?php the_permalink() ?>" rel="bookmark" title="详细阅读<?php the_title(); ?>"><?php echo cut_str($post->post_title,64); ?></a> <span class="comments_h"> <?php comments_popup_link('+0', '+1', '+%'); ?></span></li>
+					<li><a href="<?php the_permalink() ?>" rel="bookmark" 
+					title="
+						<?php if (has_excerpt())
+						{ ?> 
+							<?php the_excerpt() ?>
+						<?php
+						}
+						else{
+							echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 190,"...");
+						}
+						?>">
+					<?php echo cut_str($post->post_title,38); ?></a></li>
 				</div>	
 				<?php endwhile; ?>
 			</div>
@@ -57,7 +80,7 @@
 			<b class="lb"></b>
 			<b class="rb"></b>
 		</div>
-	<?php } ?> 
+	<?php } ?>
 		<!-- end: entry_box -->
 	<div class="clear"></div>
 	<?php if (get_option('swt_map') == 'Hide') { ?>
@@ -65,5 +88,5 @@
 	<?php } else { include(TEMPLATEPATH . '/includes/map.php'); } ?>
 </div>
 <!-- end: post -->
-<?php get_sidebar(); ?>
+<?php include('sidebar_h.php'); ?>
 <?php get_footer(); ?>

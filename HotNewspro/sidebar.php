@@ -15,10 +15,7 @@
 			<div class="clear"></div>
 				<ul>
 					<ol id="hotarticles">
-						<?php $popular = new WP_Query('orderby=comment_count&caller_get_posts=4&posts_per_page=10'); ?>
-						<?php while ($popular->have_posts()) : $popular->the_post(); ?>
-						<a href="<?php the_permalink(); ?>"><?php echo cut_str($post->post_title,32); ?></a>
-						<?php endwhile; ?>
+					<?php simple_get_most_viewed(); ?>
 					</ol>
 				</ul>		
 			<li><a href="#">随机文章</a>
@@ -45,6 +42,11 @@
 		<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('小工具1') ) : ?>
 		<?php endif; ?>
 	</div>
+
+	<?php if (get_option('swt_recommend') == 'Display') { ?>
+	<?php include('includes/s_cat.php'); ?>
+	<?php { echo ''; } ?>
+	<?php } else { } ?>
 
 	<?php if (get_option('swt_wallreaders') == 'Hide') { ?>
 	<?php { echo ''; } ?>

@@ -1,5 +1,4 @@
 <?php include('header_b.php'); ?>
-<div id="roll"><div title="回到顶部" id="roll_top"></div><div title="转到底部" id="fall"></div></div>
 <div id="content">
 	<!-- menu -->
 	<div id="map">
@@ -11,12 +10,12 @@
 			<?php } elseif (is_day()) { ?><?php the_time('Y年m月'); ?>发表的文章
 			<?php } elseif (is_month()) { ?>所有<?php the_time('Y年m月'); ?>文章
 			<?php } elseif (is_year()) { ?>Archive for <?php the_time('Y'); ?>
-			<?php } elseif (is_author()) { ?>该作者所有文章
+			<?php } elseif (is_author()) { ?><?php wp_title( '');?>发表的所有文章
 			<?php } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
 			<h1>Blog Archives</h1>
 			<?php } ?>
 		</div>
-		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
+		<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
     <div class="navigation"><?php pagination($query_string); ?></div>
@@ -37,6 +36,7 @@
 				<div class="archive_info">
 					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
 					<span class="category"> &#8260; <?php the_category(', ') ?></span>
+					<?php include('includes/source.php'); ?>
 					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数 1', '评论数 %'); ?></span>
 					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
 					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>

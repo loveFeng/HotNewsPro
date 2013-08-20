@@ -1,11 +1,10 @@
 <?php get_header(); ?>
-<div id="roll"><div title="回到顶部" id="roll_top"></div><div title="查看评论" id="ct"></div><div title="转到底部" id="fall"></div></div>
 <div id="content">
 	<?php if (have_posts()) : ?><?php while (have_posts()) : the_post(); ?>	
 	<!-- menu -->
 	<div id="map">
 		<div class="browse">现在位置 ＞<a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php the_title(); ?></div>
-		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
+		<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
 	<!-- entry -->
@@ -17,6 +16,7 @@
 				<div class="clear"></div>
 				<?php the_tags('标签: ', ', ', ' '); ?>
 				<span class="edit"><?php edit_post_link('<span class="edita">&nbsp&nbsp&nbsp&nbsp&nbsp</span>', '  ', '  '); ?></span>
+				<?php if(function_exists('the_views')) { print ' 被围观 '; the_views(); print '+';  } ?>
 			</div>
 		</div>
 		<!-- end: entry -->

@@ -5,6 +5,7 @@
 <?php if ( is_category() ) { ?><title><?php single_cat_title(); ?> | <?php bloginfo('name'); ?></title><?php } ?>
 <?php if ( is_month() ) { ?><title><?php the_time('F'); ?> | <?php bloginfo('name'); ?></title><?php } ?>
 <?php if (function_exists('is_tag')) { if ( is_tag() ) { ?><title><?php  single_tag_title("", true); ?> | <?php bloginfo('name'); ?></title><?php } ?> <?php } ?>
+<?php if ( is_author() ) {?><title><?php wp_title('');?>发表的所有文章 | <?php bloginfo('name'); ?></title><?php }?>
 <?php
 if (!function_exists('utf8Substr')) {
  function utf8Substr($str, $from, $len)

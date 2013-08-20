@@ -11,7 +11,8 @@
 					$url = $comment->comment_author_url;
 					else $url="#";
 					$r="rel='external nofollow'";
-					$tmp = "<a href='".$url."' '".$r."' title='".$comment->comment_author." (留下".$comment->cnt."个脚印)'>".get_avatar($comment->comment_author_email, 32)."</a>";
+					$imgsize="32";
+					$tmp = "<a target='_blank' href='".$url."' title='".$comment->comment_author." (留下".$comment->cnt."个脚印)'><img width='".$imgsize ."' height='".$imgsize ."' src='http://www.gravatar.com/avatar.php?gravatar_id=".md5( strtolower($comment->comment_author_email) )."&size=".$imgsize ."&d=identicon&r=G' alt='".$comment->comment_author."(留下".$comment->cnt."个脚印)' /></a>";
 					$output .= $tmp;
 				}
 				echo $output ;

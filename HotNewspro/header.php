@@ -5,7 +5,7 @@
 <?php include('includes/seo.php'); ?>	
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style.css" />
 <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/css.css" />
-<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/home.css" />
+<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/highlight.css" />
 <?php if (get_option('swt_ie') == 'Hide') { ?>
 <?php { echo ''; } ?>
 <?php } else { include(TEMPLATEPATH . '/includes/ie.php'); } ?>
@@ -23,6 +23,8 @@
 <script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery.min.js" ></script>
 <script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/hoveraccordion.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/custom.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/superfish.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/muscript.js"></script>
 <script type="text/javascript">
 $(function () {
 $('.thumbnail img,.thumbnail_t img,.box_comment img,#slideshow img,.cat_ico,.cat_name,.r_comments img').hover(
@@ -38,7 +40,6 @@ function() {$(this).fadeTo("fast", 1);
 DD_belatedPNG.fix('.boxCaption,.top_box,.logo,.reply');
 </script>
 <![endif]-->
-
 <!-- 图片延迟加载 -->
 <?php include('includes/lazyload.php'); ?>
 <!-- IE6菜单 -->
@@ -60,14 +61,10 @@ sfHover = function() {
 		sfEls[i].onmouseover=function() {
 			this.className+=" sfhover";
 		}
-		sfEls[i].onmouseout=function() {
-			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
-		}
 	}
 }
 if (window.attachEvent) window.attachEvent("onload", sfHover);
 //--><!]]></script>
-
 </head>
 <body>
 <div id="wrapper">
@@ -104,4 +101,10 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 	<?php if (get_option('swt_hot') == 'Hide') { ?>
 	<?php { echo ''; } ?>
 	<?php } else { include(TEMPLATEPATH . '/includes/top_hot_a.php'); } ?>
-	<?php include('includes/cookies.php'); ?>
+	<?php include('includes/share.php'); ?>
+	<!-- scroll -->
+	<div id="scroll">
+		<a class="scroll_t" title="返回顶部" href="#header"></a>
+		<?php if(is_single() || is_page()) { ?><a class="scroll_c" title="查看留言" href="#comments"></a><?php } ?>
+		<a class="scroll_b" title="转到底部" href="#footer"></a>
+	</div>

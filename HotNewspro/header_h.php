@@ -22,6 +22,8 @@
 <script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/hoveraccordion.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/custom.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/superfish.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/facebox.js"></script>
 <script type="text/javascript">
 $(function () {
 $('.thumbnail img,.thumbnail_t img,.box_comment img,#slideshow img,.cat_ico,.r_comments img').hover(
@@ -37,7 +39,13 @@ function() {$(this).fadeTo("fast", 1);
 DD_belatedPNG.fix('.boxCaption,.top_box,.logo,.reply,#featured_tag,#slider_nav a');
 </script>
 <![endif]-->
-
+<script type="text/javascript">
+//页面淡入淡出
+	if(!+[1,]);else
+	$(document).ready(function() {
+	$('#wrapper').hide().fadeIn(1000);
+});
+</script>
 <!-- 图片延迟加载 -->
 <?php include('includes/lazyload.php'); ?>
 <!-- IE6菜单 -->
@@ -50,32 +58,19 @@ sfHover = function() {
 		sfEls[i].onmouseover=function() {
 			this.className+=" sfhover";
 		}
-		sfEls[i].onmouseout=function() {
-			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
-		}
 	}	
 	var sfEls = document.getElementById("topnav").getElementsByTagName("li");
 	for (var i=0; i<sfEls.length; i++) {
 		sfEls[i].onmouseover=function() {
 			this.className+=" sfhover";
 		}
-		sfEls[i].onmouseout=function() {
-			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
-		}
 	}
 }
 if (window.attachEvent) window.attachEvent("onload", sfHover);
 //--><!]]></script>
-<script type="text/javascript">
-jQuery(function(){
-jQuery('#loading-one').empty().append('页面加载完毕.').parent().fadeOut('slow');
-});
-</script>
+
 </head>
 <body>
-<?php if (get_option('swt_loading') == 'Hide') { ?>
-<?php { echo ''; } ?>
-<?php } else { include(TEMPLATEPATH . '/includes/loading.php'); } ?>
 <div id="wrapper">
 	<div id="top">
 		<div id='topnav'>
@@ -93,7 +88,6 @@ jQuery('#loading-one').empty().append('页面加载完毕.').parent().fadeOut('s
 					<input type="image" src="<?php bloginfo('template_directory'); ?>/images/go.gif" id="go" alt="Search" title="搜索" />
 					</div>
 				</form>
-				<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=zh-Hans"></script>
 			</div>
 			<!-- end: searchbar -->
 		</div>
@@ -107,13 +101,20 @@ jQuery('#loading-one').empty().append('页面加载完毕.').parent().fadeOut('s
 			<?php { echo ''; } ?>
 			<?php } else { include(TEMPLATEPATH . '/includes/logo.php'); } ?>
 			<div class="login_t"><?php include('includes/login.php'); ?></div>
+			<?php include('includes/time.php'); ?>
 		</div>
 		<div class="clear"></div>
 		<!-- end: header_c -->
 	</div>
 	<!-- end: header -->
-	<?php include('includes/cookies.php'); ?>
 	<div id="map_h">
 		<div class="tag_t"><?php wp_tag_cloud('smallest=12&largest=12&orderby=count&unit=px&number=12&order=&exclude&include=');?></div>
 	</div>
 	<div class="clear"></div>
+	<?php include('includes/share.php'); ?>
+	<!-- scroll -->
+	<div id="scroll">
+		<a class="scroll_t" title="返回顶部" href="#header"></a>
+		<?php if(is_single() || is_page()) { ?><a class="scroll_c" title="查看留言" href="#comments"></a><?php } ?>
+		<a class="scroll_b" title="转到底部" href="#footer"></a>
+	</div>

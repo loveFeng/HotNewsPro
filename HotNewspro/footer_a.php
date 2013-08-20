@@ -20,8 +20,7 @@
 		Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
 	 	</span>&nbsp;Theme by <a href="http://zmingcx.com" title="http://zmingcx.com">Robin</a>&nbsp;&nbsp;
 		基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建
-		&nbsp;&nbsp;<?php echo get_num_queries(); ?>次查询&nbsp;&nbsp;	
-		<?php echo stripslashes(get_option('swt_track_code')); ?>
+		&nbsp;&nbsp;<?php echo stripslashes(get_option('swt_track_code')); ?>
 		<big class="lb"></big>
 		<big class="rb"></big>
 	</div>

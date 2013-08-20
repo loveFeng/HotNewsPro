@@ -1,5 +1,4 @@
 <?php get_header(); ?>
-<div id="roll"><div title="回到顶部" id="roll_top"></div><div title="转到底部" id="fall"></div></div>
 	<!-- menu -->
 	<div id="map_box">
 		<div id="map_l">
@@ -10,7 +9,7 @@
 		</div>
 		</div>
 		<div id="map_r">
-			<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
+			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
 		</div>
 	</div>
 	<!-- end: menu -->
@@ -35,8 +34,10 @@
  			<!-- end: archive_title_box -->
  			<div class="clear"></div>
 			<div class="archive_b">
-				<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 146,"..."); ?>
-				<span class="more_b"><a href="<?php the_permalink() ?>" title="详细阅读 <?php the_title(); ?>" rel="bookmark" class="title">&nbsp;&nbsp;&nbsp;&nbsp;</a></span>
+				<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 140,"......"); ?>
+				<div class="clear"></div>
+				<span class="archive_more"><a href="<?php the_permalink() ?>" title="详细阅读 <?php the_title(); ?>" rel="bookmark" class="title">阅读全文</a></span>
+				<div class="clear"></div>
 			</div>
 		</div>
 		<!-- end: archive_box --> 

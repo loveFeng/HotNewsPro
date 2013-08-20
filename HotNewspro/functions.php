@@ -1,6 +1,7 @@
 <?php
 
 include("includes/theme_options.php");
+include("includes/custom-post-types.php");
 include("includes/inks_ico.php");
 if (function_exists('register_sidebar'))
 {
@@ -95,71 +96,14 @@ if (function_exists('register_sidebar'))
          'footer-menu' => __( '页角自定义菜单' )
       )
    );
+
 // 背景
 add_custom_background();
+
 //自定义格式
 add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
-// 公告
-function post_type_bulletin() {
-register_post_type(
-                     'bulletin', 
-                     array( 'public' => true,
-					 		'publicly_queryable' => true,
-							'hierarchical' => false,
-                    		'labels'=>array(
-    									'name' => _x('公告', 'post type general name'),
-    									'singular_name' => _x('Video', 'post type singular name'),
-    									'add_new' => _x('添加新公告', 'video'),
-    									'add_new_item' => __('添加新公告'),
-    									'edit_item' => __('编辑公告'),
-    									'new_item' => __('新的公告'),
-    									'view_item' => __('预览公告'),
-    									'search_items' => __('搜索公告'),
-    									'not_found' =>  __('No bulletin found'),
-    									'not_found_in_trash' => __('No bulletin found in Trash'), 
-    									'parent_item_colon' => ''
-  										),							 
-                             'show_ui' => true,
-							 'menu_position'=>5,
-                             'supports' => array(
-							 			'title',
-										'editor',
-										'author',
-                                        'post-thumbnails',
-                                        'excerpts',
-                                        'trackbacks',
-							            'custom-fields',
-                                        'comments',
-                                        'revisions')
-                                ) 
-                      ); 
 
-} 
-add_action('init', 'post_type_bulletin');
 
-function create_genre_taxonomy() 
-{
-  $labels = array(
-	  						  'name' => _x( '公告分类', 'taxonomy general name' ),
-    						  'singular_name' => _x( 'genre', 'taxonomy singular name' ),
-    						  'search_items' =>  __( '搜索分类' ),
-   							  'all_items' => __( '全部分类' ),
-    						  'parent_item' => __( 'Parent Genre' ),
-   					   		  'parent_item_colon' => __( 'Parent Genre:' ),
-   							  'edit_item' => __( '编辑公告分类' ), 
-  							  'update_item' => __( '更新' ),
-  							  'add_new_item' => __( '添加公告分类' ),
-  							  'new_item_name' => __( 'New Genre Name' ),
-  ); 
-  register_taxonomy('genre',array('bulletin'), array(
-    'hierarchical' => true,
-    'labels' => $labels,
-    'show_ui' => true,
-    'query_var' => true,
-    'rewrite' => array( 'slug' => 'genre' ),
-  ));
-}
-add_action( 'init', 'create_genre_taxonomy', 0 );
 //标题文字截断
 function cut_str($src_str,$cut_length)
 {
@@ -237,7 +181,22 @@ function s_random_lists($num_limit = 10 , $exclude = "" , $date_limit = "" , $ec
         }
     }
 
-//分页
+// 获得热评文章
+function simple_get_most_viewed($posts_num=10, $days=30){
+    global $wpdb;
+    $sql = "SELECT ID , post_title , comment_count
+           FROM $wpdb->posts
+           WHERE post_type = 'post' AND TO_DAYS(now()) - TO_DAYS(post_date) < $days
+           ORDER BY comment_count DESC LIMIT 0 , $posts_num ";
+    $posts = $wpdb->get_results($sql);
+    $output = "";
+    foreach ($posts as $post){
+        $output .= "\n<li><a href= \"".get_permalink($post->ID)."\" rel=\"bookmark\" title=\"".$post->post_title." (".$post->comment_count."条评论)\" >".cut_str($post->post_title,32)."</a></li>";
+    }
+    echo $output;
+}
+
+//分页1
 function pagination($query_string){
 global $posts_per_page, $paged;
 $my_query = new WP_Query($query_string ."&posts_per_page=-1");
@@ -263,6 +222,29 @@ if(1 != $pages){
 	}
 }
 
+//分页2
+if ( !function_exists('pagenavi') ) {
+	function pagenavi( $p = 5 ) { // 取当前页前后各 2 页，根据需要改
+		if ( is_singular() ) return; // 文章与插页不用
+		global $wp_query, $paged;
+		$max_page = $wp_query->max_num_pages;
+		if ( $max_page == 1 ) return; // 只有一页不用
+		if ( empty( $paged ) ) $paged = 1;
+		echo '<span class="pages">页码: ' . $paged . ' of ' . $max_page . ' </span> '; // 显示页数
+		if ( $paged > $p + 1 ) p_link( 1, '最前页' );
+		if ( $paged > $p + 2 ) echo '... ';
+		for( $i = $paged - $p; $i <= $paged + $p; $i++ ) { // 中间页
+			if ( $i > 0 && $i <= $max_page ) $i == $paged ? print "<span class='page-numbers current'>{$i}</span> " : p_link( $i );
+		}
+		if ( $paged < $max_page - $p - 1 ) echo '... ';
+		if ( $paged < $max_page - $p ) p_link( $max_page, '最后页' );
+	}
+	function p_link( $i, $title = '' ) {
+		if ( $title == '' ) $title = "第 {$i} 页";
+		echo "<a class='page-numbers' href='", esc_html( get_pagenum_link( $i ) ), "' title='{$title}'>{$i}</a> ";
+	}
+}
+
 //自定义头像
 add_filter( 'avatar_defaults', 'fb_addgravatar' );
 function fb_addgravatar( $avatar_defaults ) {
@@ -271,25 +253,13 @@ $myavatar = get_bloginfo('template_directory') . '/images/gravatar.png';
   return $avatar_defaults;
 }
 
-//彩色标签云
-function colorCloud($text) {
-$text = preg_replace_callback('|<a (.+?)>|i', 'colorCloudCallback', $text);
-return $text;
-}
-function colorCloudCallback($matches) {
-$text = $matches[1];
-$color = dechex(rand(0,16777215));
-$pattern = '/style=(\'|\")(.*)(\'|\")/i';
-$text = preg_replace($pattern, "style=\"color:#{$color};$2;\"", $text);
-return "<a $text>";
-}
-add_filter('wp_tag_cloud', 'colorCloud', 1);
-
 //支持外链缩略图
 if ( function_exists('add_theme_support') )
  add_theme_support('post-thumbnails');
- add_image_size('featured', 140, 100, true);
-  
+//add_image_size('thumbnail', 140, 100, true);
+//add_image_size('show', 400, 248, true);
+//add_image_size('hot', 236, 155, true);
+
  /*Catch first image (post-thumbnail fallback) */
  function catch_first_image() {
   global $post, $posts;
@@ -306,7 +276,15 @@ if ( function_exists('add_theme_support') )
   }
   return $first_img;
  }
- 
+// 判断管理员
+function is_admin_comment( $comment_ID = 0 ) {
+$comment = get_comment( $comment_ID );
+$admin_comment = false; //设置一个布尔类型的变量用于判断该留言的ID是否为管理员的留言
+if($comment->user_id == 1){
+$admin_comment = true;
+}
+return $admin_comment;
+}
 // 评论回复
 function robin_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment; ?>
@@ -314,16 +292,21 @@ function robin_comment($comment, $args, $depth) {
    <div id="div-comment-<?php comment_ID() ?>">
       <?php $add_below = 'div-comment'; ?>
 		<div class="comment-author">
-			<div id="avatar"><?php echo get_avatar( $comment, 32 ); ?></div>
+			<div id="avatar">
+				<?php if (is_admin_comment($comment->comment_ID)){ ?>
+      			 <?php echo get_avatar( $comment, 48 ); ?> 
+				<?php } else { echo get_avatar( $comment, 32 ); } ?>
+			</div>
 			<strong><?php comment_author_link() ?></strong> :
 			<span class="datetime"><?php comment_date('Y年m月d日') ?><?php comment_time() ?><?php edit_comment_link('编辑','+',''); ?></span>
 			<span class="reply"><?php comment_reply_link(array_merge( $args, array('reply_text' => '回复', 'add_below' =>$add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))); ?></span>
 		</div>
 		<?php if ( $comment->comment_approved == '0' ) : ?>
 			您的评论正在等待审核中...
-			<br />			
+			<br />
 		<?php endif; ?>
 		<?php comment_text() ?>
+	<div class="clear"></div>
   </div>
 <?php
 }
@@ -429,6 +412,7 @@ return $c;
 }
 }
 add_filter('the_content', 'password_hint');
+
 //后台logo
 add_action('admin_head', 'my_custom_logo');
 function my_custom_logo() {
@@ -439,5 +423,119 @@ echo '
  '
 ;}
 
+//文章归档
+function archives_list_SHe() {
+     global $wpdb,$month;
+     $lastpost = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_date <'" . current_time('mysql') . "' AND post_status='publish' AND post_type='post' AND post_password='' ORDER BY post_date DESC LIMIT 1");
+     $output = get_option('SHe_archives_'.$lastpost);
+     if(empty($output)){
+         $output = '';
+         $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'SHe_archives_%'");
+         $q = "SELECT DISTINCT YEAR(post_date) AS year, MONTH(post_date) AS month, count(ID) as posts FROM $wpdb->posts p WHERE post_date <'" . current_time('mysql') . "' AND post_status='publish' AND post_type='post' AND post_password='' GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date DESC";
+         $monthresults = $wpdb->get_results($q);
+         if ($monthresults) {
+             foreach ($monthresults as $monthresult) {
+             $thismonth    = zeroise($monthresult->month, 2);
+             $thisyear    = $monthresult->year;
+             $q = "SELECT ID, post_date, post_title, comment_count FROM $wpdb->posts p WHERE post_date LIKE '$thisyear-$thismonth-%' AND post_date AND post_status='publish' AND post_type='post' AND post_password='' ORDER BY post_date DESC";
+             $postresults = $wpdb->get_results($q);
+             if ($postresults) {
+                 $text = sprintf('%s %d', $month[zeroise($monthresult->month,2)], $monthresult->year);
+                 $postcount = count($postresults);
+                 $output .= '<ul class="archives-list"><li><span class="archives-yearmonth">' . $text . ' &nbsp;(' . count($postresults) . '&nbsp;' . __('篇文章','freephp') . ')</span><ul class="archives-monthlisting">' . "\n";
+             foreach ($postresults as $postresult) {
+                 if ($postresult->post_date != '0000-00-00 00:00:00') {
+                 $url = get_permalink($postresult->ID);
+                 $arc_title    = $postresult->post_title;
+                 if ($arc_title)
+                     $text = wptexturize(strip_tags($arc_title));
+                 else
+                     $text = $postresult->ID;
+                     $title_text = __('View this post','freephp') . ', &quot;' . wp_specialchars($text, 1) . '&quot;';
+                     $output .= '<li>' . mysql2date('d日', $postresult->post_date) . ':&nbsp;' . "<a href='$url' title='$title_text'>$text</a>";
+                     $output .= '&nbsp;(' . $postresult->comment_count . ')';
+                     $output .= '</li>' . "\n";
+                 }
+                 }
+             }
+             $output .= '</ul></li></ul>' . "\n";
+             }
+         update_option('SHe_archives_'.$lastpost,$output);
+         }else{
+             $output = '<div class="errorbox">'. __('Sorry, no posts matched your criteria.','freephp') .'</div>' . "\n";
+         }
+     }
+     echo $output;
+ }
+ 
+//小墙Willin Kan
+//建立
+class anti_spam {
+  function anti_spam() {
+    if ( !current_user_can('level_0') ) {
+      add_action('template_redirect', array($this, 'w_tb'), 1);
+      add_action('init', array($this, 'gate'), 1);
+      add_action('preprocess_comment', array($this, 'sink'), 1);
+    }
+  }
+  //設欄位
+  function w_tb() {
+    if ( is_singular() ) {
+      ob_start(create_function('$input','return preg_replace("#textarea(.*?)name=([\"\'])comment([\"\'])(.+)/textarea>#",
+      "textarea$1name=$2w$3$4/textarea><textarea name=\"comment\" cols=\"100%\" rows=\"4\" style=\"display:none\"></textarea>",$input);') );
+    }
+  }
+  //檢查
+  function gate() {
+    if ( !empty($_POST['w']) && empty($_POST['comment']) ) {
+      $_POST['comment'] = $_POST['w'];
+    } else {
+      $request = $_SERVER['REQUEST_URI'];
+      $referer = isset($_SERVER['HTTP_REFERER'])         ? $_SERVER['HTTP_REFERER']         : '隱瞞';
+      $IP      = isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] . ' (透過代理)' : $_SERVER["REMOTE_ADDR"];
+      $way     = isset($_POST['w'])                      ? '手動操作'                       : '未經評論表格';
+      $spamcom = isset($_POST['comment'])                ? $_POST['comment']                : null;
+      $_POST['spam_confirmed'] = "請求: ". $request. "\n來路: ". $referer. "\nIP: ". $IP. "\n方式: ". $way. "\n內容: ". $spamcom. "\n -- 記錄成功 --";
+    }
+  }
+  //處理
+  function sink( $comment ) {
+    if ( !empty($_POST['spam_confirmed']) ) {
+      if ( in_array( $comment['comment_type'], array('pingback', 'trackback') ) ) return $comment; //不管 Trackbacks/Pingbacks
+      //方法一: 直接擋掉, 將 die(); 前面兩斜線刪除即可.
+      //die();
+      //方法二: 標記為 spam, 留在資料庫檢查是否誤判.
+      add_filter('pre_comment_approved', create_function('', 'return "spam";'));
+      $comment['comment_content'] = "[ 小牆判斷這是Spam! ]\n". $_POST['spam_confirmed'];
+    }
+    return $comment;
+  }
+}
+$anti_spam = new anti_spam();
+
+//评论贴图
+function embed_images($content) {
+  $content = preg_replace('/\[img=?\]*(.*?)(\[\/img)?\]/e', '"<img src=\"$1\" alt=\"" . basename("$1") . "\" />"', $content);
+  return $content;
+}
+add_filter('comment_text', 'embed_images');
+//留言信息
+function WelcomeCommentAuthorBack($email = ''){
+	if(empty($email)){
+		return;
+	}
+	global $wpdb;
+
+	$past_30days = gmdate('Y-m-d H:i:s',((time()-(24*60*60*30))+(get_option('gmt_offset')*3600)));
+	$sql = "SELECT count(comment_author_email) AS times FROM $wpdb->comments
+					WHERE comment_approved = '1'
+					AND comment_author_email = '$email'
+					AND comment_date >= '$past_30days'";
+	$times = $wpdb->get_results($sql);
+	$times = ($times[0]->times) ? $times[0]->times : 0;
+	$message = $times ? sprintf(__('过去30天内您有<strong>%1$s</strong>条留言，感谢关注!' ), $times) : '您已很久都没有留言了，这次想说点什么？';
+
+	return $message;
+}
 //全部设置结束
 ?>

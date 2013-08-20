@@ -25,13 +25,6 @@ array( "name" => $themename." Options",
             "type" => "select",
             "std" => "CMS",
             "options" => array("BLOG", "CMS")),
-        
-	array(  "name" => "首页是否启用图片布局",
-			"desc" => "默认不启用",
-            "id" => $shortname."_bj",
-            "type" => "select",
-            "std" => "Display",
-            "options" => array("Hide", "Display")),
 
 //最新日志设置开始
 
@@ -96,16 +89,16 @@ array( "name" => $themename." Options",
             "std" => "Hide",
             "options" => array("Display", "Hide")),
 
-	array(  "name" => "是否显示加载中特效",
-			"desc" => "默认显示",
-            "id" => $shortname."_loading",
-            "type" => "select",
-            "std" => "Hide",
-            "options" => array("Display", "Hide")),
-
 	array(  "name" => "是否显示分类图标",
 			"desc" => "默认不显示",
             "id" => $shortname."_ico",
+            "type" => "select",
+            "std" => "Display",
+            "options" => array("Hide", "Display")),
+
+	array(  "name" => "是否显示顶部访客统计",
+			"desc" => "默认不显示",
+            "id" => $shortname."_count",
             "type" => "select",
             "std" => "Display",
             "options" => array("Hide", "Display")),
@@ -123,6 +116,13 @@ array( "name" => $themename." Options",
             "type" => "select",
             "std" => "Hide",
             "options" => array("Display", "Hide")),
+
+	array(  "name" => "是否显示侧边滚动推荐模块",
+			"desc" => "默认不显示",
+            "id" => $shortname."_recommend",
+            "type" => "select",
+            "std" => "Display",
+            "options" => array("Hide", "Display")),
 
 	array(  "name" => "是否显示侧边谷歌搜索",
 			"desc" => "默认显示",
@@ -325,7 +325,7 @@ if ( $_REQUEST['reset'] ) echo '<div id="message" class="updated fade"><p><stron
 ?>
 <div class="wrap rm_wrap">
 <h2><?php echo $themename; ?> 设置</h2>
-<p>当前使用主题: HotNewspro 2.4版 | 设计者:<a href="http://zmingcx.com" target="_blank"> Robin</a> | <a href="http://zmingcx.com/hotnews-pro-theme-24.html" target="_blank">查看主题更新</a></p>
+<p>当前使用主题: HotNewspro 2.5版 | 设计者:<a href="http://zmingcx.com" target="_blank"> Robin</a> | <a href="http://zmingcx.com/hotnews-pro-theme-25.html" target="_blank">查看主题更新</a></p>
 <div class="rm_opts">
 <form method="post">
 <?php foreach ($options as $value) {
@@ -433,7 +433,7 @@ $i++;
 </p>
 </form>
  </div> 
- <div class="kg"></div>
+<div class="kg"></div>
 <?php
 }
 ?>

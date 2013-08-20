@@ -1,11 +1,17 @@
 <?php get_header(); ?>
-<div id="roll"><div title="回到顶部" id="roll_top"></div><div title="查看评论" id="ct"></div><div title="转到底部" id="fall"></div></div>
+<script type="text/javascript">
+    function doZoom(size) {
+        var zoom = document.all ? document.all['entry'] : document.getElementById('entry');
+        zoom.style.fontSize = size + 'px';
+    }
+</script>
 <div id="content">
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	 <!-- menu -->
 		<div id="map">
 			<div class="browse">现在的位置: <a title="返回首页" href="<?php echo get_settings('Home'); ?>/">首页</a> ＞<?php echo get_the_term_list($post->ID,  'genre', '', ', ', ''); ?>＞正文<!-- <?php the_title();?> --></div>
-			<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
+			<div id="feed"><a href="<?php echo get_option('swt_rsssub'); ?>" title="RSS">RSS</a></div>
+			<div class="font"><a href="javascript:doZoom(12)">小</a> <a href="javascript:doZoom(13)">中</a> <a href="javascript:doZoom(18)">大</a></div>
 		</div>
 		<!-- end: menu -->
 		<div class="entry_box_s">
@@ -21,8 +27,15 @@
 			</div>
 			<!-- end: entry_title_box -->
 			<div class="entry">
-				<?php the_content('Read more...'); ?>
+				<div id="entry">
+					<?php the_content('Read more...'); ?>
+					<?php wp_link_pages( array( 'before' => '<p class="pages">' . __( '日志分页:'), 'after' => '</p>' ) ); ?>
+				</div>
 			</div>
+			<div class="back_b">
+				<a href="javascript:void(0);" onclick="history.back();">返回</a>
+			</div>
+			<div class="clear"></div>
 			<!-- end: entry -->
 			<b class="lt"></b>
 			<b class="rt"></b>
@@ -31,10 +44,53 @@
 			<b class="lb"></b>
 			<b class="rb"></b>
 		</div>
+		<!-- entrymeta -->
+		<div class="entrymeta">
+			<div class="authorbio">
+				<div class="author_pic">
+					<?php echo get_avatar( get_the_author_email(), '48' ); ?>
+				</div>
+				<div class="clear"></div>
+				<div class="author_text">
+					<h4>作者: <span><?php the_author_posts_link('namefl'); ?></span></h4>
+					<?php the_author_description(); ?>
+				</div>
+			</div>
+			<span class="spostinfo">
+				该日志由 <?php the_author() ?> 于<?php the_time('Y年m月d日') ?>发表在<?php the_category(', ') ?>分类下，
+				<?php if (('open' == $post-> comment_status) && ('open' == $post->ping_status)) {?>
+				你可以<a href="#respond">发表评论</a>，并在保留<a href="<?php the_permalink() ?>" rel="bookmark">原文地址</a>及作者的情况下<a href="<?php trackback_url(); ?>" rel="trackback">引用</a>到你的网站或博客。
+				<?php } elseif (('open' == $post-> comment_status) && !('open' == $post->ping_status)) { ?>
+				通告目前不可用，你可以至底部留下评论。
+				<?php } ?><br/>
+				原创文章转载请注明: <a href="<?php the_permalink() ?>" rel="bookmark" title="本文固定链接 <?php the_permalink() ?>"><?php the_title(); ?> | <?php bloginfo('name');?></a><br/>
+				<span class="content_tag"><?php the_tags('关键字: ', ', ', ''); ?></span>
+			</span>
+			<b class="lt"></b>
+			<b class="rt"></b>
+			<div class="clear"></div>
+		</div>
+		<div class="entry_sb">
+			<b class="lb"></b>
+			<b class="rb"></b>
+		</div>
+		<!-- end: entrymeta -->
 	<div class="context_b">
 		<?php previous_post_link('【上篇】%link') ?><br/><?php next_post_link('【下篇】%link') ?>
 		<b class="lt"></b>
 		<b class="rt"></b>
+		<b class="lb"></b>
+		<b class="rb"></b>
+	</div>
+	<!-- relatedposts -->
+	<div class="entry_b">
+	<?php include('includes/related.php'); ?>
+	<?php include('includes/related_img.php'); ?>
+	<div class="clear"></div>
+		<b class="lt"></b>
+		<b class="rt"></b>
+	</div>
+	<div class="entry_sb">
 		<b class="lb"></b>
 		<b class="rb"></b>
 	</div>
