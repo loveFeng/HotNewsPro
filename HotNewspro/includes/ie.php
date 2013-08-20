@@ -1,0 +1,1 @@
+<!--[if IE]> <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/ie.css" /> <![endif]-->

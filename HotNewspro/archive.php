@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php include('header_b.php'); ?>
 <div id="roll"><div title="回到顶部" id="roll_top"></div><div title="转到底部" id="fall"></div></div>
 <div id="content">
 	<!-- menu -->
@@ -15,7 +15,7 @@
 			<?php } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
 			<h1>Blog Archives</h1>
 			<?php } ?>
-		</div>	
+		</div>
 		<div id="feed"><a href="<?php bloginfo('rss2_url'); ?>" title="RSS">RSS</a></div>
 	</div>
 	<!-- end: menu -->
@@ -36,9 +36,9 @@
 				</div> 
 				<div class="archive_info">
 					<span class="date">发表于<?php echo human_time_diff(get_the_time('U'), current_time('timestamp')) . '前'; ?></span>
-					<span class="category"> &#8260; <?php the_category(', ') ?></span>&nbsp
-					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数1', '评论数%'); ?></span>
-					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views('次', true); print '+';  } ?>
+					<span class="category"> &#8260; <?php the_category(', ') ?></span>
+					<span class="comment"> &#8260; <?php comments_popup_link('暂无评论', '评论数 1', '评论数 %'); ?></span>
+					<?php if(function_exists('the_views')) { print ' &#8260; 被围观 '; the_views(); print '+';  } ?>
 					<span class="edit"><?php edit_post_link('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', '  ', '  '); ?></span>
 				</div>
 			</div>
@@ -49,7 +49,15 @@
 				<span class="postdate"><?php the_time('Y年m月d日') ?></span>
 			</div>
 			<div class="archive">
-				<?php echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 590,"..."); ?>
+				<?php if (has_excerpt())
+				{ ?> 
+					<?php the_excerpt() ?>
+				<?php
+				}
+				else{
+					echo mb_strimwidth(strip_tags(apply_filters('the_content', $post->post_content)), 0, 480,"...");
+				} 
+				?>
 			</div>
 			<div class="clear"></div>
 			<span class="posttag"><?php the_tags('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', ', ', ''); ?></span><span class="archive_more"><a href="<?php the_permalink() ?>" title="详细阅读 <?php the_title(); ?>" rel="bookmark" class="title">阅读全文</a></span>

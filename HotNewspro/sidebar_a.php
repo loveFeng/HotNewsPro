@@ -5,6 +5,7 @@
 		<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('小工具1') ) : ?>
 		<?php endif; ?>
 	</div>
+
 	<h3>最新文章</h3>
 	<div class="box">
   		 <ul>
@@ -17,15 +18,21 @@
 		<b class="lb"></b>
 		<b class="rb"></b>
 	</div>
+
 	<div class="widget">
 		<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('小工具2') ) : ?>
 		<?php endif; ?>
 	</div>
-	<div class="rssblock"><?php include('includes/rssblock.php'); ?></div>
+
+	<?php if (get_option('swt_rssblock') == 'Hide') { ?>
+	<?php { echo ''; } ?>
+	<?php } else { include(TEMPLATEPATH . '/includes/rssblock.php'); } ?>
+
 	<div class="widget">
 		<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('小工具3') ) : ?>
 		<?php endif; ?>
 	</div>
+
 	<h3>热门文章</h3>
 	<div class="box">
   		 <ul>
@@ -39,11 +46,14 @@
 		<b class="lb"></b>
 		<b class="rb"></b>
 	</div>
+
 	<div class="s_category"><?php include('includes/s_category.php'); ?></div>
+
 	<div class="widget">
 		<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('小工具4') ) : ?>
 		<?php endif; ?>
 	</div>
+
 	<h3>随机文章</h3>
 	<div class="box">
   		 <ul>
@@ -59,7 +69,17 @@
 		<b class="lb"></b>
 		<b class="rb"></b>
 	</div>
-	<div class="ad"><?php include('includes/ads.php'); ?></div>
+			
+
+	<?php if (get_option('swt_ads') == 'Display') { ?>
+		<?php include('includes/ads.php'); ?>
+	<?php { echo ''; } ?>
+	<?php } else { } ?>
+
+	<?php if (get_option('swt_statistics') == 'Hide') { ?>
+	<?php { echo ''; } ?>
+	<?php } else { include(TEMPLATEPATH . '/includes/statistics.php'); } ?>
+
 	<div class="widget">
 		<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('小工具5') ) : ?>
 		<?php endif; ?>

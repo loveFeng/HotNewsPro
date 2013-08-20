@@ -1,4 +1,4 @@
-<?php if (get_theme_mod('showcatico') == 'Yes') { ?>
+<?php if (get_option('swt_ico') == 'Display') { ?>
 	<div class="cat_ico">
 		<?php foreach((get_the_category()) as $cat)
 			{
@@ -13,5 +13,5 @@
 			}
 		?>
 	</div>
-<?php } else { ?>
-<?php } ?>
+<?php { echo ''; } ?>
+<?php } else { } ?>

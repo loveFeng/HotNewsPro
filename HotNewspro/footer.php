@@ -22,7 +22,7 @@
 			if(function_exists(’wp_dtree_get_links’)){
 			wp_dtree_get_links();
 			}else{
-			wp_list_bookmarks('title_li=&categorize=1&category=&orderby=rand&show_images=1');
+			wp_list_bookmarks('title_li=&categorize=1&category=&orderby=rand&limit=40&show_images=');
 			}
 		?>
 		<div class="clear"></div>
@@ -35,13 +35,14 @@
 	<div class="footer_bottom">
 		Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
 	 	</span>&nbsp;Theme by <a href="http://zmingcx.com" title="http://zmingcx.com">Robin</a>&nbsp;&nbsp;
-		基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建&nbsp;&nbsp;
-		
-		<?php if(get_theme_mod('track') == 'Yes') { ?>
-		<?php echo stripslashes(get_theme_mod('track_code')); ?>
-		<?php } else { ?>
-		<?php } ?>
+		基于<a href="http://wordpress.org/" title="WordPress.org"> WordPress</a> 技术创建
+		&nbsp;&nbsp;<?php echo get_num_queries(); ?>次查询&nbsp;&nbsp;	
+		<?php echo stripslashes(get_option('swt_track_code')); ?>
 	</div>
   	<div class="clear"></div>
 <?php wp_footer(); ?>
+</div>
 </body></html>
+<?php if (get_option('swt_bulletin') == 'Hide') { ?>
+<?php { echo ''; } ?>
+<?php } else { include(TEMPLATEPATH . '/includes/bulletin.php'); } ?>

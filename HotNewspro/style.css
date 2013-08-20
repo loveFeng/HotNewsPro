@@ -1,10 +1,10 @@
 /* 
-	Theme Name: HotNewspro
-	Theme URL: http://zmingcx.com/wordpress-theme-hotnews-pro-hot-news-v2-3-edition.html
+	Theme Name: HotNewsPro
+	Theme URL: http://zmingcx.com/hotnews-pro-theme-24.html
 	Description: 获得更多主题<a href="http://zmingcx.com/">zmingcx.com</a>。
 	Author: Robin
 	Author URI: http://zmingcx.com
-	Version: 2.33
+	Version: 2.4
 */
 /** 全局设置 **/
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4,img, ol, ul,p{
@@ -25,11 +25,11 @@ body {
 	}
 #wrapper {
 	width: 980px;
-	margin: 18px auto 0;
-	line-height: 20px;
+	margin: 18px auto;
+	line-height: 21px;
 	}
 a, a:visited {
-	color: #393939;
+	color: #000;
 	text-decoration: none;
 	}
 a:hover {
@@ -40,7 +40,7 @@ a:active {
 	}
 /** 顶部导航 **/
 #topnav {
-	background: #b8b8b8 url(images/bg.png) no-repeat 0 -125px;
+	background: #d2d2d2 url(images/bg.png) no-repeat 0 -125px;
 	height: 38px;
 	font-size: 13px;
 	}
@@ -76,7 +76,7 @@ a:active {
 	display: block;
 	padding: 0 25px 0 25px;
 	line-height:36px; 
-	color: #616161;
+	color: #4b4b4b;
 	text-shadow: 0px 1px 0px #d1d1d1;
 	}
 #topnav li a:hover, #topnav li a:active {
@@ -124,7 +124,7 @@ a:active {
 #topnav  li ul li a:hover {
 	background: #f9f9f9;
 	color: #004276;
-	text-decoration: normal;
+	text-decoration: none;
 	}
 #topnav  li ul ul {
 	margin: -32px 0px 0px 150px;
@@ -157,22 +157,19 @@ a:active {
 #searchbar #s { 
 	height: 16px;
 	float: right;
-	margin: 7px 0 0 0;
-	border: 0;
+	margin: 5px 0 0 0;
+	border: 0 !important;
 	width: 130px;
 	background: none;
 	color:#393939;
 	font-size:12px;
 	}
 #searchbar #go {
+	position: absolute;
 	float:left;
 	margin: 8px 0 0 8px;
 	width:13px;
 	height:13px;
-	}
-#searchresult { 
-	padding-right:20px;
-	width:200px;
 	}
 /** 页眉 **/
 .header_c {
@@ -187,8 +184,9 @@ a:active {
 	}
 h1 {
 	float: left;
-	font-size: 26px;
-	padding: 15px 0 0 10px;
+	font-size: 22px;
+	width: 500px;
+	padding: 10px 0 0 15px;
 	}
 h1 a:hover {
 	color:#0196e3;
@@ -196,9 +194,10 @@ h1 a:hover {
 .blog-title {
 	font-size: 12px;
 	font-weight:normal;
+	line-height:25px; 
 	}
 .login_t {
-	float:right;
+	float: right;
 	margin: 0 10px 0 0;
 	text-transform: uppercase;
 	}
@@ -233,10 +232,16 @@ h1 a:hover {
 	border:0px;	 
 	margin: 1px 0;
 	}
+#modlogn_remember {
+	display:none;
+	}
+.time {
+	float: right;
+	margin: 0 10px 0 0;
+	}
 /** 热点文章 **/
 #featured {
 	margin: 0 0 10px 0;
-	height: 155px;
 	}
 #featured .item {
 	position: relative;
@@ -273,19 +278,16 @@ h1 a:hover {
 .top_t {
 	position:absolute;
 	width:236px;
-	height:155px;
+
 	z-index:3;
 	}
 .top_t img{
 	width:236px;
+	}
+.thumbnail_hot img {
+	position:absolute;
+	width: 236px;
 	height:155px;
-	}
-.top_b {
-	position:absolute;
-	z-index:1;
-	}
-.thumbnail_hot_a,.thumbnail_hot {
-	position:absolute;
 	z-index:3;
 	}
 #featured .item h2 {
@@ -324,7 +326,7 @@ h1 a:hover {
 	}
 .browse {
 	text-shadow: 0px 1px 0px #d1d1d1;
-	width:550px;
+	width:450px;
 	float:left;
 	line-height:27px; 
 	padding:0 0 0 10px;
@@ -346,7 +348,7 @@ h1 a:hover {
 	position:relative;
 	background:#fff;
 	width:730px;
-	height:14px;
+	height:10px;
 	margin:0 0 10px 0;
 	}
 .entry_box,.entry_box_s,.entrymeta,.entry_b,#respond_box {
@@ -361,11 +363,11 @@ h1 a:hover {
 	}
 .footer_bottom_a {
 	position:relative;
-	background:#f2f2f;
+	background:#f2f2f2;
 	text-align:center;
 	padding:10px;
 	height:32px;
-	margin: 0 0 10px 0;
+	margin: 0 0 30px 0;
 	}
 b {
 	position:absolute;
@@ -399,7 +401,6 @@ b {
 #post {
 	float: left;
 	width: 732px;
-	line-height: 20px;
 	}
 .box_entry_title {
 	float:left;
@@ -414,6 +415,8 @@ b {
 	width:710px;
 	}
 .post_entry {
+	font-size: 13px;
+	line-height: 25px;
 	}
 .info a:visited,.info, .info a  {
 	color: #737373;
@@ -435,7 +438,7 @@ b {
 	float:left;
 	width: 40px;
 	height:40px;
-	margin:0 5px 0 0;
+	margin:0 5px 2px 0;
 	white-space: nowrap;
 	overflow: hidden;
 	}
@@ -468,6 +471,8 @@ b {
 	}
 .posttag {
 	float:left;
+	font-size: 12px;
+	line-height:20px;
 	width:600px;
 	margin:5px 0 0 0;
 	color:#b2b2b2;
@@ -491,7 +496,7 @@ b {
 .thumbnail_box {
 	float: left;
 	width: 140px;
-	height:125px;
+	height:129px;
 	margin: 5px 10px 5px 0;
 	padding: 4px;
 	border:1px solid #ccc;
@@ -500,19 +505,10 @@ b {
 	position:absolute;
 	z-index:3;
 	}
-.thumbnail_a {
-	background:#fff;
-	position:absolute;
-	z-index:3;
-	}
-.thumbnail_t img{
+.thumbnail_t img,.thumbnail img{
 	position:absolute;
 	width: 140px;
 	height:100px;
-	}
-.thumbnail_b img{
-	position:absolute;
-	z-index:1;
 	}
 /** 首页底部 **/
 #bottom {
@@ -565,6 +561,10 @@ b {
 .archive_box {
 	width:710px;
 	}
+.archive{
+	font-size: 13px;
+	line-height:25px;
+	}
 .archive_title_box {
 	width: 710px;
 	margin: 0 0 5px 0;
@@ -604,12 +604,13 @@ b {
 	font-size:13px;
 	margin-top:5px;
 	line-height: 24px;
-	text-align:justify;
-	letter-spacing:1px;
 	overflow:hidden;
 	}
 .entry p,.entry ul,.entry ol,.entry dd,.entry pre,.entry hr {
 	margin: 0 0 10px 0;
+	}
+.entry p {
+	text-indent:2em;
 	}
 .entry_title_box a:hover {
 	color:#0196e3;
@@ -652,7 +653,8 @@ b {
 	}
 .authorbio {
 	float:left;
-	width:90px;
+	width:100px;
+	height:80px;
 	text-align:center;
 	margin: 0 10px 0 0;
 	padding: 2px;
@@ -714,9 +716,7 @@ b {
 	padding: 5px;
 	border:1px solid #ccc;
 	}
-/** 内页结束 **/
 /** 侧边栏 **/
-
 #sidebar {
 	overflow:hidden;
 	float: right;
@@ -760,9 +760,10 @@ b {
 /** 滑动菜单 **/ 
 #drawer {
 	margin: 0 0 10px 0;
-	width: 236px;	
+	width: 236px;
+	height:328px;
 	list-style-type: none;
-	background: #fdfdfd;
+	overflow:hidden;
 	}
 #drawer a {
 	display: block;
@@ -776,6 +777,7 @@ b {
 	}
 #drawer li a {
 	display: block;
+	background: #fff  url(images/bg.png) 0 -75px;
 	padding: 0 0 0 15px;
 	width: 221px;
 	color: #000; 
@@ -799,6 +801,7 @@ b {
 	}
 #drawer ol a {
 	width: 219px;
+	background: #fff;
 	border-right:1px solid #ccc;
 	border-left:1px solid #ccc;
 	}
@@ -815,7 +818,7 @@ b {
 	}
 #drawer li.lastitem ul {
 	background-position: 50% bottom;
-	background-image: url(images/box-bottom.png);
+	background-image:url(images/box-bottom.png);
 	padding:0 0 4px 0; 
 	background-repeat: no-repeat
 	}
@@ -858,6 +861,15 @@ b {
 	float:left;
 	padding:1px;
 	margin:4px 4px 0 0;
+	}
+ /** 网站统计 **/ 
+.statistics ul {
+	float:left;
+	width:50%;
+	}
+.statistics_c ul {
+	float:left;
+	width:50%;
 	}
 /** 评论 **/
 #respond_box {
@@ -1117,7 +1129,6 @@ big {
 .footer_bottom {
 	text-align:center;
 	padding:10px;
-	border-bottom:1px solid #ccc;
 	}
 /** 翻页 **/
 .navigation {
@@ -1176,7 +1187,7 @@ big {
 	position:fixed;
 	right:50%;
 	top:50%;
-	_margin-right:-503px;
+	_margin-right:-507px;
 	_position:absolute;
 	_margin-top:300px;
 	_top:expression(eval(document.documentElement.scrollTop));

@@ -15,7 +15,7 @@
 ?>
 <!-- You can start editing here. -->
 <?php if ($comments) : ?>
-	<h2 id="comments"><?php the_title(); ?>：目前有<?php comments_number('', '1 条留言', '% 条留言' );?></h2>
+	<h2 id="comments"><?php the_title(); ?>：目前有<?php comments_number('', '1 条留言', '% 条留言' );?></h2>	
 	<ol class="commentlist"><?php wp_list_comments('type=comment&callback=robin_comment&end-callback=robin_end_comment'); ?></ol>
 	<div class="navigation_c">
 		<div class="previous"><?php paginate_comments_links(); ?></div>
@@ -89,7 +89,11 @@
 		<!--<p><small><strong>XHTML:</strong> You can use these tags: <code><?php echo allowed_tags(); ?></code></small></p>-->
       <div class="clear"></div>
 		<p><textarea name="comment" id="comment" tabindex="4"></textarea></p>
-		<p><?php include(TEMPLATEPATH . '/includes/smiley.php'); ?></p>
+		<p>
+			<?php if (get_option('swt_smiley') == 'Hide') { ?>
+			<?php { echo ''; } ?>
+			<?php } else { include(TEMPLATEPATH . '/includes/smiley.php'); } ?>
+		</p>
 		<p>
 			<input class="submit" name="submit" type="submit" id="submit" tabindex="5" value="提交留言" />
 			<input class="reset" name="reset" type="reset" id="reset" tabindex="6" value="<?php esc_attr_e( '重写' ); ?>" />

@@ -105,7 +105,7 @@ $time_lastcomment = mysql2date('U', $lasttime, false);
 $time_newcomment  = mysql2date('U', current_time('mysql', 1), false);
 $flood_die = apply_filters('comment_flood_filter', false, $time_lastcomment, $time_newcomment);
 if ( $flood_die ) {
-    err(__('You are posting comments too quickly.  Slow down.'));
+    err(__('您发表评论也太快了'));
 	}
 }
 
@@ -146,7 +146,7 @@ $tmp_c = get_comment($tmp_c->comment_parent);
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 		<div id="comment-<?php comment_ID(); ?>">
 		<div class="comment-author">
-			<img src="<?php echo bloginfo('template_directory'),'/images/gravatar.png' ?>" alt="" id="avatar" />
+			<div id="avatar"><?php echo get_avatar( $comment, 32 ); ?></div>
 			<?php printf( __( '<cite class="fn">%s</cite> <span class="says">says:</span>'), get_comment_author_link() ); ?>
 		</div>
 		<?php if ( $comment->comment_approved == '0' ) : ?>

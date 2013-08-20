@@ -38,10 +38,8 @@ if ( is_single() ){
 <meta name="description" content="<?php echo trim($description); ?>" />
 <meta name="keywords" content="<?php echo rtrim($keywords,','); ?>" />
 <?php } ?>
-<?php if (get_theme_mod('showseo') == 'Yes') { ?>
+
 <?php if ( is_home() ) { ?>
-<meta name="description" content="<?php echo stripslashes(get_theme_mod('description')); ?>" />
-<meta name="keywords" content="<?php echo stripslashes(get_theme_mod('keywords')); ?>" />
-<?php } ?>
-<?php } else { ?>
+<meta name="description" content="<?php echo get_option('swt_description'); ?>" />
+<meta name="keywords" content="<?php echo get_option('swt_keywords'); ?>" />
 <?php } ?>

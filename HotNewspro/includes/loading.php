@@ -1,0 +1,3 @@
+<div id="loading" style="position:fixed !important;position:absolute;top:0;left:0;height:100%; width:100%; z-index:1999; background:#000 url() no-repeat center; opacity:0.6; filter:alpha(opacity=60);font-size:14px;line-height:20px;" onclick="javascript:turnoff('loading')">
+<p id="loading-one" style="color:#fff;position:absolute; top:50%; left:50%; margin:50px 0 0 -50px; padding:3px 10px;" onclick="javascript:turnoff('loading')">页面载入中,请稍后...</p>
+</div>

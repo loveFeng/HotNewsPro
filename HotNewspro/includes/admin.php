@@ -1,8 +1,7 @@
-<?php if (get_theme_mod('showadmin') == 'Yes') { ?>
 <?php
 	global $user_identity,$user_level;
 	get_currentuserinfo();
-	if ($user_identity) { ?>			
+	if ($user_identity) { ?>
 	<h3>网站管理</h3>
 	<div class="admin">
 		<ul class="admin_bar">
@@ -33,5 +32,3 @@
 		<b class="rb"></b>
 	</div>
 	<?php } ?>
-<?php } else { ?>
-<?php } ?>

@@ -4,9 +4,11 @@
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 <?php include('includes/seo.php'); ?>	
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_directory'); ?>/style.css" />
-<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/img.css" />
-<?php if (get_theme_mod('showie') == 'Yes') { ?><!--[if IE]> <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/ie.css" /> <![endif]-->
-<?php } else { ?><?php } ?>
+<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/css.css" />
+<link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/css/img.css" />
+<?php if (get_option('swt_ie') == 'Hide') { ?>
+<?php { echo ''; } ?>
+<?php } else { include(TEMPLATEPATH . '/includes/ie.php'); } ?>
 <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?> RSS Feed" href="<?php bloginfo('rss2_url'); ?>" />
 <link rel="alternate" type="application/atom+xml" title="<?php bloginfo('name'); ?> Atom Feed" href="<?php bloginfo('atom_url'); ?>" />
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
@@ -54,8 +56,16 @@ sfHover = function() {
 }
 if (window.attachEvent) window.attachEvent("onload", sfHover);
 //--><!]]></script>
+<script type="text/javascript">
+jQuery(function(){
+jQuery('#loading-one').empty().append('页面加载完毕.').parent().fadeOut('slow');
+});
+</script>
 </head>
 <body>
+<?php if (get_option('swt_loading') == 'Hide') { ?>
+<?php { echo ''; } ?>
+<?php } else { include(TEMPLATEPATH . '/includes/loading.php'); } ?>
 <div id="wrapper">
 	<div id="top">
 		<div id='topnav'>
@@ -77,14 +87,18 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 	<!-- end: top -->
 	<div id="header">
 		<div class="header_c">
-			<?php if (get_theme_mod('showlogo') == 'Yes') { ?>
-			<a href="<?php bloginfo('siteurl'); ?>"title="<?php bloginfo(’name’); ?>"><div class="logo"></div></a>
-			<?php } else { ?>	
+			<?php if (get_option('swt_logo') == 'Hide') { ?>
 			<h1><a href="<?php echo get_option('home'); ?>/"><?php bloginfo('name'); ?>&trade;</a><br/><span  class="blog-title"><?php bloginfo('description'); ?></span ></h1>
-			<?php } ?>
+			<?php { echo ''; } ?>
+			<?php } else { include(TEMPLATEPATH . '/includes/logo.php'); } ?>
 			<div class="login_t"><?php include('includes/login.php'); ?></div>
 		</div>
 		<div class="clear"></div>
 		<!-- end: header_c -->
 	</div>
 	<!-- end: header -->
+	<?php include('includes/cookies.php'); ?>
+	<div id="map_h">
+		<div class="tag_t"><?php wp_tag_cloud('smallest=12&largest=12&orderby=count&unit=px&number=12&order=&exclude&include=');?></div>
+	</div>
+	<div class="clear"></div>

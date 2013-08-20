@@ -1,5 +1,7 @@
 <?php
+
 include("includes/theme_options.php");
+include("includes/inks_ico.php");
 if (function_exists('register_sidebar'))
 {
     register_sidebar(array(
@@ -95,7 +97,69 @@ if (function_exists('register_sidebar'))
    );
 // 背景
 add_custom_background();
+//自定义格式
+add_theme_support( 'post-formats', array( 'aside', 'gallery' ) );
+// 公告
+function post_type_bulletin() {
+register_post_type(
+                     'bulletin', 
+                     array( 'public' => true,
+					 		'publicly_queryable' => true,
+							'hierarchical' => false,
+                    		'labels'=>array(
+    									'name' => _x('公告', 'post type general name'),
+    									'singular_name' => _x('Video', 'post type singular name'),
+    									'add_new' => _x('添加新公告', 'video'),
+    									'add_new_item' => __('添加新公告'),
+    									'edit_item' => __('编辑公告'),
+    									'new_item' => __('新的公告'),
+    									'view_item' => __('预览公告'),
+    									'search_items' => __('搜索公告'),
+    									'not_found' =>  __('No bulletin found'),
+    									'not_found_in_trash' => __('No bulletin found in Trash'), 
+    									'parent_item_colon' => ''
+  										),							 
+                             'show_ui' => true,
+							 'menu_position'=>5,
+                             'supports' => array(
+							 			'title',
+										'editor',
+										'author',
+                                        'post-thumbnails',
+                                        'excerpts',
+                                        'trackbacks',
+							            'custom-fields',
+                                        'comments',
+                                        'revisions')
+                                ) 
+                      ); 
 
+} 
+add_action('init', 'post_type_bulletin');
+
+function create_genre_taxonomy() 
+{
+  $labels = array(
+	  						  'name' => _x( '公告分类', 'taxonomy general name' ),
+    						  'singular_name' => _x( 'genre', 'taxonomy singular name' ),
+    						  'search_items' =>  __( '搜索分类' ),
+   							  'all_items' => __( '全部分类' ),
+    						  'parent_item' => __( 'Parent Genre' ),
+   					   		  'parent_item_colon' => __( 'Parent Genre:' ),
+   							  'edit_item' => __( '编辑公告分类' ), 
+  							  'update_item' => __( '更新' ),
+  							  'add_new_item' => __( '添加公告分类' ),
+  							  'new_item_name' => __( 'New Genre Name' ),
+  ); 
+  register_taxonomy('genre',array('bulletin'), array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'genre' ),
+  ));
+}
+add_action( 'init', 'create_genre_taxonomy', 0 );
 //标题文字截断
 function cut_str($src_str,$cut_length)
 {
@@ -142,6 +206,36 @@ function cut_str($src_str,$cut_length)
     }
     return $return_str;
 }
+
+//随机文章
+function s_random_lists($num_limit = 10 , $exclude = "" , $date_limit = "" , $echo = true , $list = true){
+        $out = "";
+        if ( $num_limit < 1 ) $num_limit = "-1";
+        if ( !$date_limit_ts = strtotime($date_limit) ) $date_limit = false;
+        if ( !$date_limit ){
+            $posts = get_posts('offset=0&numberposts='.$num_limit.'&exclude='.$exclude.'&orderby=rand');
+        } else {
+            $posts = get_posts('offset=0&numberposts=-1&exclude='.$exclude.'&orderby=rand');
+        }
+        $postscount = count($posts);
+        if ( $num_limit < 1 ) $num_limit = $postscount;
+        if ( $postscount < $num_limit ) $num_limit = $postscount ;
+        for ( $i = 0 ; $i < $num_limit ; $i++ ){
+             if ( !$date_limit or $date_limit_ts < strtotime( $posts[$i]->post_date )){
+                if ( $list ) $out.= '<li class="random-post-link">'."\n";
+                  $out.= '<a href="'.get_permalink($posts[$i]->ID).'" title="'.$posts[$i]->post_title.'">'.cut_str($posts[$i]->post_title,32).'</a>'."\n";
+                if ( $list ) $out.= '</li>'."\n";
+            }else{
+                if ( $postscount > $num_limit ) $num_limit++;
+            }
+        }
+        if ( $list ) $out = '<ul class="random-post-link">'."\n".$out.'</ul>'."\n";
+        if ( $echo ){
+              echo $out;
+        } else {
+            return $out;
+        }
+    }
 
 //分页
 function pagination($query_string){
@@ -191,37 +285,11 @@ return "<a $text>";
 }
 add_filter('wp_tag_cloud', 'colorCloud', 1);
 
-//自动截图设置
-function get_thumbnail($postid=0, $size='full') {
-	if ($postid<1) 
-	$postid = get_the_ID();
-	$thumb = get_post_meta($postid, "thumb", TRUE); // Declare the custom field for the image
-	if ($thumb != null or $thumb != '') {
-		echo $thumb; 
-	}
-	elseif ($images = get_children(array(
-		'post_parent' => $postid,
-		'post_type' => 'attachment',
-		'numberposts' => '1',
-		'post_mime_type' => 'image', )))
-		foreach($images as $image) {
-			$thumbnail=wp_get_attachment_image_src($image->ID, $size);
-			?>
-<?php echo $thumbnail[0]; ?>
-<?php
-		}
-	else {
-		echo get_bloginfo ( 'stylesheet_directory' );
-		echo '/images/image-pending.gif';
-	}
-}
-//支持外链缩略图 (WP 2.9+) 
+//支持外链缩略图
 if ( function_exists('add_theme_support') )
  add_theme_support('post-thumbnails');
- add_image_size('featured', 400, 250, true);
- add_image_size('home-thumb', 125, 125, true);
- add_image_size('related-thumb', 75, 50, true);
- 
+ add_image_size('featured', 140, 100, true);
+  
  /*Catch first image (post-thumbnail fallback) */
  function catch_first_image() {
   global $post, $posts;
@@ -232,11 +300,13 @@ if ( function_exists('add_theme_support') )
   $first_img = $matches [1] [0];
 
   if(empty($first_img)){ //Defines a default image
-	$themepath = get_bloginfo('template_url');
-    $first_img = ''.$themepath.'/images/thumbnail.jpg';
+		$random = mt_rand(1, 22);
+		echo get_bloginfo ( 'stylesheet_directory' );
+		echo '/images/random/'.$random.'.jpg';
   }
   return $first_img;
  }
+ 
 // 评论回复
 function robin_comment($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment; ?>
@@ -327,6 +397,7 @@ function comicpress_copyright() {
     }
     return $output;
     }
+
 //密码保护提示
 function password_hint( $c ){
 global $post, $user_ID, $user_identity;
@@ -367,10 +438,6 @@ echo '
 </style>
  '
 ;}
-//后台页角
-function remove_footer_admin () {
-echo ' 感谢使用<a href="http://wordpress.org/" target="_blank"> WordPress </a>进行创作 | <a href="http://codex.wordpress.org/" target="_blank"> 官方文档 </a> | <a href="http://wordpress.org/support/forum/4" target="_blank"> 反馈 </a> | 当前使用主题: HotNewspro 2.33 | 设计者:<a href="http://zmingcx.com" target="_blank"> Robin</a> | <a href="http://zmingcx.com/wordpress-theme-hotnews-pro-hot-news-v2-3-edition.html" target="_blank">查看主题更新</a></p>';
-}
-add_filter('admin_footer_text', 'remove_footer_admin');
+
 //全部设置结束
 ?>

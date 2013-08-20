@@ -1,4 +1,3 @@
-<?php if (get_theme_mod('showico') == 'Yes') { ?>
 <script type="text/javascript">
 /* <![CDATA[ */
     function grin(tag) {
@@ -57,5 +56,3 @@
 <a href="javascript:grin(':cry:')"><img src="<?php bloginfo('url'); ?>/wp-includes/images/smilies/icon_cry.gif" alt="" /></a>
 <a href="javascript:grin(':mrgreen:')"><img src="<?php bloginfo('url'); ?>/wp-includes/images/smilies/icon_mrgreen.gif" alt="" /></a>
 <br />
-<?php } else { ?>
-<?php } ?>
