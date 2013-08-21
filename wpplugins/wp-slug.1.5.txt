@@ -1,0 +1,1 @@
+wp slug will set slug by translate title to english with google translate or pinyin. 设置wordpress slug 通过google translate翻译标题到英语, 在google translate 翻译失败时转换成拼音
