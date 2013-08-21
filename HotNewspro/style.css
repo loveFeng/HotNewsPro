@@ -437,9 +437,6 @@ i {
 .entry p,.entry ul,.entry ol,.entry dd,.entry pre,.entry hr {
 	margin: 0 0 10px 0;
 	}
-.entry p {
-	text-indent:2em;
-	}
 .entry_title_box {
 	padding: 10px 0 0 0;
 	}
