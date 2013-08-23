@@ -477,4 +477,10 @@ function security_remove_emails_logic($result) {
 }
 add_filter( 'the_content', 'security_remove_emails', 20 );
 add_filter( 'comment_text', 'security_remove_emails', 20 );
+//end
+//过滤器可以去除登陆错误时出现标准错误信息
+add_filter('login_errors', create_function('$a', "return null;"));
+
+//主题的wp_head()函数可能还会输出WordPress版本号，不让它输出
+remove_action('wp_head', 'wp_generator'); 
 ?>
