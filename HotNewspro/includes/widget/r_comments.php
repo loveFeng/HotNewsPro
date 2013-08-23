@@ -3,6 +3,7 @@
 	<ul>
 		<?php
 			global $wpdb;
+			//排除自己（管理员）的评论显示
 			$my_email = get_bloginfo ('admin_email'); 
 			$sql = "SELECT DISTINCT ID, post_title, post_password, comment_ID, comment_post_ID, comment_author, comment_date_gmt, comment_approved, comment_type,comment_author_url,comment_author_email, SUBSTRING(comment_content,1,24) AS com_excerpt FROM $wpdb->comments LEFT OUTER JOIN $wpdb->posts ON ($wpdb->comments.comment_post_ID = $wpdb->posts.ID) WHERE comment_approved = '1' AND comment_type = '' AND post_password = '' AND comment_author_email != '$my_email' ORDER BY comment_date_gmt DESC LIMIT 9";
 			$comments = $wpdb->get_results($sql);
