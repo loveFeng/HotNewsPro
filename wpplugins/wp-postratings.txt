@@ -1,0 +1,12 @@
+下载WP-Postrating X版本，解压后上传到Plugins/目录，在wordpress管理后台激活即可。
+激活插件后，在后台的一级菜单会多出一个”Ratings”选项，有详细的Post Ratings日志功能，能看到每一个评级人的IP地址和评级时间等信息。相应的文字选项设置一下即可。
+修改你的theme使之支持WP-Postrating。
+
+用法也简单，在模板index.php中找到：
+< ?php while (have_posts()) : the_post(); ?>
+
+在它的下面，加入：
+< ?php if(function_exists(‘the_ratings’)) { the_ratings(); } ?>
+
+即可。
+（也可以在single.php, post.php,search.php 或者 page.php中加入）

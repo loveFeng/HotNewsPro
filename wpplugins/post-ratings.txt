@@ -1,0 +1,5 @@
+直接在后台搜post ratings，作者是digitalnature，后台安装，启用即可。之后选择在content的前面或者后面显示，还有哪个页面显示即配置完成。当然也提供了手动放置的代码（注：短代码[ rate ]只在文章中使用有效，主题编辑中请使用如下代码）：
+<?php print PostRatings()->getControl(); ?>
+插件代码比较少（3个php，一个js，一个css），而且直接在目录中提供了星星图标的psd，方便修改。如果想修改显示文字的话，直接编辑plugins\post-ratings\templates\post-ratings-control.php这个文件即可，代码几十行，很简单。
+具体添加内容可参照MG12的教程：《评分微数据 Rating 和 AggregateRating 使用方法》，此文比较详细地介绍了几种微数据的差异和注意事项。
+
