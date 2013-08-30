@@ -47,9 +47,6 @@
 <div class="footer_bottom">
 	Copyright <?php echo comicpress_copyright(); ?> <?php bloginfo('name'); ?>&nbsp;&nbsp;保留所有权利.
 	&nbsp;&nbsp;Theme by <a target="_blank" href="http://zmingcx.com" title="主题：知更鸟">Robin</a>
-	<?php global $user_ID; if ( 1 != $user_ID) : ?>
-	<!-- 这里添加成统计代码 默认屏蔽自己-->
-	<?php endif; ?>
 	<?php echo stripslashes(get_option('swt_track_code')); ?>
 </div>
 <?php } ?>
