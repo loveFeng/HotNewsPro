@@ -1,0 +1,9 @@
+Any Mobile Theme Switcher //检测移动终端
+#先不装UpdraftPlus //备份系统
+WordPress连接微博 //连接微博等 wp-connect.1.9.24.zip
+WP-PostViews //统计插件
+wp slug translate //翻译文章名称,设置url
+WP Super Cache //缓存
+
+carrington-mobile //移动主题
+google-sitemap-generator //网站xml地图
